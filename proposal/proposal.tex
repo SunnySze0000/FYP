@@ -1,0 +1,831 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{fontenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{tabularx}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=blue,
+}
+\usepackage{enumitem}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage{setspace}
+\onehalfspacing
+
+\title{\textbf{EventLens} \\ On-Chain-Adjusted Prediction-Market Probabilities for Event-Driven Volatility and Applications}
+\author{Franklin · Anthony · Owen · Sunny}
+\date{Academic Year 2026--2027}
+
+\begin{document}
+
+\maketitle
+\begin{center}
+\textbf{THE HONG KONG UNIVERSITY OF SCIENCE AND TECHNOLOGY} \\
+Department of Computer Science and Engineering \\
+FINAL YEAR PROJECT PROPOSAL \\
+\vspace{0.5cm}
+Submitted in partial fulfilment of the requirements of the Final Year Project
+\end{center}
+
+\vspace{0.5cm}
+
+\textbf{Supervisor:} Prof. Shuai Wang
+
+\textbf{Document:} Formal Second Draft · 27 August 2026
+
+\section*{Abstract}
+Prediction markets aggregate dispersed information into continuously updated event probabilities, while public blockchains expose participant-level settlement records that are rarely available in traditional markets. This project proposes EventLens, an event-risk research platform that tests whether strictly past-only Polymarket wallet behaviour adds incremental forecasting information beyond conventional variables, raw prediction-market prices, and anonymous aggregate flow. The system will combine Polymarket market data with indexed and raw Polygon records, estimate category-aware wallet quality with shrinkage, and fit an interpretable adjusted-probability model.
+
+Adjusted event probabilities will then be mapped to event and non-event asset-return distributions for a controlled SPY, BTC, and cash portfolio. Applying the law of total variance will produce event-conditioned forecast volatility, scenario loss, Value at Risk (VaR), and expected shortfall/Conditional Value at Risk (CVaR). Furthermore, EventLens incorporates a dedicated Volatility Forecasting \& Delta-Hedged Trading Strategy Extension. Users can select from recurring event families (e.g., FOMC rate decisions, CPI releases) where the engine automatically isolates closest-to-expiry contracts. By combining adjusted probabilities, probability jump signals, and regime baselines, the platform evaluates candidate volatility models (HAR-RV, GARCH-X, and XGBoost) to forecast realized volatility. An automated delta-hedged backtest compares this forecasted realized volatility against option-implied volatility to harvest the variance risk premium.
+
+The research will use chronological, event-grouped walk-forward evaluation to prevent look-ahead leakage. Probability quality will be assessed using proper scoring rules and reliability diagrams; variance and risk forecasts will be assessed using realised-variance error, VaR exceedances, and exploratory expected-shortfall diagnostics. A negative smart-wallet result remains academically meaningful if the data reconstruction and incremental-information tests are rigorous. The final deliverable will include a reproducible point-in-time dataset, an evaluated modelling pipeline, a deterministic risk engine, and an evidence-grounded interface in which a language model retrieves and explains results but does not invent prices, calculate risk in free text, or execute live trades.
+
+\noindent \textbf{Keywords:} prediction markets; Polymarket; on-chain analytics; probability calibration; smart wallets; forecast volatility; portfolio tail risk; large language model agents
+
+\tableofcontents
+
+\newpage
+
+\section{Introduction}
+
+\subsection{Overview}
+
+\subsubsection{Background and motivation}
+Financial markets are repeatedly repriced around discrete events such as central-bank decisions, elections, and geopolitical developments. Investors can observe news, asset prices, and volatility indicators, but these sources do not directly show a continuously updated probability of the underlying event. Prediction markets such as Polymarket aggregate the beliefs of market participants into continuously updated probabilities. Under appropriate assumptions, the binary contract price can serve as a useful estimate of the real-world event probability \cite{wolfers2004prediction, wolfers2006interpreting}.
+
+Beyond these aggregate probabilities, Polymarket adds a distinctive Web3 dimension through a hybrid trading architecture. Orders are created and matched through an off-chain central limit order book, while matched trades settle on Polygon. Its blockchain-based infrastructure provides transparent transaction histories that enable the behaviour and historical performance of individual participants to be analysed. This creates an opportunity to investigate whether information embedded in prediction-market activity can provide useful signals for traditional financial markets.
+
+This project aims to develop an AI- and machine-learning-assisted quantitative analysis framework that extracts information from Polymarket and evaluates its value in forecasting financial-market volatility.
+
+\subsubsection{Problem statement}
+A raw prediction-market probability is not automatically a reliable or decision-ready risk estimate. Thin liquidity, concentrated positions, ambiguous resolution rules, heterogeneous trader quality, and correlated trading can make a price noisy. Even a well-calibrated event probability does not directly specify how SPY, BTC, or a portfolio will react. The missing link is a transparent mapping from event probability to conditional asset-return distributions and then to volatility and tail risk.
+
+\noindent \textbf{CORE RESEARCH PROPOSITION}
+
+EventLens will test whether past-only, category-aware Polymarket wallet activity improves event probabilities beyond the public market price and anonymous flow, and whether any improvement carries through to realised-volatility and portfolio tail-risk forecasts.
+
+\subsubsection{Proposed system}
+The system will first analyse on-chain wallet activity to identify traders whose historical behaviour demonstrates greater predictive value. Rather than treating all market participants equally, the system will construct smart-wallet-adjusted event probabilities by assigning greater importance to historically informative wallets. This extends the raw crowd probability provided by Polymarket with information about the quality and behaviour of the traders participating in each market.
+
+The resulting event probabilities will then be incorporated into a volatility-forecasting framework for selected financial assets, initially focusing on broad market indices and exchange-traded funds (ETFs). Instead of attempting to predict volatility solely from prediction-market data, the project will use an existing market-based volatility estimate as a benchmark and investigate whether Polymarket-derived signals provide additional predictive information.
+
+\begin{figure}[H]
+\centering
+\caption{EventLens high-level architecture}
+\end{figure}
+
+\subsubsection{Target user and value proposition}
+The primary target user is a research-oriented retail investor or finance professional who understands basic portfolio concepts but lacks the infrastructure to query blockchains, evaluate prediction-market participants, and construct event-conditioned risk models. EventLens is intended as a research and paper-decision tool rather than personalised financial advice.
+
+\begin{table}[H]
+\centering
+\caption{Target-user needs and the corresponding value proposition.}
+\begin{tabularx}{\textwidth}{p{3.5cm}p{4.5cm}p{4.5cm}}
+\toprule
+\textbf{User need} & \textbf{EventLens response} & \textbf{Evidence shown} \\
+\midrule
+Identify material events & Portfolio-aware event ranking & Category, horizon, relevance and liquidity \\
+Judge the market probability & Calibration and uncertainty layer & Raw/adjusted probability, spread and confidence \\
+Interpret public wallet activity & Past-only smart-wallet signal & Skill, breadth, concentration and recency \\
+Understand asset and portfolio impact & Scenario and risk engine & Conditional returns, forecast volatility, VaR and CVaR \\
+Evaluate possible responses & Bounded paper alternatives & Risk reduction, turnover and model assumptions \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Objectives}
+
+\subsubsection{Primary objective}
+To investigate whether information embedded in Polymarket's on-chain trading activity can improve conventional financial-market volatility forecasts, and to operationalize these insights into measurable return through an AI-assisted quantitative analysis dashboard.
+
+\subsubsection{Specific objectives}
+\begin{enumerate}
+    \item Develop a smart-wallet identification model using historical Polymarket on-chain trading behavior to distinguish informative traders from noise, hedging, and other non-predictive activity.
+    \item Construct smart-wallet-adjusted event probabilities by weighting prediction-market information according to the estimated informativeness of participating wallets, and compare it with raw probability inferred from the bets.
+    \item Develop an event-to-asset relevance framework using statistical techniques and LLM research agent to identify Polymarket events relevant to selected ETFs or indices.
+    \item Develop a volatility forecasting model that incorporates Polymarket-derived signals alongside a conventional market volatility baseline.
+    \item Evaluate whether Polymarket data provides incremental predictive value through historical backtesting and comparison against benchmark volatility forecasts, and present the results through an interactive AI-assisted dashboard.
+\end{enumerate}
+
+\subsubsection{Scope}
+
+\begin{table}[H]
+\centering
+\caption{Minimum viable scope and explicitly separated stretch objectives.}
+\begin{tabularx}{\textwidth}{p{4.5cm}p{4.5cm}p{4cm}}
+\toprule
+\textbf{Dimension} & \textbf{MVP commitment} & \textbf{Extensions} \\
+\midrule
+Venue & Polymarket on Polygon & Cross-platform comparison, for example from Kalshi \\
+Event coverage & Fed rates decisions & Macro, geopolitical and crypto-regulatory expansion \\
+Assets & Indices and ETFs & User-defined multi-asset portfolio \\
+Horizons & 1, 5 and 20 trading days & Additional term-structure horizons \\
+Wallet model & Address-level, past-only scoring & Validated entity clustering \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Literature Survey}
+
+\subsubsection{Prediction-market prices and calibration}
+Wolfers and Zitzewitz show that prediction markets can aggregate dispersed information and often generate useful forecasts \cite{wolfers2004prediction}. Their later work gives conditions under which binary contract prices approximate average participant beliefs while recognising possible bias caused by preferences and belief distributions \cite{wolfers2006interpreting}. This supports treating Polymarket prices as a strong baseline rather than as unquestionable truth.
+
+Probability forecasts require proper evaluation. Brier score and log loss are strictly proper scoring rules \cite{brier1950verification, gneiting2007strictly}. Reliability diagrams separately assess whether predicted probabilities agree with observed event frequencies. Sampling uncertainty can remain large for rare events, so confidence intervals and event-level resampling are necessary \cite{bradley2008sampling}.
+
+Logit pooling provides a transparent way to combine probability evidence \cite{satopaa2014combining}, while beta calibration offers a parametric alternative when simple logistic calibration is misspecified \cite{kull2017beta}. Both approaches reinforce the use of raw Polymarket price as a strong prior whose incremental adjustments must be learned and tested rather than assigned retrospectively.
+
+\subsubsection{Blockchain prediction markets and wallet analysis}
+Blockchain prediction markets combine information aggregation with public settlement and token state \cite{buckley2024blockchain}. Address-level records enable transaction-network and behavioural analysis, but public addresses are pseudonymous and clustering is heuristic. Victor demonstrates that Ethereum addresses may sometimes be grouped using explicit behavioural patterns, while also showing why address-to-entity mapping must be treated probabilistically \cite{victor2020address}. EventLens therefore evaluates wallets separately in the MVP and treats clustering as a robustness extension.
+
+Recent Polymarket research reports that a minority of accounts may display persistent forecasting skill \cite{gomez2026prediction}, but wallet rankings are vulnerable to sparse histories, event selection and late entry into nearly certain contracts. Question selection itself can affect apparent forecaster quality \cite{merkle2017neglected}. This motivates category conditioning, partial pooling, late-entry controls, sign-randomisation tests and a primary comparison against the contemporaneous market probability.
+
+\subsubsection{Event studies and asset mapping}
+Event-study methods estimate abnormal asset responses around information events \cite{mackinlay1997event}. Prediction-market probabilities can improve event studies by making prior uncertainty explicit, but event windows remain vulnerable to confounding news and regime changes. Wolfers and Zitzewitz's analysis of the 2016 US election illustrates how pre-event expectations and realised market reactions may diverge \cite{wolfers2018standard}. EventLens consequently uses reviewed scenario ranges and sensitivity analysis instead of asserting a single causal return target.
+
+\subsubsection{Tail risk, forecast volatility and implied volatility}
+CVaR, or expected shortfall, measures average losses beyond a selected VaR threshold and provides a coherent framework for downside-risk analysis \cite{rockafellar2000optimization}. For EventLens, adjusted probabilities enter a mixture distribution over event and non-event return states; the resulting variance is a physical forecast of future variation. Realised variance computed from subsequent returns provides the main observable forecast target \cite{andersen2003modeling}. This physical forecast is distinct from option-implied volatility, which is extracted from option prices under risk-neutral valuation. Cboe's VIX methodology aggregates option prices across strikes to estimate market-implied expected volatility \cite{cboe2025vix}.
+
+Using the sign convention in this proposal, the variance risk premium is option-implied variance minus the physical expected realised variance \cite{carr2009variance}. It is time-varying and need not be positive in every sample or horizon. The underlying, horizon, annualisation convention, and realised-variance definition must match. Consequently, a negative or positive variance gap is a testable signal rather than proof of arbitrage. A valid volatility-strategy extension also requires matched expiries and strikes, bid–ask data, hedging assumptions, and paper P\&L after costs.
+
+Variance-risk-premium research shows that the implied–realised difference is economically meaningful rather than a measurement error to be removed \cite{bollerslev2009expected}. QLIKE and formal predictive-accuracy comparisons provide more defensible volatility evaluation than strategy P\&L alone \cite{patton2011volatility, diebold1995comparing}.
+
+\subsubsection{Language-model agents in financial research}
+Recent systems such as CryptoTrade combine language models with market and on-chain inputs \cite{li2024cryptotrade}, while surveys highlight reproducibility, leakage, and numerical-reliability problems in financial agents \cite{yu2024large}. Retrieval-augmented and tool-using architectures support a design in which the model locates evidence and calls deterministic services \cite{lewis2020retrieval, yao2023react}. EventLens limits the language model to event retrieval, tool orchestration, evidence synthesis and explanation, with testing and governance informed by the NIST Generative AI Profile \cite{nist2024ai}.
+
+\subsubsection{Research gap}
+Recent work already examines whether a minority of Polymarket participants displays persistent forecasting skill \cite{gomez2026prediction}. EventLens therefore does not claim that wallet skill itself is unexplored. Its defensible gap is a leakage-safe test of whether wallet-address-aware flow adds incremental probability information, followed by translation into cross-asset event-conditioned realised-variance, tail-risk, and optional paper-volatility decisions. The contribution is not a generic dashboard, a claim of insider detection, or an exact-price predictor.
+
+\newpage
+
+\section{Methodology}
+
+\subsection{Design}
+
+\subsubsection{Research framework}
+The unit of analysis will be a market–horizon observation. For each resolved market, features will be constructed at standard cut-offs such as 20, 5, and 1 day before resolution. All observations from the same event will remain in the same training or testing block. This prevents repeated snapshots from being treated as independent outcomes.
+
+\begin{enumerate}
+    \item Observe a raw market probability from the CLOB midpoint and record spread, depth, volume, price movement, open interest, and time to resolution.
+    \item Calibrate the raw probability using only earlier resolved markets.
+    \item Estimate wallet quality at the historical cut-off and aggregate current category-relevant wallet activity.
+    \item Fit an adjusted-probability model and quantify incremental improvement over the raw market.
+    \item Map a focal event to conditional asset-return distributions with documented assumptions.
+    \item Calculate forecast volatility and portfolio tail risk; compare with option IV only where horizon-matched data exist.
+\end{enumerate}
+
+\subsubsection{Web3 data sources and provenance}
+EventLens will use a provenance-first, multi-layer architecture because Polymarket is a hybrid market. Orders and cancellations exist in the off-chain Central Limit Order Book (CLOB), whereas matched trades settle through smart contracts on Polygon \cite{polymarket2026order}. Platform APIs are therefore necessary for market definitions and order-book state, but they are not automatically on-chain evidence. A record is treated as chain-verified only when its transaction and decoded contract event can be reconciled with a finalised Polygon block.
+
+\begin{table}[H]
+\centering
+\caption{Data sources, evidential status, required fields and feasibility constraints.}
+\begin{tabularx}{\textwidth}{p{3cm}p{2.5cm}p{3cm}p{2.5cm}p{3cm}}
+\toprule
+\textbf{Source / interface} & \textbf{Evidence class} & \textbf{Required fields} & \textbf{Research role} & \textbf{Access and limitation} \\
+\midrule
+Gamma API & Platform metadata & Event/market/condition IDs, rules, dates and token IDs & Target and identifier crosswalk & Public/rate-limited; snapshot mutable metadata \\
+CLOB V2 REST/WebSocket & Off-chain operator state & Bid/ask, depth, midpoint, spread, trades and source time & Probability, liquidity and forward snapshots & Historical depth/cancellations require own collection \\
+Polymarket Data API & Analytical projection & Account, fills, activity, positions, P\&L and transaction & Candidate wallets and rapid cross-checks & Derived fields are not immutable; inspect taker-only defaults \\
+Goldsky Turbo V2 & Indexed on-chain data & Fills/matches, account, counterparty, asset, shares, block and transaction & Targeted historical reconstruction & One-time US\$100 credit; full positions backfill is very large \cite{goldsky2026pricing} \\
+Polygon PoS RPC & Canonical raw chain & Blocks, receipts, logs, log order, contracts and token balance & Sampled provenance and settlement audit & Public RPC is rate-limited; old state may need archive access \cite{polygon2026rpc} \\
+Asset/option provider & External market data & SPY/BTC returns, controls and option bid/ask if licensed & Conditional returns, RV and baselines & Strategy gated on reproducible quotes and costs \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Goldsky's current V2 datasets include order\_filled, orders\_matched, user\_balances, and user\_positions \cite{goldsky2026polymarket}. The participant-side order\_filled representation may contain two valid wallet perspectives for one economic match. Both are retained for wallet modelling, whereas orders\_matched or a reconstructed match table is used for market-wide volume to prevent double counting. A transaction hash is also insufficient as a unique key because one Polygon transaction may contain several logs; the canonical raw-log key is chain ID, transaction hash, log index, and contract address.
+
+\begin{figure}[H]
+\centering
+\caption{Provenance-first data architecture joining official platform interfaces, indexed on-chain events and raw Polygon verification.}
+\end{figure}
+
+\subsubsection{Contract, token and account-wallet model}
+Polymarket outcome positions are ERC-1155 Conditional Tokens. Collateral may be split into a complete YES/NO set, complementary outcomes may be merged back into collateral, and winning tokens may be redeemed after resolution \cite{polymarket2026positions}. Exchange fills, token transfers, PositionSplit, PositionsMerge, PayoutRedemption and resolution events therefore expose information unavailable from conventional price series: public outcome-token balances, counterparty relationships, smart-contract interactions, block ordering and verifiable settlement provenance. EventLens will keep a versioned registry of official Exchange, Conditional Token, collateral and resolution contracts rather than hard-code addresses throughout the application \cite{polymarket2026contracts}.
+
+The analysis unit is the public account or funding wallet, not a presumed person. Polymarket supports externally owned accounts and several proxy, Safe or contract-wallet configurations; the signer or relayer may differ from the address that holds funds \cite{polymarket2026wallets}. The platform does not document automatic per-trade address rotation. Activity under the same observed account wallet may therefore be linked, while the report explicitly acknowledges that one person can control several wallets and that an address reveals neither verified identity nor off-platform hedges.
+
+Polymarket CLOB V2 went live on 28 April 2026 with new Exchange contracts and pUSD collateral. Legacy V1 orders and SDK assumptions are no longer valid \cite{polymarket2026v2}. Goldsky also warns that old public subgraphs may be incomplete or incorrect after the migration \cite{goldsky2026polymarket}. Every raw record will consequently retain protocol version, dataset version, contract address, collateral token, block number, source name and collection time; pre- and post-migration observations will be reported separately in robustness checks.
+
+\subsubsection{Scoped acquisition and reconciliation protocol}
+
+\begin{table}[H]
+\centering
+\caption{Proposed bounded data-acquisition and reconciliation protocol.}
+\begin{tabularx}{\textwidth}{p{3.5cm}p{6cm}p{4.5cm}}
+\toprule
+\textbf{Stage} & \textbf{Procedure} & \textbf{Required control} \\
+\midrule
+1. Freeze universe & Select one event family and bounded resolved/unresolved markets; snapshot Gamma metadata & Predefined inclusion rule and event-market-condition-token registry \\
+2. Capture market state & Poll midpoint, spread and depth; preserve forward WebSocket updates & Source timestamp, observed-at time, request hash and gap monitoring \\
+3. Targeted backfill & Filter Goldsky V2 order\_filled by selected block ranges; derive candidate wallets & No universal user\_positions mirror; checkpointed and idempotent ingestion \\
+4. Build wallet history & Request candidate-wallet trades with both maker and taker sides; collect split/merge/redeem evidence & Recompute positions and cost basis where feasible; flag derived API P\&L \\
+5. Verify chain & Decode a stratified sample of Polygon receipts and whitelisted contract logs & Reconcile wallet, token, side, amount, transaction and finalised block \\
+6. Materialise cut-offs & Create feature views for 20-, 5- and 1-day historical prediction times & Every field must satisfy available\_at $\leq$ cutoff; later corrections create a new version \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+The storage design will preserve the identifier chain event\_id $\rightarrow$ market\_id $\rightarrow$ condition\_id $\rightarrow$ outcome token\_id $\rightarrow$ order\_hash $\rightarrow$ transaction\_hash $\rightarrow$ log\_index. Immutable raw files will be accompanied by source-run metadata and SHA-256 hashes; relational tables will separately hold versioned metadata, book snapshots, chain logs, participant fills, economic matches, wallet positions, resolutions and reconciliation results. Replaying a source batch must create no additional canonical records.
+
+\noindent \textbf{FEASIBILITY BOUNDARY}
+
+A self-hosted Polygon node is unnecessary and outside the MVP. Public or hosted JSON-RPC plus a targeted Goldsky pipeline is sufficient. Goldsky's starter access is a one-time credit rather than an indefinite free tier, and its full user\_positions history may reach approximately 1.2 billion entities; the project will therefore backfill only selected markets, block ranges and candidate wallets.
+
+\subsubsection{Raw and calibrated market probability}
+The initial probability will use the YES order-book midpoint rather than the last trade. When both outcome books are available, the midpoints will be normalised to reduce small deviations from the fully collateralised YES-plus-NO value. Spread, depth imbalance, liquidity, and time remaining will remain explicit quality features rather than being hidden inside the probability.
+
+\begin{equation}
+p_{\text{raw}} = \frac{\text{mid\_YES}}{\text{mid\_YES} + \text{mid\_NO}}
+\end{equation}
+
+Ridge logistic calibration will initially map raw log-odds to historical observed frequencies because it is stable and interpretable with a moderate independent-event sample. Beta calibration is a robustness alternative \cite{kull2017beta}. Non-parametric isotonic calibration will be used only if the final sample is sufficiently large, because small calibration sets can overfit. Horizon and event category enter through partial pooling rather than separate unrestricted models when data are sparse.
+
+\subsubsection{Smart-wallet definition and eligibility}
+
+\noindent \textbf{OPERATIONAL DEFINITION}
+
+A smart wallet is an observed Polymarket account address whose past, category-conditioned decisions show persistent out-of-sample information value beyond the contemporaneous market probability and chance. It is not necessarily a person, a large wallet or an insider.
+
+Historical skill and a current anomaly are deliberately separated. A newly created wallet placing one unusually large position is labelled fresh-wallet anomaly, not smart wallet. Wallet size measures observed Polymarket capital rather than total wealth, and profit from liquidity provision does not by itself demonstrate event-forecasting skill.
+
+\begin{table}[H]
+\centering
+\caption{Separation of historical wallet skill from contemporaneous anomaly signals.}
+\begin{tabularx}{\textwidth}{p{3.5cm}p{4.5cm}p{5cm}}
+\toprule
+\textbf{Signal} & \textbf{Question answered} & \textbf{Information permitted at cutoff $t$} \\
+\midrule
+Wallet skill $Q(w,c,t)$ & Has address $w$ previously demonstrated skill in category $c$? & Only markets resolved and observable before $t$ \\
+Current anomaly $A(w,m,t)$ & Is present activity unusually large, concentrated, fresh or timely? & Only trades, balances and book state observable by $t$ \\
+Smart-wallet flow $SWF(m,t)$ & Are established category-relevant wallets leaning YES or NO? & Past skill multiplied by present direction and capped conviction \\
+Fresh-wallet flow $FWF(m,t)$ & Are new or unproven addresses taking unusual one-sided exposure? & Kept separate from evidence of historical skill \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Repeated fills will be aggregated into one wallet–event decision. Let $V_{\text{YES}}$ and $V_{\text{NO}}$ denote marked net exposure to the two outcomes at the historical cutoff. Direction and conviction are defined below so a market maker holding both sides is not mistaken for a directional forecaster.
+
+\begin{equation}
+d_{w,m,t} = \operatorname{sign}(V_{\text{YES},w,m,t} - V_{\text{NO},w,m,t})
+\end{equation}
+
+\begin{equation}
+c_{w,m,t} = \frac{|V_{\text{YES},w,m,t} - V_{\text{NO},w,m,t}|}{V_{\text{YES},w,m,t} + V_{\text{NO},w,m,t} + \varepsilon}
+\end{equation}
+
+A provisional established-wallet label requires at least ten earlier independent resolved markets and three independent resolution dates. Five to nine observations may be displayed as provisional, and 5/10/20 thresholds will be tested in sensitivity analysis. Suspected self-counterparty or wash activity will be excluded or flagged; near-certain late entries will be excluded or downweighted; and category expertise will remain pooled toward global skill unless history in that category is adequate. All gates will be fixed using training and validation data before the final test interval is opened.
+
+\subsubsection{Rule-based expertise score}
+Three performance concepts remain distinguishable. Resolution edge rewards a correct side when the market regarded that side as unlikely; short-horizon markout measures whether the trade preceded price discovery; and net P\&L after fees measures economic performance. Breadth and persistence prevent one market cluster from creating an apparent expert. Brier score is not calculated directly from a buy/sell flag because a trade direction is not a stated subjective probability.
+
+\begin{equation}
+E_{w,m} = d_{w,m} (Y_m - p_{m,\text{entry}})
+\end{equation}
+
+\begin{equation}
+M_{w,m,\Delta} = d_{w,m} (p_{m,\text{entry}+\Delta} - p_{m,\text{entry}}) - \text{costs}_{w,m}
+\end{equation}
+
+\begin{equation}
+Q_{\text{rule}}(w,c,t) = \lambda_{w,c,t} \left[0.35z_E + 0.25z_M + 0.20z_R + 0.10z_B + 0.10z_P\right]
+\end{equation}
+
+\begin{equation}
+\lambda_{w,c,t} = \frac{n_{\text{eff}}}{n_{\text{eff}} + \kappa}
+\end{equation}
+
+The displayed coefficients are a transparent preregistered baseline rather than claimed optimal weights: $E$, $M$, $R$, $B$ and $P$ denote robustly standardised resolution edge, markout, net return, breadth and persistence within category, horizon and time-to-resolution. The shrinkage factor $\lambda$ pulls limited histories toward zero. $\kappa$ and any time-decay parameter are tuned within training/validation folds, and all five components are ablated individually. The score is always shown with effective sample size and uncertainty rather than as a context-free leaderboard.
+
+\subsubsection{Current wallet-flow and anomaly features}
+A current wallet contribution combines direction, conviction, past-only category skill, and a capped size/anomaly weight. Size will be measured relative to the market's available depth, the wallet's own historical stake distribution and an observed-capital proxy; raw dollars alone are not sufficient. Exponential decay represents freshness, and a per-wallet cap prevents one whale from determining the result.
+
+\begin{equation}
+g_{w,m,t} = d_{w,m,t} \cdot c_{w,m,t} \cdot Q_{w,c,t} \cdot a_{w,m,t}
+\end{equation}
+
+\begin{equation}
+SWF_{m,t} = \frac{\sum_w g_{w,m,t}}{\sum_w |Q_{w,c,t} a_{w,m,t}| + \varepsilon}
+\end{equation}
+
+\begin{table}[H]
+\centering
+\caption{Candidate smart-wallet and unusual-flow features available at the forecast cutoff.}
+\begin{tabularx}{\textwidth}{p{3.5cm}p{4.5cm}p{5cm}}
+\toprule
+\textbf{Feature family} & \textbf{Examples} & \textbf{Reason for inclusion} \\
+\midrule
+Market activity and microstructure & Signed 1 h/6 h/24 h volume, median/MAD anomaly, maker/taker role, spread and depth & Detect event-specific pressure and separate active demand from passive liquidity \\
+Wallet conviction and timing & Stake percentile, size/depth, observed-capital proxy, freshness and time to resolution & Compare heterogeneous wallets, cap whales and control late-entry inflation \\
+Historical expertise & Category score, effective sample, markout, independent markets, persistence and $1-$HHI & Distinguish repeatable category skill from one successful event cluster \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Goldsky participant-side fills are used to reconstruct wallet decisions, while an economic-match representation is used for market volume. Anonymous aggregate signed flow, unusual volume, established smart-wallet flow and fresh-wallet anomaly flow remain separate variables so ablation tests can isolate whether persistent public address identity adds value beyond conventional price and volume.
+
+\subsubsection{Trainable wallet weights and adjusted probability}
+The first learned wallet model will be a regularised or hierarchical logistic model. For the side chosen by a wallet, the contemporaneous calibrated probability enters as a fixed offset; a global wallet effect $u_w$ and category-specific effect $v_{w,c}$ therefore estimate performance beyond the public market baseline after controlling for liquidity, timing, conviction and maker/taker status. Partial pooling automatically shrinks sparse wallets and categories.
+
+\begin{equation}
+\operatorname{logit} P(C_{w,m}=1) = \operatorname{logit}(q_{w,m}) + u_w + v_{w,c} + \gamma^\top x_{w,m}
+\end{equation}
+
+A frequentist mixed-effects or empirical-Bayes approximation is sufficient for the MVP; a fully Bayesian hierarchy is a stretch goal. Wallet ranking will also be tested against a sign-randomisation null that preserves each wallet's market selection, timing and stake while randomly reversing event-level direction. Multiple-wallet tests require false-discovery-rate control.
+
+The event-level adjusted probability then uses the calibrated market log-odds as an offset. The primary ridge-logistic specification is intentionally limited to three to five aggregated signals; a boosted tree is only a secondary benchmark if several hundred independent resolved events are available.
+
+\begin{equation}
+\operatorname{logit}(p_{\text{adj}}) = \operatorname{logit}(p_{\text{cal}}) + \beta_1 AF + \beta_2 UV + \beta_3 SWF + \beta_4 FWF + \beta_5 (SWF \times \text{Illiquidity})
+\end{equation}
+
+$AF$ denotes anonymous signed flow, $UV$ unusual market volume, $SWF$ established smart-wallet flow and $FWF$ fresh-wallet anomaly flow. $\exp(\beta_3)$ is the multiplicative change in event odds for a one-unit increase in smart-wallet flow, conditional on the other variables. All coefficients, scaling, thresholds and interactions are learned inside chronological training folds. The primary scientific comparison is the identity-aware model against a model containing the same market price, liquidity and anonymous flow but no persistent wallet identifier.
+
+\subsubsection{Event relevance and asset-response mapping}
+Event relevance is portfolio-specific. A high-volume market is not automatically material to a SPY/BTC portfolio. Deterministic retrieval first filters markets by category, active horizon, liquidity and named portfolio entities. A language model may propose a transmission mechanism and candidate sign, but the numerical exposure must be estimated from historical event windows or entered as a reviewed stress assumption.
+
+The first controlled experiment will use one repeatable event family. Markets will be assigned to a controlled taxonomy; announcement, observation and resolution times will be recorded; asset returns and probability changes will be aligned; and category-level event effects will be estimated with regularisation and regime controls. Sparse event-asset coefficients will be shrunk toward zero. Each mapping retains its sample size, confidence interval, historical regime coverage and human-approval status. This mapping is expected to be the largest modelling uncertainty.
+
+Part of an event is already reflected in asset prices. EventLens will therefore estimate a return response to surprise rather than treating the full binary outcome as new information. Let $q_{\text{raw}}$ be the public probability at the observation time, $E$ the realised outcome, $\beta_e$ the asset exposure to the event surprise, and $Z$ conventional controls.
+
+\begin{equation}
+R_{t,H} = \mu_{\text{base}} + \beta_e (E_e - q_{\text{raw},e,t}) + \Gamma Z_t + \varepsilon_{t,H}
+\end{equation}
+
+\begin{equation}
+\mathbb{E}_t[R_{t,H}] = \mu_{\text{base}} + \beta_e (p_{\text{adj},e,t} - q_{\text{raw},e,t}) + \Gamma Z_t
+\end{equation}
+
+If $p_{\text{adj}}$ equals $q_{\text{raw}}$, EventLens does not manufacture an additional directional return. If the adjusted probability differs, the expected-return change depends on an independently estimated $\beta_e$. When the event resolves after the requested risk horizon, the system will model the expected change in event probability over that horizon rather than assume immediate resolution. Multiple correlated events will not be multiplied as independent; the MVP uses one primary event or a small reviewed scenario tree.
+
+\subsubsection{Primary route: portfolio return and tail risk}
+For an event that may resolve within horizon $H$, EventLens estimates conditional multivariate asset-return distributions for event and non-event states. Matched historical event windows, hierarchical category effects, and regime controls will be used where possible. Empirical block bootstrap or multivariate-$t$ residuals are preferred to imposing normal returns. With adjusted probability $p$, the mixture mean and covariance follow the laws of total expectation and total covariance.
+
+\begin{equation}
+\mu_{\text{mix}} = p \mu_E + (1 - p) \mu_N
+\end{equation}
+
+\begin{equation}
+\Sigma_{\text{mix}} = p\Sigma_E + (1 - p)\Sigma_N + p(1 - p)(\mu_E - \mu_N)(\mu_E - \mu_N)^\top
+\end{equation}
+
+The final between-state term is essential: uncertainty about which return regime will occur can create portfolio risk even when each state is internally stable. It is largest near $p = 0.5$. Consequently, a higher adverse-event probability does not mechanically imply higher terminal-return variance; expected loss and CVaR may worsen while state uncertainty falls.
+
+\begin{equation}
+R_P = w^\top R; \quad \mu_P = w^\top \mu_{\text{mix}}; \quad \sigma_P = \sqrt{w^\top \Sigma_{\text{mix}} w}
+\end{equation}
+
+\begin{equation}
+\text{VaR}_\alpha(L) = F_L^{-1}(\alpha); \quad \text{ES}_\alpha(L) = \mathbb{E}[L \mid L \geq \text{VaR}_\alpha], \quad \text{where } L = -R_P
+\end{equation}
+
+The deterministic engine will draw weighted event/non-event samples and calculate expected return, terminal forecast volatility, scenario loss, VaR, expected shortfall/CVaR, loss-threshold probability and holding-level contribution. It will show event-YES, event-NO, adjusted-probability-weighted and baseline distributions, together with lower/central/upper probability and event-response sensitivities. Maximum drawdown is reported only from a simulated or historical return path, not inferred from a terminal distribution.
+
+A calculated relevance score, defined as the change in portfolio expected shortfall when the event layer is included, will rank events after candidate retrieval. The engine may compare a bounded action set—keep allocation, reduce SPY, reduce BTC or increase cash—or solve a no-leverage, turnover-penalised ES problem. The language model explains the tool-produced trade-off; it cannot invent a new allocation or override constraints. Portfolio stress analysis is the primary assessed application because it can be evaluated without a costly historical options dataset.
+
+\subsubsection{Volatility Forecasting \& Delta-Hedged Trading Strategy Extension}
+As a key downstream application of the adjusted probabilities, EventLens allows users to configure and analyze recurring event series (e.g., FOMC rate decisions, CPI releases, election cycles). For any selected recurring series, the platform dynamically locks onto the closest-to-expiry market contract to maintain temporal and horizon consistency.
+
+The feature engineering pipeline extracts $p_{\text{adj}}$, probability spreads ($p_{\text{adj}}-p_{\text{raw}}$), confidence bands, and probability jump/surprise signals ($p_{\text{adj}}$ leading up to cut-off) to serve as exogenous inputs alongside macro regime indicators and option-implied volatility.
+
+These features will be passed into a realized volatility forecasting model that fits on the history and produces the future realized volatility forecast. Below are some of the candidate forecasting models that we would further explore:
+
+\begin{itemize}
+    \item \textbf{HAR-RV}: Heterogeneous Autoregressive model augmented with exogenous event-probability features.
+    \item \textbf{GARCH-X}: Generalized Autoregressive Conditional Heteroskedasticity with exogenous event signals.
+    \item \textbf{Machine Learning Baselines}: Non-linear ensemble models (e.g., XGBoost, Random Forest).
+\end{itemize}
+
+To demonstrate practical utility, EventLens executes a delta-hedged volatility backtest comparing the model's forecasted realized volatility against current market option IV. When an implied-versus-forecasted variance gap is identified, the system simulates a delta-neutral paper trade to harvest the variance risk premium, displaying backtested Sharpe ratios, maximum drawdowns, and trade histories directly within the research dashboard.
+
+\subsubsection{LLM research-agent integration}
+The language model is a controlled research interface and workflow orchestrator; it is not the probability model, wallet-scoring model, risk engine, volatility calculator, optimiser or execution system. It parses the user's portfolio and horizon, retrieves candidate events, proposes structured event–asset hypotheses, requests deterministic calculations, and explains results and bounded paper alternatives.
+
+\begin{table}[H]
+\centering
+\caption{Role boundary between the LLM, deterministic services and human review.}
+\begin{tabularx}{\textwidth}{p{3.5cm}p{5cm}p{5cm}}
+\toprule
+\textbf{Agent function} & \textbf{Permitted operation} & \textbf{Deterministic or human control} \\
+\midrule
+Event mapping & Retrieve and rank candidates; propose asset, sign, channel and horizon & Historical estimator validates magnitude; unsupported links abstain \\
+Parameter tuning & Propose predefined search ranges, interactions and sensitivity runs & Chronological validation selects parameters; frozen test data remain hidden \\
+Strategy selection & Choose among approved portfolio actions or volatility templates & Risk engine returns feasible actions and costs; no new free-form trades \\
+Risk interpretation & Explain adjusted probability, VaR, CVaR, attribution and assumptions & Every number must match a versioned tool output \\
+Rebalancing support & Translate user goals into typed bounds and compare alternatives & Optimiser enforces weights, turnover, no leverage and paper-only status \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Proposed typed tools include find\_relevant\_events, get\_event\_definition, get\_onchain\_evidence, get\_wallet\_signal, get\_adjusted\_probability, estimate\_event\_asset\_mapping, run\_portfolio\_scenarios, calculate\_var\_es, compare\_allowed\_allocations, forecast\_realised\_variance and backtest\_volatility\_template. Each response contains value and unit, as-of time, data-quality flags, confidence interval, source identifiers, relevant Polygon block/transaction/log identifiers, model and scenario versions, and a reproducible run ID.
+
+The LLM may recommend a model family or parameter search range, but it may not hand-edit coefficients after observing test outcomes, change wallet labels, promote a production model, invent missing scenario numbers, calculate VaR in free text, identify an address as an insider, or execute trades. Read-only typed tools, schema validation, point-in-time retrieval, mandatory evidence IDs, unit/horizon checks, prompt-injection tests, automatic abstention and immutable tool traces enforce these boundaries \cite{lewis2020retrieval, yao2023react, nist2024ai}.
+
+Every answer will separate verified facts, model estimates, scenario assumptions, bounded alternatives, and uncertainty. Agent evaluation compares a static dashboard, direct LLM, retrieval-grounded LLM, and full tool-grounded agent. Metrics include event-retrieval Precision@k/Recall@k, numerical-claim agreement, citation coverage, unsupported-claim rate, constraint violations, tool success, appropriate abstention, repeated-run stability, prompt-injection resistance, latency, cost and user comprehension of VaR/CVaR.
+
+\subsection{Implementation}
+
+\subsubsection{Preferred technology stack}
+
+\begin{table}[H]
+\centering
+\caption{Preferred implementation stack for the MVP.}
+\begin{tabularx}{\textwidth}{p{3.5cm}p{4.5cm}p{5cm}}
+\toprule
+\textbf{Component} & \textbf{Preferred implementation} & \textbf{Purpose} \\
+\midrule
+Collectors & Python, HTTP/WebSocket clients & Scheduled snapshots and live feeds \\
+Processing & Polars/Pandas, NumPy & Point-in-time features and quality checks \\
+Models & scikit-learn, statsmodels, arch & Forecasting and probability models \\
+Blockchain & Goldsky Turbo V2, Polygon RPC, web3.py & Targeted indexed history and sampled raw-chain verification \\
+Storage & PostgreSQL/TimescaleDB + Parquet & Structured state, raw snapshots and research runs \\
+Backend & FastAPI + Pydantic & Typed research and risk tools \\
+Frontend & Next.js/React + TypeScript & Research dashboard and scenario interface \\
+Agent & Tool-calling LLM with structured output & Retrieval, orchestration and explanation \\
+Deployment & Docker Compose; modest cloud VM & Reproducible shared demonstration \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsubsection{Data pipeline}
+\begin{enumerate}
+    \item Ingest event metadata and resolution rules, assigning stable internal event and market identifiers.
+    \item Collect fixed-interval market snapshots and forward WebSocket updates, preserving source and observation timestamps.
+    \item Backfill bounded Goldsky Turbo V2 fill records by selected block range; derive candidate wallets rather than mirror the complete positions dataset.
+    \item Aggregate participant fills into wallet–event decisions, economic matches and historical position views; verify a stratified sample through Polygon RPC.
+    \item Join asset returns and conventional baselines using market calendars and horizon-aligned timestamps.
+    \item Store every model run, feature version, scenario version, and agent tool trace for reproducibility.
+\end{enumerate}
+
+\subsubsection{Modelling and risk services}
+A batch research service will fit the calibrator, rule baseline, mixed-effects wallet model, adjusted-probability model, event-response mapping and walk-forward evaluations. A separate inference service exposes only frozen model versions. The scenario/risk service accepts a portfolio, adjusted probability, versioned event/non-event assumptions and horizon, then returns sampled distributions and risk metrics. The optional volatility service uses a distinct realised-variance target and is disabled unless the data-feasibility gate passes.
+
+\subsubsection{Interface and evidence layer}
+The frontend will display event definition, raw and adjusted probability, liquidity and freshness warnings, wallet-signal decomposition, scenario assumptions, portfolio impacts, and bounded paper alternatives. Saved reports will contain sufficient identifiers to reproduce the displayed result. A methodology page will explain each metric and distinguish facts, estimates, assumptions, and uncertainty.
+
+\subsubsection{Agent tool gateway and audit record}
+FastAPI and Pydantic schemas will expose read-only analysis tools to the language model. The gateway validates units, probability bounds, portfolio weights, horizon alignment, timestamps and model versions before returning data. Prompts, tool arguments, tool outputs, evidence identifiers, validation results and the final explanation are stored under an immutable research-run identifier. No signer, exchange API key or live order endpoint is present in the agent environment.
+
+\subsection{Testing}
+
+\subsubsection{Data Pipeline Tests}
+\begin{itemize}
+    \item Schema validation for all data sources, including temporal ordering and referential integrity checks; double-counting prevention verified by confirming participant fills sum correctly against economic matches.
+    \item On-chain reconciliation through stratified sampling of ingested records against Polygon RPC receipts, with all mismatches reported; balance reconstruction for selected wallets using on-chain events.
+    \item Resilience testing covering rate-limit handling, checkpoint recovery, partial failure isolation, and deterministic reprocessing of identical raw inputs.
+\end{itemize}
+
+\subsubsection{Wallet Signal Tests}
+\begin{itemize}
+    \item Point-in-time compliance ensuring every feature and wallet score is computable from pre-cutoff information only; event-grouped chronological cross-validation preventing leakage between folds.
+    \item Unit testing of all scoring functions including resolution edge, markout, net return, breadth, persistence, and shrinkage; randomisation controls through direction flips, identity shuffles, and negative-category tests to confirm skill signals are not spurious.
+    \item Reproducibility verification for walk-forward runs under frozen configuration and seeds.
+\end{itemize}
+
+\subsubsection{Risk Engine Tests}
+\begin{itemize}
+    \item Mixture distribution validation confirming event-conditioned returns combine correctly into portfolio distributions; boundary case handling for missing assets, extreme losses, zero variance, and singular covariance scenarios.
+    \item VaR and CVaR verification against reference cases with monotonicity checks; realised variance differentiation ensuring path variance excludes the terminal between-state term.
+    \item Horizon and constraint enforcement rejecting mismatched timelines and enforcing portfolio weights, leverage limits, position limits, and transaction costs.
+\end{itemize}
+
+\subsubsection{System Interface and Agent Tests}
+\begin{itemize}
+    \item API contract validation covering required fields, data types, bounds, and error handling; data lineage confirming every displayed number traces to a versioned tool output with run identifier.
+    \item Security testing against prompt injection and tool-policy bypass attempts; stability verification under repeated queries.
+    \item End-to-end user journey testing from event lookup through scenario generation to rebalancing comparison.
+\end{itemize}
+
+\subsection{Evaluation}
+
+\subsubsection{Data Foundation and Pipeline}
+\begin{itemize}
+    \item Verify reliable ingestion and joining of Polymarket market states, wallet activity, and Polygon settlement records; confirm point-in-time dataset preserves temporal ordering and source provenance.
+    \item Validate blockchain reconciliation quality through minimal mismatch rates; test idempotency ensuring repeated ingestion of identical raw data yields identical outputs.
+    \item Confirm double-counting prevention in both wallet modelling and market-wide aggregation.
+\end{itemize}
+
+\textbf{Outcome Check:} A reproducible, versioned dataset with documented coverage and reconciliation quality.
+
+\subsubsection{Wallet Signal Generation}
+\begin{itemize}
+    \item Validate smart-wallet identification against baseline definitions; compare rule-based scores against learned hierarchical weights for consistency and incremental value.
+    \item Evaluate identity-aware models against identity-blind baselines to determine whether wallet-address flow adds information beyond anonymous aggregate flow.
+    \item Test shrinkage behaviour and current wallet-flow feature computation; run randomisation controls to confirm skill signals are not spurious.
+\end{itemize}
+
+\textbf{Outcome Check:} A leakage-safe wallet methodology demonstrably improving upon anonymous flow baselines.
+
+\subsubsection{Transfer Wallet Knowledge to Risk Knowledge}
+\begin{itemize}
+    \item Verify adjusted probabilities improve upon raw and calibrated probabilities out-of-sample; compare models with and without wallet-address information to isolate incremental value at both probability and risk forecast levels.
+    \item Confirm event-to-asset mapping (SPY, BTC) produces defensible conditional return distributions; validate portfolio scenario analysis yields sensible outputs with clear sensitivity ranges.
+    \item Test VaR and CVaR diagnostics against expected properties; ensure risk forecasts from identity-aware models show measurable improvement over identity-blind models.
+\end{itemize}
+
+\textbf{Outcome Check:} A deterministic risk engine transforming wallet-informed probabilities into conditioned volatility, VaR, and CVaR.
+
+\subsubsection{System Interface and User Experience}
+\begin{itemize}
+    \item Validate dashboard displays including event definition, raw/adjusted probability, liquidity warnings, wallet signal decomposition, and portfolio impacts.
+    \item Confirm every number traces to a versioned tool output with run\_id and timestamp; test saved reports contain sufficient identifiers to reproduce results.
+    \item Verify methodology page distinguishes facts, estimates, assumptions, and uncertainty; assess usability through typical user journeys.
+\end{itemize}
+
+\textbf{Outcome Check:} An intuitive, evidence-grounded interface for users.
+
+\subsubsection{LLM and Agent Orchestration}
+\begin{itemize}
+    \item Evaluate event suggestion capability: agent correctly interprets user-supplied portfolio or index and retrieves relevant Polymarket events; assess plausibility of proposed event-to-asset transmission channels; measure unsupported-link abstention and ranking precision.
+    \item Assess dashboard summarisation: agent accurately reads and interprets dashboard outputs; summaries clearly distinguish facts, model estimates, scenario assumptions, and uncertainty; verify every cited number references a tool output and run ID.
+\end{itemize}
+
+\textbf{Outcome Check:} A deployed, tool-grounded research agent that retrieves and explains results without hallucination or unauthorised actions.
+
+\subsubsection{Success Criteria}
+The project is successful if it delivers:
+\begin{itemize}
+    \item A reproducible point-in-time dataset with documented coverage and reconciliation quality
+    \item A leakage-safe wallet methodology with statistical comparison to identity-blind baselines
+    \item A defensible event-to-asset mapping with reviewed scenarios and sensitivity analysis
+    \item A working deterministic risk engine integrated with a research interface
+    \item Transparent reporting of positive, negative, and null findings
+\end{itemize}
+
+\textbf{Profitability is not a required criterion; a rigorous null result is academically valuable.}
+
+\newpage
+
+\section{Project Planning}
+
+\subsection{Division of Work}
+
+\begin{table}[H]
+\centering
+\caption{Proposed work allocation; names require team confirmation.}
+\begin{tabularx}{\textwidth}{p{3.5cm}p{3.5cm}p{5.5cm}p{4cm}}
+\toprule
+\textbf{Track} & \textbf{Provisional owner} & \textbf{Responsibilities} & \textbf{Principal deliverable} \\
+\midrule
+Data and blockchain & Team confirmation & APIs, Goldsky, Polygon verification, schema and quality & Versioned dataset and reconciliation report \\
+Probability modelling & Team confirmation & Wallet scoring, calibration, flow model and ablations & Adjusted-probability model and evaluation \\
+Scenario and risk & Team confirmation & Event taxonomy, mapping, volatility, VaR/CVaR and backtest & Risk engine and application study \\
+Product and agent & Team confirmation & Backend/frontend, evidence tools, interface and deployment & Integrated dashboard and reproducible demo \\
+Academic outputs & All members & Literature, protocol, reports, presentation and review & Proposal, progress report and final submission \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Gantt Chart}
+
+\begin{table}[H]
+\centering
+\caption{Draft 24-week Gantt schedule; official course dates remain to be inserted.}
+\begin{tabularx}{\textwidth}{p{5cm}|c|c|c|c|c|c|}
+\toprule
+\textbf{Workstream} & \textbf{Aug} & \textbf{Sep} & \textbf{Oct} & \textbf{Nov} & \textbf{Dec} & \textbf{Jan} & \textbf{Feb} \\
+\midrule
+Scope, literature and proposal & \checkmark & \checkmark & & & & & \\
+Feasibility and data audit & \checkmark & \checkmark & & & & & \\
+Data pipeline and reconciliation & & \checkmark & \checkmark & & & & \\
+Wallet and probability models & & & & \checkmark & \checkmark & & \\
+Event mapping and risk engine & & & & & & \checkmark & \checkmark \\
+Platform and research agent & & & & & & & \checkmark \\
+Walk-forward evaluation & & & & & & & \checkmark \\
+Final report and presentation & & & & & & & \checkmark \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Milestones}
+
+\begin{table}[H]
+\centering
+\caption{Major project milestones and the evidence required at each gate.}
+\begin{tabularx}{\textwidth}{p{2.5cm}p{5cm}p{6cm}}
+\toprule
+\textbf{Week} & \textbf{Milestone} & \textbf{Go/no-go evidence} \\
+\midrule
+2 & Feasibility decision & Recoverable market/wallet history and frozen primary event family \\
+7 & Data foundation & Reconciled point-in-time dataset and quality report \\
+12 & Probability milestone & Raw, anonymous-flow and smart-wallet model comparison \\
+18 & Risk milestone & Event mapping and deterministic forecast-volatility/risk engine \\
+22 & Integrated evaluation & Walk-forward results and complete demonstration \\
+24 & Submission & Final report, presentation and reproducibility package \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\newpage
+
+\section{Hardware and Software Requirements}
+
+\subsection{Hardware Requirements}
+
+\begin{table}[H]
+\centering
+\caption{Hardware requirements for development and demonstration.}
+\begin{tabularx}{\textwidth}{p{3cm}p{3.5cm}p{3.5cm}p{4cm}}
+\toprule
+\textbf{Resource} & \textbf{Minimum} & \textbf{Recommended} & \textbf{Rationale} \\
+\midrule
+Developer computer & 4-core CPU, 8 GB RAM & 8-core CPU, 16 GB RAM & Local database, processing and application stack \\
+Storage & 30 GB free & 100 GB+ SSD free & Snapshots, Parquet files, database and containers \\
+GPU & Not required & Optional cloud GPU for justified extension & Initial models and API-hosted LLM require no local training \\
+Network & Stable broadband & Monitored broadband connection & REST, WebSocket, RPC and model access \\
+Deployment & Local Docker & 2–4 vCPU, 8–16 GB cloud VM & Shared collectors and demonstration \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Running a Polygon node is outside the MVP. Public or hosted RPC endpoints and indexed Goldsky datasets are sufficient for initial research and far less resource-intensive. The team will monitor free-tier and rate-limit changes before final deployment.
+
+\subsection{Software Requirements}
+
+\begin{table}[H]
+\centering
+\caption{Software and external-service requirements.}
+\begin{tabularx}{\textwidth}{p{3.5cm}p{4.5cm}p{5.5cm}}
+\toprule
+\textbf{Category} & \textbf{Software/service} & \textbf{Purpose} \\
+\midrule
+Collaboration & Git, issue tracker and shared documentation & Version control, task ownership and reproducibility \\
+Runtime & Python 3.x and Node.js LTS & Quantitative backend and frontend \\
+Data & PostgreSQL/TimescaleDB, Parquet and Polars & Structured and columnar research storage \\
+Web3 & Polymarket APIs, Goldsky Turbo V2 and Polygon RPC & Market, wallet and settlement evidence \\
+Modelling & NumPy, SciPy, scikit-learn and statsmodels & Calibration, forecasting and testing \\
+Application & FastAPI, Pydantic, Next.js/React and TypeScript & Typed services and interface \\
+Agent & Tool-calling LLM API & Evidence retrieval and explanation \\
+Quality & Pytest, frontend tests and Playwright & Unit, integration and end-to-end verification \\
+Deployment & Docker and Docker Compose & Consistent local and hosted environments \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\newpage
+
+\section{References}
+
+\bibliographystyle{plain}
+\begin{thebibliography}{99}
+
+\bibitem{wolfers2004prediction}
+J. Wolfers and E. Zitzewitz, ``Prediction Markets,'' \textit{Journal of Economic Perspectives}, vol. 18, no. 2, pp. 107–126, 2004.
+
+\bibitem{wolfers2006interpreting}
+J. Wolfers and E. Zitzewitz, ``Interpreting Prediction Market Prices as Probabilities,'' NBER Working Paper 12200, 2006.
+
+\bibitem{brier1950verification}
+G. W. Brier, ``Verification of Forecasts Expressed in Terms of Probability,'' \textit{Monthly Weather Review}, vol. 78, no. 1, pp. 1–3, 1950.
+
+\bibitem{buckley2024blockchain}
+P. Buckley, ``Blockchain Based Prediction Markets,'' \textit{Journal of Prediction Markets}, vol. 18, no. 3, 2024.
+
+\bibitem{victor2020address}
+F. Victor, ``Address Clustering Heuristics for Ethereum,'' in \textit{Financial Cryptography and Data Security}, pp. 617–633, 2020.
+
+\bibitem{mackinlay1997event}
+A. C. MacKinlay, ``Event Studies in Economics and Finance,'' \textit{Journal of Economic Literature}, vol. 35, no. 1, pp. 13–39, 1997.
+
+\bibitem{wolfers2018standard}
+J. Wolfers and E. Zitzewitz, ``The `Standard Error' of Event Studies: Lessons from the 2016 Election,'' \textit{AEA Papers and Proceedings}, vol. 108, pp. 584–589, 2018.
+
+\bibitem{rockafellar2000optimization}
+R. T. Rockafellar and S. Uryasev, ``Optimization of Conditional Value-at-Risk,'' \textit{Journal of Risk}, vol. 2, no. 3, pp. 21–41, 2000.
+
+\bibitem{carr2009variance}
+P. Carr and L. Wu, ``Variance Risk Premiums,'' \textit{Review of Financial Studies}, vol. 22, no. 3, pp. 1311–1341, 2009.
+
+\bibitem{cboe2025vix}
+Cboe Global Indices, ``Cboe Volatility Index Methodology,'' 2025.
+
+\bibitem{li2024cryptotrade}
+Y. Li et al., ``CryptoTrade: A Reflective LLM-based Agent to Guide Zero-shot Cryptocurrency Trading,'' in \textit{Proceedings of EMNLP}, 2024.
+
+\bibitem{yu2024large}
+Y. Yu et al., ``Large Language Model Agent in Financial Trading: A Survey,'' arXiv:2408.06361, 2024.
+
+\bibitem{polymarket2026order}
+Polymarket, ``Order Lifecycle,'' accessed 27 August 2026.
+
+\bibitem{polymarket2026wallets}
+Polymarket, ``Wallets and Authentication,'' accessed 27 August 2026.
+
+\bibitem{polymarket2026positions}
+Polymarket, ``Positions and Tokens,'' accessed 27 August 2026.
+
+\bibitem{polygon2026rpc}
+Polygon Labs, ``Polygon PoS RPC Endpoints,'' accessed 27 August 2026.
+
+\bibitem{goldsky2026pricing}
+Goldsky, ``Pricing,'' accessed 27 August 2026.
+
+\bibitem{polymarket2026contracts}
+Polymarket, ``Contract Addresses,'' accessed 27 August 2026.
+
+\bibitem{polymarket2026v2}
+Polymarket, ``CLOB V2 Migration Guide,'' accessed 27 August 2026.
+
+\bibitem{goldsky2026polymarket}
+Goldsky, ``Polymarket Datasets,'' accessed 27 August 2026.
+
+\bibitem{bradley2008sampling}
+A. A. Bradley, S. S. Schwartz, and T. Hashino, ``Sampling Uncertainty and Confidence Intervals for the Brier Score and Brier Skill Score,'' \textit{Weather and Forecasting}, vol. 23, no. 5, pp. 992–1006, 2008.
+
+\bibitem{gneiting2007strictly}
+T. Gneiting and A. E. Raftery, ``Strictly Proper Scoring Rules, Prediction, and Estimation,'' \textit{Journal of the American Statistical Association}, vol. 102, no. 477, pp. 359–378, 2007.
+
+\bibitem{gomez2026prediction}
+R. Gómez-Cram, Y. Guo, T. I. Jensen, and H. Kung, ``Prediction Market Accuracy: Crowd Wisdom or Informed Minority?'' SSRN Working Paper 6617059, 2026.
+
+\bibitem{andersen2003modeling}
+T. G. Andersen, T. Bollerslev, F. X. Diebold, and P. Labys, ``Modeling and Forecasting Realized Volatility,'' \textit{Econometrica}, vol. 71, no. 2, pp. 579–625, 2003.
+
+\bibitem{satopaa2014combining}
+V. A. Satopää et al., ``Combining Multiple Probability Predictions Using a Simple Logit Model,'' \textit{International Journal of Forecasting}, vol. 30, no. 2, pp. 344–356, 2014.
+
+\bibitem{kull2017beta}
+M. Kull, T. M. Silva Filho, and P. Flach, ``Beta Calibration: A Well-Founded and Easily Implemented Improvement on Logistic Calibration for Binary Classifiers,'' in \textit{Proceedings of AISTATS}, pp. 623–631, 2017.
+
+\bibitem{merkle2017neglected}
+E. C. Merkle, M. Steyvers, B. Mellers, and P. E. Tetlock, ``A Neglected Dimension of Good Forecasting Judgment: The Questions We Choose Also Matter,'' \textit{International Journal of Forecasting}, vol. 33, no. 4, pp. 817–832, 2017.
+
+\bibitem{bollerslev2009expected}
+T. Bollerslev, G. Tauchen, and H. Zhou, ``Expected Stock Returns and Variance Risk Premia,'' \textit{Review of Financial Studies}, vol. 22, no. 11, pp. 4463–4492, 2009.
+
+\bibitem{patton2011volatility}
+A. J. Patton, ``Volatility Forecast Comparison Using Imperfect Volatility Proxies,'' \textit{Journal of Econometrics}, vol. 160, no. 1, pp. 246–256, 2011.
+
+\bibitem{diebold1995comparing}
+F. X. Diebold and R. S. Mariano, ``Comparing Predictive Accuracy,'' \textit{Journal of Business \& Economic Statistics}, vol. 13, no. 3, pp. 253–263, 1995.
+
+\bibitem{lewis2020retrieval}
+P. Lewis et al., ``Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks,'' in \textit{Advances in Neural Information Processing Systems}, 2020.
+
+\bibitem{yao2023react}
+S. Yao et al., ``ReAct: Synergizing Reasoning and Acting in Language Models,'' in \textit{Proceedings of ICLR}, 2023.
+
+\bibitem{nist2024ai}
+National Institute of Standards and Technology, \textit{Artificial Intelligence Risk Management Framework: Generative Artificial Intelligence Profile}, NIST AI 600-1, 2024.
+
+\end{thebibliography}
+
+\newpage
+
+\section*{Appendix A: Meeting Minutes}
+
+\subsection*{A.1 Documented initial meeting}
+
+\begin{table}[H]
+\centering
+\caption{Information available from the documented first meeting.}
+\begin{tabularx}{\textwidth}{p{3.5cm}p{8cm}}
+\toprule
+\textbf{Item} & \textbf{Record} \\
+\midrule
+Date & 8 August 2026 \\
+Location & Hong Kong \\
+Attendees & Franklin, Anthony, Owen and Sunny \\
+Purpose & Agree on a research direction, scope, evaluation method and initial task split \\
+Recorded status & Planning; formal decisions and ownership remained open \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+The first meeting considered a broader Web3 quantitative-trading and market-analysis agent. Subsequent research narrowed the direction to Polymarket, public wallet behaviour, event-conditioned volatility, and portfolio risk. The present proposal records portfolio stress analysis as the primary application and paper volatility trading as an optional extension. Formal approval of this scope and the final work allocation should be recorded in the next meeting minutes.
+
+\subsection*{A.2 Meeting-minute template}
+
+\begin{table}[H]
+\centering
+\caption{Formal meeting-minute template for future proposal appendices.}
+\begin{tabularx}{\textwidth}{p{4cm}p{8cm}}
+\toprule
+\textbf{Field} & \textbf{To be completed} \\
+\midrule
+Meeting number and date & \\
+Time and place/call & \\
+Present / absent & \\
+Recorder & \\
+Approval of previous minutes & \\
+Progress reported & \\
+Discussion items & \\
+Decisions & \\
+Action items, owner and deadline & \\
+Next meeting & \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\end{document}
