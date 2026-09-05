@@ -1,0 +1,30 @@
+\clearpage
+\subsubsection{Initial asset and event universe}
+The first release will use a fixed US equity universe, keeping calendars, currency treatment and data acquisition manageable. The following proposed list covers broad market exposure and familiar companies and will be frozen during the data audit.
+
+\begin{table}[H]
+\smalltable
+\caption{Proposed initial coverage. The ETF return is the portfolio input, not the index level.}
+\begin{tabularx}{\linewidth}{@{}L{30mm}Y Y@{}}
+\toprule\tablehead
+\textbf{Group} & \textbf{Coverage} & \textbf{Role} \\
+\midrule
+Key indices & S\&P 500, Nasdaq-100 and Dow Jones Industrial Average & Research context, represented by SPY, QQQ and DIA respectively. \\
+Popular equities & Apple (AAPL), Microsoft (MSFT), NVIDIA (NVDA), Amazon (AMZN), Tesla (TSLA) & A fixed list of widely followed equities. \\
+Cash & USD cash balance & Reference allocation for paper comparisons; zero return over the short prototype horizon. \\
+Events & Federal Reserve interest-rate decisions & One recurring family with explicit outcomes and documented announcement times. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+This product-focused list is not representative of all equities. Retrospective results will acknowledge selection and survivorship limitations. Any replacement for insufficient data will be recorded before testing.
+
+\subsubsection{Minimum viable product}
+The MVP will support a watchlist and manually entered, long-only paper portfolios drawn from this universe. We will use one focal event per scenario, USD valuation and 1-, 5- and 20-trading-day horizons where data support them. Daily equity data are the minimum requirement; prediction-market snapshots will be collected prospectively at a configurable interval, initially targeting five minutes subject to access limits.
+
+For each Federal Open Market Committee (FOMC) meeting, we will select one binary question, such as whether the target rate will be cut, and preserve its resolution rule. Contracts for the same meeting form one event group. Selection must match the user's horizon and the event definition, not merely the nearest expiry.
+
+\subsubsection{Extensions and exclusions}
+CPI releases and other macroeconomic events are conditional extensions if the primary sample is too small or the core pipeline is complete. Historical intraday volatility models, richer wallet models and a delta-hedged options paper backtest are also optional. They require separate evidence of adequate data and time.
+
+Cryptocurrencies, foreign exchange, global coverage, unrestricted portfolios, identity inference, live orders and leverage are outside the MVP. Index options or VIX data will not substitute for equity-specific implied volatility.

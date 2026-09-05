@@ -1,0 +1,61 @@
+\clearpage
+\subsection{Testing}
+The testing programme will cover the data pipeline, numerical services and complete user workflow. Ingestion tests will check schema validation, duplicate-free replay, interrupted collection and reconciliation against sampled blockchain records. Point-in-time checks will reject features or wallet histories that include information published after the forecast cut-off.
+
+Risk calculations will be checked against reference cases, including event probabilities of zero and one, missing assets, extreme losses and singular covariance estimates. API tests will enforce supported assets, compatible horizons and non-negative portfolio weights that sum to one. The frontend and assistant must display the same versioned results.
+
+End-to-end tests will cover event selection, scenario comparison and report retrieval, including unavailable or stale data. Agent tests will include malformed tool requests and hostile instructions in retrieved text. Every numerical claim must trace to a saved result; no test may produce a live order or violate allocation constraints.
+
+\subsection{Evaluation}
+\subsubsection{Experimental design}
+The audit will target 20--50 resolved markets, if recoverable, and report independent announcement dates separately. Several contracts or snapshots of one FOMC meeting do not create additional outcomes. If the sample cannot support reliable fitting, we will report a descriptive pilot. A broader macro sample requires a documented scope revision before testing.
+
+Training, validation and testing will follow chronological order, with each event's contracts and snapshots kept together. Overlapping return windows will be purged at split boundaries. Wallet scores, normalisation and scenarios must use only pre-cut-off information. The final test interval stays unopened until models and thresholds are fixed.
+
+\begin{table}[H]
+\smalltable
+\caption{Baseline comparisons isolate the contribution of each information layer.}
+\begin{tabularx}{\linewidth}{@{}L{15mm}Y Y@{}}
+\toprule\tablehead
+\textbf{Model} & \textbf{Information used} & \textbf{Question tested} \\
+\midrule
+B0 & Historical event frequency or conventional asset variables & What is possible without prediction-market signals? \\
+B1 & Raw market probability & What does the public price already tell us? \\
+B2 & Calibrated price and liquidity & Does basic market-quality adjustment help? \\
+B3 & B2 plus anonymous directional flow & Does overall trading activity add information? \\
+B4 & B3 plus past-only wallet-informed flow & Does persistent wallet information add value? \\
+Optional & Learned wallet weights or richer models & Is extra complexity justified by held-out results? \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\clearpage\subsubsection{Performance measures}
+Probability evaluation will use Brier score, log loss and reliability plots. Direction randomisation, identity shuffles, concentration controls and eligibility-threshold sensitivity will test apparent wallet skill. We will report event-level confidence intervals and small-sample limitations. Multiple wallet-level tests require false-discovery control.
+
+Volatility forecasts will use variance error and QLIKE, a variance-forecast loss function \cite{patton}. Portfolio diagnostics include VaR exceedances and exploratory expected-shortfall checks. Probability variants will share the same asset-response model to isolate the adjustment's downstream effect. Strong claims require enough independent observations.
+
+We will target 6--8 participants for a formative study: find an event, explain a probability difference, compare scenarios and identify a limitation. We will record completion, time, errors and feedback. Fixed questions will compare the agent with the dashboard alone and a retrieval-only assistant, measuring source coverage, numerical agreement, abstention, latency and cost.
+
+
+\subsubsection{Success criteria and limitations}
+Success requires reproducible data, controlled comparisons, a tested risk engine and a usable evidence-linked interface. Positive, negative and null findings will be reported; profitability is not required.
+
+\begin{table}[H]
+\smalltable
+\caption{Principal risks and planned responses.}
+\begin{tabularx}{\linewidth}{@{}L{38mm}Y@{}}
+\toprule\tablehead
+\textbf{Risk} & \textbf{Response} \\
+\midrule
+Sparse independent events & Report event counts; use a descriptive pilot or simple model; broaden the event family only through a documented revision. \\
+Missing or costly history & Audit access early, backfill selectively and collect prospectively; disable unsupported features. \\
+Selection bias and hidden hedges & Freeze the universe, reconstruct participants historically, shrink wallet scores and avoid claims about real-world identity or total conviction. \\
+Confounded asset responses & Use controls, reviewed scenario ranges and sensitivity analysis; distinguish stress assumptions from validated forecasts. \\
+Protocol or API changes & Version source schemas and contracts, test adapters and reconcile sampled settlements. \\
+Unsupported AI answers & Restrict tools, validate arguments, link claims to results and test missing-data abstention and prompt injection. \\
+Time and integration pressure & Integrate an early vertical slice; defer complex models and options trading until the core evaluation is complete. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+The final package will contain a documented dataset and acquisition scripts, model and baseline experiments, a tested scenario/risk service, the working dashboard and assistant, and a report covering research findings and usability. Data redistribution will follow provider permissions; where raw data cannot be shared, the package will provide acquisition instructions, schemas and permitted sample fixtures. The demonstration will include both a supported analysis and a case with insufficient data.

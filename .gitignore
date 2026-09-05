@@ -1,0 +1,43 @@
+# Local review files and scratch work
+/tmp/
+
+# LaTeX build products, including builds in section subdirectories
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.lof
+*.log
+*.lot
+*.out
+*.run.xml
+*.synctex
+*.synctex.gz
+*.toc
+*.xdv
+*.dvi
+*.nav
+*.snm
+*.vrb
+/proposal/build/
+
+# Compiled report only; PDF figures and other source assets can be committed
+/proposal/proposal.pdf
+
+# Operating-system files and local editor backups
+.DS_Store
+._*
+Thumbs.db
+Desktop.ini
+*.swp
+*.swo
+*~
+*.bak
+/proposal/.texpadtmp/
+
+# Local credentials; a documented example may be committed
+.env
+.env.*
+!.env.example

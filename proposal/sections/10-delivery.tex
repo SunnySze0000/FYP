@@ -1,0 +1,43 @@
+\pagechapter{Project Planning}
+\subsection{Division of Work}
+Franklin, Anthony, Owen and Sunny will work across four tracks, each with a lead and a reviewer. Named ownership remains to be agreed. All members will contribute to literature review, reporting and presentations.
+
+\begin{table}[H]
+\smalltable
+\caption{Proposed work allocation, with named ownership to be recorded by the team.}
+\begin{tabularx}{\linewidth}{@{}L{36mm}Y Y@{}}
+\toprule\tablehead
+\textbf{Track} & \textbf{Responsibility} & \textbf{Deliverable} \\
+\midrule
+Data and blockchain & Source adapters, collection, reconciliation and quality reporting. & Versioned dataset and coverage report. \\
+Probability research & Wallet scoring, calibration, baseline comparisons and leakage controls. & Reproducible probability experiments. \\
+Scenarios and risk & Asset-response estimates, volatility, tail risk and reference tests. & Deterministic risk engine and application study. \\
+Product and AI & Backend integration, frontend, agent tools and deployment. & Integrated dashboard and user evaluation. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Git will hold code, experiment configuration and separate LaTeX section files for collaborative editing. Generated files and secrets stay out of version control. Weekly reviews and an issue tracker will record owners, dependencies, meeting decisions and experiment changes.
+
+\subsection{GANTT Chart}
+The schedule is relative to project commencement and will be aligned with course dates. Data feasibility comes first; interface work starts with sample data to identify integration problems early.
+
+\begin{table}[H]
+\smalltable
+\caption{Planning baseline. Shaded cells indicate the main work period.}
+\begin{tabularx}{\linewidth}{@{}Y*{6}{>{\centering\arraybackslash}p{11mm}}@{}}
+\toprule\tablehead
+\textbf{Workstream} & \textbf{1--4} & \textbf{5--8} & \textbf{9--12} & \textbf{13--16} & \textbf{17--20} & \textbf{21--24} \\
+\midrule
+Scope, literature and feasibility & \cellcolor{navy!22} & & & & & \\
+Collection and reconciliation & \cellcolor{navy!22} & \cellcolor{navy!22} & \cellcolor{navy!22} & & & \\
+Wallet and probability models & & \cellcolor{navy!22} & \cellcolor{navy!22} & \cellcolor{navy!22} & & \\
+Event mapping and risk engine & & & \cellcolor{navy!22} & \cellcolor{navy!22} & \cellcolor{navy!22} & \\
+Interface and AI integration & & \cellcolor{navy!22} & \cellcolor{navy!22} & \cellcolor{navy!22} & \cellcolor{navy!22} & \\
+Evaluation and user study & & & & & \cellcolor{navy!22} & \cellcolor{navy!22} \\
+Report and reproducibility & \cellcolor{navy!10} & \cellcolor{navy!10} & \cellcolor{navy!10} & \cellcolor{navy!10} & \cellcolor{navy!22} & \cellcolor{navy!22} \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\textbf{Milestones.} Week 2: initial access and scope decision. Week 7: a versioned dataset and reconciliation report. Week 12: first raw-price, anonymous-flow and wallet-flow comparison. Week 18: working scenarios and risk calculations. Week 22: integrated evaluation and user tasks. Week 24: final report, demonstration and reproducibility package. Failed feasibility gates will narrow the model or coverage before optional work begins.

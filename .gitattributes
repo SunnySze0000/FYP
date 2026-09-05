@@ -1,0 +1,14 @@
+# Normalise text files across macOS, Windows and Linux.
+* text=auto
+*.tex text eol=lf
+*.bib text eol=lf
+*.md text eol=lf
+.gitignore text eol=lf
+.gitattributes text eol=lf
+
+# Preserve image/document bytes and avoid text diffs for binary assets.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.pdf binary
+*.docx binary

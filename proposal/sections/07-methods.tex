@@ -1,0 +1,43 @@
+\clearpage
+\subsubsection{Estimate the event probability}
+We will begin with a raw probability based on the YES bid/ask midpoint, recording spread, depth and timestamp. When both outcome books are usable, their midpoints can be normalised for consistency. A missing or one-sided book will be flagged, not silently replaced by an unrelated latest trade.
+
+A simple regularised logistic model will calibrate this estimate using earlier resolved events. The wallet-informed model will then add a small number of signals: overall directional flow, the flow of historically informative wallets and market-quality controls. Coefficients will be fitted on training data, rather than chosen to produce a desired adjustment. Beta calibration is a possible robustness check if justified by the sample \cite{kull}.
+
+\subsubsection{Assess wallet information conservatively}
+An informative wallet is an observed account whose earlier decisions contain information beyond the contemporaneous market price. Our first score will examine whether the wallet repeatedly chose the eventual outcome at informative prices, whether prices subsequently moved in its direction, and how broad its prior history was. Returns after fees will be a supporting diagnostic; profitable liquidity provision alone is not proof of forecasting skill.
+
+Repeated fills will be consolidated into wallet--event decisions. Balanced YES and NO holdings will be distinguished from directional exposure. Scores based on few independent events will be pulled towards the population average, a technique called shrinkage. A provisional eligibility rule is ten earlier resolved events across at least three announcement dates, with five- and twenty-event thresholds checked in sensitivity analysis. If the history cannot support this rule, the wallet signal will be unavailable rather than assigned artificial confidence.
+
+Current contributions will combine earlier skill, direction, recency and capped position size. New-wallet anomalies remain separate from historical skill. No single large wallet should dominate the adjustment. A learned hierarchical wallet model is an extension, conditional on enough independent events; the initial transparent rule model remains useful for testing feasibility.
+
+\subsubsection{Link events to assets}
+The event research agent may suggest that a rate decision matters to SPY or MSFT, but numerical impacts will come from matched historical event windows and conventional market controls. The mapping must account for surprise relative to the expectation already embedded in prices. Sparse asset-specific estimates will be pooled or replaced by explicitly reviewed stress ranges.
+
+Wallet information may improve an event probability without improving an equity-risk forecast. The event-to-asset response is a separate estimate with its own uncertainty and evidence requirements.
+
+Each mapping will retain its event definition, horizon, sample size, estimated response range and review status. A terminal YES/NO mixture will only be used when the economic announcement falls within the risk horizon. Otherwise the MVP will offer a compatible horizon or withhold that calculation. Correlated contracts from one meeting will not be treated as independent shocks.
+
+\clearpage
+\subsubsection{Explore portfolio scenarios and tail risk}
+For a selected portfolio, the engine will combine the conditional return distributions for an event occurring (YES) and not occurring (NO). Let $p$ be the selected event probability, $\mu$ a mean portfolio return and $\sigma^2$ its variance over the same horizon. The key calculations are:
+\begin{align}
+\mu_{\mathrm{mix}} &= p\mu_{\mathrm{YES}}+(1-p)\mu_{\mathrm{NO}}, \\
+\sigma^2_{\mathrm{mix}} &= p\sigma^2_{\mathrm{YES}}+(1-p)\sigma^2_{\mathrm{NO}}
+ +p(1-p)(\mu_{\mathrm{YES}}-\mu_{\mathrm{NO}})^2.
+\end{align}
+The last term captures uncertainty about which outcome occurs. Consequently, a higher adverse-event probability can worsen expected loss without necessarily increasing variance. For multiple holdings, we will preserve cross-asset dependence when sampling returns, then apply the user's weights to each joint scenario.
+
+The engine will report scenario returns, horizon volatility, a chosen loss-threshold probability, 95\% VaR and 95\% expected shortfall. VaR is a threshold, not the maximum loss. Expected shortfall will be calculated as the average of the worst 5\% of the weighted loss distribution, including fractional threshold mass where needed. We will use empirical or heavy-tailed scenarios and check sensitivity to the probability and asset-response assumptions.
+
+Paper comparisons will hold the event and model version constant while comparing the current allocation with a user-selected reduction in a supported holding and a corresponding increase in cash. Weights must sum to one and remain non-negative. Any displayed benefit must be considered alongside turnover, transaction-cost assumptions and estimation uncertainty.
+
+\subsubsection{Test whether event signals improve volatility forecasts}
+The core forecasting experiment will compare a conventional daily-return volatility baseline with the same baseline augmented by event probabilities, their recent changes and the difference between adjusted and raw estimates. Rolling historical variance and exponentially weighted variance provide simple benchmarks. The initial observed target over $H$ trading days will be the sum of squared daily log returns:
+\begin{equation}
+RV_{t,H}=\sum_{h=1}^{H} r_{t+h}^{2}.
+\end{equation}
+This is a noisy daily-data proxy for realised variation; at one day it is especially noisy. It differs from the variance of the terminal portfolio return above. We will compare like-for-like targets and annualisation conventions and will not insert the terminal mixture's between-outcome term into a path-variance formula. If suitable intraday histories exist, a richer realised-variance measure and HAR-RV, GARCH-X or a tree model can be explored. These are candidate methods, not commitments to implement all models.
+
+\subsubsection{Optional volatility trading study}
+A delta-hedged paper options backtest may compare forecast variance with option-implied variance only after acquiring historical quotes with matching underlying, horizon and expiry. Costs, bid/ask spreads, hedge frequency and execution assumptions must be included. Results would report after-cost profit and loss, drawdown and sensitivity rather than promise a variance premium. This extension is optional and will not displace the core probability, risk or interface evaluation.

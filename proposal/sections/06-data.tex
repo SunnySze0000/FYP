@@ -1,0 +1,49 @@
+\clearpage
+\subsubsection{Sources and their roles}
+The data pipeline will combine three kinds of evidence: prediction-market information, public blockchain settlement records and conventional financial data. These sources serve different purposes. Polymarket matches orders off-chain and settles trades on-chain, so an order-book snapshot is not itself a blockchain record \cite{polymarketorder}.
+
+\begin{table}[H]
+\smalltable
+\caption{Planned sources, with access decisions made during the feasibility audit.}
+\begin{tabularx}{\linewidth}{@{}L{35mm}Y Y@{}}
+\toprule\tablehead
+\textbf{Source} & \textbf{Data to acquire} & \textbf{Use and limitation} \\
+\midrule
+Polymarket metadata API (Gamma) & Event definitions, rules, identifiers, outcome prices and available price history. & Define the forecast target; archive changes to mutable metadata \cite{polymarketdata}. \\
+Polymarket CLOB and activity Data API & Bid/ask snapshots, liquidity and public wallet activity. & Measure market quality and candidate wallet flow; historical book depth may need prospective collection. \\
+Goldsky Polymarket datasets & Indexed fills, matched trades and relevant position records. & Targeted historical reconstruction, subject to version coverage and access cost \cite{goldsky}. \\
+Polygon RPC & Transaction receipts, contract logs and block references. & Verify a stratified sample of settlements; older state may require archival access. \\
+Alpha Vantage or an approved equivalent & Daily equity/ETF prices, splits and dividends; intraday data only if available. & Proposed primary price-provider adapter. Adjusted daily data are a premium function; coverage and academic-use terms must be checked \cite{alphavantage}. \\
+Federal Reserve & Meeting dates, statements and announced rate decisions. & Establish announcement timing and validate event labels separately from platform resolution \cite{fed}. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+The initial audit will test real sample downloads for all eight securities and the chosen event family before fixing the provider. If access is insufficient, the team will use a documented, permitted university dataset or equivalent licensed export through the same schema. Provider, adjustment convention and coverage will be fixed for each experiment; overlapping series will be compared before any switch.
+
+\subsubsection{A bounded collection strategy}
+We will enumerate eligible events, collect their public metadata, and backfill only relevant market and wallet histories. We will not mirror the entire blockchain or all Polymarket positions. Goldsky documents a 2026 contract migration and warns that legacy public subgraphs may be incomplete; the audit must therefore verify version-specific coverage rather than assume one continuous dataset \cite{goldsky}.
+
+Forward market snapshots will be retained from the start of the project, while equity bars will be refreshed after the trading session. Historical options quotes are a separate acquisition decision and are not required for the core dashboard. No provider subscription or historical depth is assumed to have been secured by this proposal.
+
+\clearpage
+\subsubsection{Turning source records into research inputs}
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[node distance=4mm]
+\node[flowbox,text width=13.7cm] (raw) {\textbf{Acquire and preserve}\par Source records, event rules, timestamps and collection logs};
+\node[flowbox,text width=13.7cm,below=of raw] (clean) {\textbf{Clean and reconcile}\par Stable identifiers, duplicate checks, corporate actions and sampled chain verification};
+\node[flowbox,text width=13.7cm,below=of clean] (align) {\textbf{Align what was known at each forecast time}\par Wallet histories, market state, event calendar and asset returns};
+\node[flowbox,text width=13.7cm,below=of align] (model) {\textbf{Create versioned features and results}\par Frozen training sets, probability forecasts, risk scenarios and evidence links};
+\draw[flowarrow] (raw)--(clean);\draw[flowarrow] (clean)--(align);\draw[flowarrow] (align)--(model);
+\end{tikzpicture}
+\caption{Processing pipeline. Raw evidence is retained so each transformation can be checked and repeated.}
+\end{figure}
+
+\textbf{Preserve identifiers and time.} Each event is linked to its markets, outcome tokens and settlement records. Raw records retain source time, collection time and source version. Announcement time, platform resolution time and data-availability time remain separate. Historical records downloaded later are admissible only when their content can be shown to have existed at the forecast cut-off; mutable current rankings are not historical features.
+
+\textbf{Reconstruct activity consistently.} Wallet analysis retains both participant perspectives, while market volume counts the economic trade once. A transaction may contain several logs, so transaction hash alone is not a unique record key. We will use chain, transaction, log and contract identifiers and verify sampled amounts against Polygon receipts. Position reconstruction must account for transfers, splits, merges and redemptions as well as trades. Incomplete positions receive a quality flag.
+
+\textbf{Align asset returns.} Timestamps will be normalised to UTC while retaining the US trading calendar, daylight-saving changes and after-hours announcements. Splits and dividends will be handled consistently. Future adjustments or revised data must not change historical features without a recorded version. Missing bars will be flagged rather than filled with zero returns; stale probabilities will not be carried across an announcement as if newly observed.
+
+\textbf{Make processing reproducible.} Immutable source snapshots and checksums will accompany cleaned tables and Parquet research files. Collectors will use retries, rate limits and checkpoints. Replaying the same batch must not duplicate records. Each model run stores the data manifest, configuration, code version and random seed, and the interface will expose coverage gaps through its evidence panel.

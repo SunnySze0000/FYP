@@ -1,0 +1,19 @@
+\clearpage\subsection{Literature Survey}
+\subsubsection{Prediction markets and informative participants}
+Prediction markets aggregate beliefs into tradable prices. Wolfers and Zitzewitz explain their forecasting value and the conditions under which a binary contract price can be interpreted as a probability \cite{wolfers2004,wolfers2006}. EventLens will therefore treat the market price as a strong baseline and test whether an adjustment improves its reliability. Calibration means that, across comparable cases, events assigned a given probability occur at approximately that frequency.
+
+The Brier score measures the squared error of a probability forecast. Proper scoring rules, including Brier score and log loss, reward honest probabilities rather than confident guesses \cite{brier,gneiting}. They provide a more suitable test of an event forecast than trading profit, which is also affected by entry price, costs and market-making activity.
+
+The 2026 working paper by G\'omez-Cram and colleagues examines whether prediction-market accuracy is associated with an informed minority \cite{gomez}. It motivates our wallet-level analysis but does not establish that the same effect will hold in our selected event family. Public addresses are not verified identities, and address clustering relies on assumptions \cite{victor}. We will study observed account wallets without claiming to identify people or insiders.
+
+\subsubsection{From event probability to asset risk}
+Event studies compare asset returns around information releases \cite{mackinlay}. Their main difficulty here is separating the event's effect from other news and from expectations already reflected in prices. We will use historical response estimates cautiously and show sensitivity ranges when evidence is weak. An event probability is not, by itself, an equity-price forecast.
+
+Portfolio risk has several meanings. Value at Risk (VaR) is a loss threshold at a chosen confidence level; expected shortfall, also called Conditional Value at Risk (CVaR), describes average loss in the worst tail \cite{rockafellar}. Forecast volatility describes future variation, while realised volatility is measured from subsequent returns \cite{andersen}. These quantities answer different user questions and will be labelled separately.
+
+Option-implied volatility reflects option prices and need not equal the volatility expected under the actual return distribution. The implied--realised variance difference can contain a risk premium \cite{carr}. This is why an apparent variance gap is a research signal, not evidence of an arbitrage opportunity. Forecast comparisons will also account for noisy realised-volatility measurements \cite{patton}.
+
+\subsubsection{AI assistance and the research gap}
+Retrieval-augmented generation and tool-using agents provide established patterns for connecting language models to external evidence \cite{lewis,yao}. EventLens will use these patterns to retrieve events and explain model outputs, while deterministic software calculates probabilities and risk.
+
+The project's specific contribution is to test the incremental value of persistent wallet information against anonymous flow, carry the comparison into a bounded equity-risk application, and expose the evidence through an understandable interface. It will connect established methods rather than claim that wallet skill, event studies or AI dashboards are themselves new discoveries.

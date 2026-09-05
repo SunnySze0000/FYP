@@ -1,0 +1,46 @@
+\pagechapter{Methodology}
+\subsection{Design}
+\subsubsection{A guided research journey}
+A user begins with an index, an equity or a small paper portfolio and selects a time horizon. EventLens then presents eligible events, explains why they may matter, and allows the user to inspect the probability evidence before opening a portfolio scenario. A contextual AI assistant can answer questions at each step. A saved report preserves the analysis for later review.
+
+For example, a user researching SPY and MSFT over the next five trading days could inspect an upcoming rate decision, compare the market and adjusted probabilities, and explore a lower-exposure paper allocation. If the announcement lies outside the selected horizon or the equity-response estimate is unsupported, the interface will explain the limitation and withhold the affected calculation.
+
+\begin{table}[H]
+\smalltable
+\caption{Core interface features and the decisions they support.}
+\begin{tabularx}{\linewidth}{@{}L{32mm}Y Y@{}}
+\toprule\tablehead
+\textbf{Screen or feature} & \textbf{What the user sees} & \textbf{What the user can do} \\
+\midrule
+Overview and watchlist & Supported assets, upcoming eligible events, source freshness and coverage. & Select holdings, choose a horizon and open an event. \\
+Event detail & Exact question, resolution rule, announcement time, raw and adjusted probability history. & Compare the estimates and inspect uncertainty and liquidity. \\
+Wallet evidence & Historical sample size, directional flow, concentration and provisional skill status. & Examine why wallet activity changed the estimate without treating a ranking as certainty. \\
+Scenario studio & YES/NO outcomes, portfolio loss estimates, VaR, expected shortfall and response assumptions. & Change a reviewed stress assumption or compare a bounded paper allocation. \\
+Research assistant & An explanation tied to the selected event, portfolio, horizon and evidence. & Ask follow-up questions and open the supporting sources. \\
+Saved research & Analysis date, inputs, model and scenario versions, source links and limitations. & Revisit a frozen run and export a readable report with a machine-readable result. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsubsection{Design principles}
+The interface will use a black-and-white visual scheme with neutral grayscale accents, clear typography and consistent navigation. The event question and its implication for the selected assets take priority. Technical details, such as wallet-score components and model settings, appear in expandable evidence panels. Probability and loss charts will use labelled axes, legends and line styles so that interpretation does not rely on colour alone.
+
+Every result will display its horizon, unit and as-of time. Observed prices, model estimates and user-entered assumptions will have distinct labels. Loading, missing data, stale data and model-unavailable states will be designed explicitly. A failed calculation will never appear as a zero-risk result. Keyboard navigation, readable contrast and accessible table alternatives will be included in the implementation.
+
+The assistant remains next to the evidence being discussed. Selecting a cited result will open its source or calculation details; changing the horizon or portfolio will require a new calculation and visibly update the analysis context.
+
+\clearpage
+\subsubsection{Concept screens}
+Figures~\ref{fig:overview-ui} and~\ref{fig:scenario-ui} illustrate the intended layout. They are conceptual interface images; values are illustrative and do not represent research results.
+\begin{figure}[H]
+\centering
+\includegraphics[width=\linewidth]{figures/overview-ui.png}
+\caption{Overview concept: a watchlist, event probability comparison and contextual research assistant. All displayed values are illustrative.}
+\label{fig:overview-ui}
+\end{figure}
+\begin{figure}[H]
+\centering
+\includegraphics[width=\linewidth]{figures/scenario-ui.png}
+\caption{Scenario concept: portfolio inputs, clearly labelled model outputs and visible assumptions. The user compares paper scenarios without placing orders.}
+\label{fig:scenario-ui}
+\end{figure}

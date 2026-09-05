@@ -1,0 +1,40 @@
+\pagechapter{Hardware and Software Requirements}
+\subsection{Hardware Requirements}
+The initial models and API-hosted language model do not require a local GPU. Development can be carried out on standard personal computers, with a modest shared server for scheduled collection and the demonstration.
+
+\begin{table}[H]
+\smalltable
+\caption{Proposed hardware provision.}
+\begin{tabularx}{\linewidth}{@{}L{32mm}Y Y@{}}
+\toprule\tablehead
+\textbf{Resource} & \textbf{Minimum provision} & \textbf{Preferred provision} \\
+\midrule
+Developer computer & Four-core CPU and 8\,GB RAM & 16\,GB RAM for concurrent local services. \\
+Storage & 30\,GB free disk space & Approximately 100\,GB SSD space for bounded historical data. \\
+Shared server & Local demonstration if necessary & 2--4 vCPU and 8--16\,GB RAM, subject to measured workload. \\
+Network & Stable internet connection & Reliable access for collectors, hosted models and remote collaboration. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+A self-hosted Polygon node is outside the initial scope. Hosted RPC and targeted indexed data will be used for collection and verification. Database and raw-data storage must persist across application updates and be backed up regularly.
+
+\subsection{Software Requirements}
+\begin{table}[H]
+\smalltable
+\caption{Required software and external services.}
+\begin{tabularx}{\linewidth}{@{}L{32mm}Y Y@{}}
+\toprule\tablehead
+\textbf{Category} & \textbf{Software or service} & \textbf{Purpose} \\
+\midrule
+Runtime & Python and Node.js & Research services, collectors and web application. \\
+Application & FastAPI, Pydantic, Next.js, React and TypeScript & Validated backend APIs and interactive interface. \\
+Data and modelling & PostgreSQL, Parquet, Polars/Pandas, NumPy and scikit-learn & Storage, processing and initial statistical models. \\
+External services & Polymarket APIs, Goldsky, Polygon RPC, equity data and hosted LLM & Event evidence, asset histories and research assistance. \\
+Quality and deployment & Pytest, browser tests, Docker and Docker Compose & Automated verification and reproducible deployment. \\
+Collaboration & Git, issue tracker and LaTeX & Source control, task allocation and shared documentation. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+External costs may include adjusted equity histories, indexed blockchain access, archival RPC, a hosted language model and server hosting. The team will set a spending cap after checking sample data and provider terms during the feasibility stage. A paid historical options dataset is not required for the core project. Software dependencies, model versions and configuration will be recorded to support reproducibility.

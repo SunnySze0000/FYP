@@ -1,0 +1,31 @@
+\clearpage
+\subsubsection{Three roles within one controlled workflow}
+The proposed assistant will use three logical roles: an \textbf{event research agent} to find relevant evidence, an \textbf{analysis coordinator} to request approved calculations, and an \textbf{explanation agent} to present results in context. These roles can share one model and orchestration service in the MVP. A separate autonomous agent infrastructure is unnecessary.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[node distance=5mm and 8mm]
+\node[flowbox,text width=13.8cm] (user) {\textbf{User selects assets and horizon}\quad or asks a contextual research question};
+\node[flowbox,text width=3.9cm,below=of user.south west,anchor=north west] (research) {\textbf{1. Retrieve}\par Event research agent\par Questions, rules and sources};
+\node[flowbox,text width=3.9cm,right=of research] (analysis) {\textbf{2. Analyse}\par Analysis coordinator\par Validated tool requests};
+\node[flowbox,text width=3.9cm,right=of analysis] (explain) {\textbf{3. Explain}\par Explanation agent\par Cited results};
+\node[flowbox,text width=13.8cm,below=17mm of analysis] (tools) {\textbf{Controlled tool gateway}\par Versioned event data\quad Probability model\quad Scenario and risk engine};
+\draw[flowarrow] (user.south -| research.north)--(research.north);
+\draw[flowarrow] (research)--(analysis);
+\draw[flowarrow] (analysis)--(explain);
+\draw[flowarrow,{Stealth[length=2mm]}-{Stealth[length=2mm]}] (research.south)--(research.south |- tools.north);
+\draw[flowarrow,{Stealth[length=2mm]}-{Stealth[length=2mm]}] (analysis.south)--node[right,font=\scriptsize]{request / result}(tools.north);
+\draw[flowarrow] (tools.north -| explain.south)--(explain.south);
+\end{tikzpicture}
+\caption{Proposed agent workflow. All quantitative results come from the same validated services used by the dashboard.}
+\end{figure}
+
+\subsubsection{From a question to a supported answer}
+For ``How could the next rate decision affect my SPY and MSFT exposure?'', the assistant resolves the assets, horizon and analysis time. It retrieves an eligible event and proposes an event-to-asset explanation. Numerical responses must come from historical estimates or reviewed stress assumptions; generated text alone is not sufficient evidence.
+
+The coordinator can call tools such as \texttt{find\_events}, \texttt{get\_wallet\_evidence}, \texttt{get\_probability}, \texttt{run\_scenario} and \texttt{compare\_allocations}. The gateway checks asset coverage, weights, units, data freshness and horizon compatibility. It returns structured values with sources, model versions and a research-run identifier. The explanation then links its numerical claims to those results and separates observations, estimates and assumptions \cite{lewis,yao}.
+
+\subsubsection{Boundaries and review}
+Users confirm changes to their paper inputs and can inspect assumptions before running a comparison. Researchers review new event-to-asset mappings and choose model versions using validation results. The agent cannot alter wallet labels, tune against the final test period, invent missing prices, calculate risk in prose or submit live orders. Market descriptions are treated as untrusted data, including any embedded instructions.
+
+When evidence is incomplete, the assistant will identify the gap and offer a supported view, such as the raw probability. Tool traces and saved reports make answers reviewable. Evaluation will cover citations, numerical agreement, abstention, user understanding, response time and cost.

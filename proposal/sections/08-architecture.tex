@@ -1,0 +1,39 @@
+\clearpage\subsection{Implementation}
+We propose a modular Python backend and a TypeScript web frontend. One deployable application with a background worker will keep the four-person project manageable while separating collection, modelling, risk calculation and AI explanation.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[node distance=5mm and 8mm]
+\node[flowbox,text width=13.8cm] (ui) {\textbf{Next.js / React frontend}\par Watchlist\quad Event detail\quad Scenario studio\quad Contextual assistant};
+\node[flowbox,text width=8.35cm,below=of ui.south west,anchor=north west] (api) {\textbf{FastAPI backend}\par Validated API and tool gateway\par Probability, scenario and report modules};
+\node[flowbox,text width=4.1cm,right=of api] (agent) {\textbf{Agent orchestrator}\par Retrieval and explanation\par Hosted model API};
+\node[flowbox,text width=6.25cm,below=of api.south west,anchor=north west] (db) {\textbf{PostgreSQL + Parquet}\par Events and snapshots\par Results and raw evidence};
+\node[flowbox,text width=6.25cm,right=of db] (jobs) {\textbf{Background worker}\par Collection, features and model evaluation};
+\draw[flowarrow] (ui.south -| api.north)--(api.north);
+\draw[flowarrow] (ui.south -| agent.north)--(agent.north);
+\draw[flowarrow] (agent.west)--(api.east);
+\draw[flowarrow] (api.south -| db.north)--(db.north);
+\draw[flowarrow] (jobs.west)--(db.east);
+\end{tikzpicture}
+\caption{Proposed application architecture. The dashboard and assistant share the same calculation services and stored results.}
+\end{figure}
+
+\begin{table}[H]
+\smalltable
+\caption{Preferred choices and the reasons for them.}
+\begin{tabularx}{\linewidth}{@{}L{30mm}L{45mm}Y@{}}
+\toprule\tablehead
+\textbf{Layer} & \textbf{Choice} & \textbf{Reason and trade-off} \\
+\midrule
+Frontend & Next.js, React, TypeScript & Reusable charts and forms; client components for interaction and server components for page/data composition \cite{nextjs}. \\
+Backend & FastAPI and Pydantic & Keep numerical work in Python; typed validation and OpenAPI contracts support both UI and agent tools \cite{fastapi}. \\
+Research & Polars/Pandas, NumPy, scikit-learn; statsmodels as needed & Familiar data and statistical tooling; begin with interpretable models. \\
+Storage & PostgreSQL and Parquet & Relational identifiers and run metadata alongside efficient research files. TimescaleDB is optional if measured volume justifies it. \\
+Jobs and deployment & Python worker, Docker Compose & Move long ingestion/training jobs out of request handling; use one shared deployment before considering distributed services. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+The frontend will receive model outputs, units, quality flags and run identifiers from the backend rather than reimplement financial calculations. Long analyses return a job identifier with queued, running, completed or failed status. Cached results are keyed by data, model, scenario, portfolio and horizon so a changed input cannot silently reuse an incompatible result.
+
+The deployment will use authenticated team access, server-side secrets, persistent database and raw-data volumes, and scheduled backups. An API-hosted language model avoids local model training; a small evaluation will select the provider based on grounded-answer quality, latency and cost. Model versions and prompts will be recorded. The dashboard will remain usable for direct research when the assistant is unavailable.
