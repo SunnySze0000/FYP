@@ -2,6 +2,8 @@
 
 [Back to the repository guide](../README.md)
 
+Read the [compiled proposal](proposal.pdf) directly, or edit and build the source below.
+
 Compile [proposal.tex](proposal.tex), which contains the shared typography and assembles the section files with `\input`. The individual section files are not standalone documents. **Filename prefixes indicate source order, not the printed section number.**
 
 ## Where to edit
@@ -77,4 +79,4 @@ From this `proposal/` directory:
 latexmk -pdf -interaction=nonstopmode -halt-on-error proposal.tex
 ```
 
-Open the generated `proposal.pdf` and inspect page count, contents, citations, figures, tables and page breaks. Resolve missing-reference and overflow warnings in `proposal.log`. PDF output and compilation intermediates are ignored; the source files and figure assets are committed. See the [repository guide](../README.md) for setup, Overleaf and the team branch workflow.
+Open the generated `proposal.pdf` and inspect page count, contents, citations, figures, tables and page breaks. Resolve missing-reference and overflow warnings in `proposal.log`. Commit the rebuilt PDF alongside report source and figure changes in the same pull request; ensure it reflects the final source before merging. Compilation intermediates remain ignored. For PDF conflicts, resolve the source first and regenerate the PDF. Documentation-only changes do not require a rebuild. See the [repository guide](../README.md) for setup, Overleaf and the team branch workflow.

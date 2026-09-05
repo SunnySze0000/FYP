@@ -23,8 +23,7 @@
 *.vrb
 /proposal/build/
 
-# Compiled report only; PDF figures and other source assets can be committed
-/proposal/proposal.pdf
+# Keep proposal/proposal.pdf and source figures available for version control.
 
 # Operating-system files and local editor backups
 .DS_Store

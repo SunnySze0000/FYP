@@ -6,6 +6,7 @@ The initial asset universe is SPY, QQQ and DIA, plus AAPL, MSFT, NVDA, AMZN and 
 
 ## Start here
 
+- [Compiled proposal](proposal/proposal.pdf): read the latest committed report without compiling LaTeX.
 - [Report source](proposal/proposal.tex): main document, formatting and section order.
 - [Section guide](proposal/README.md): find the file for each printed section and follow the editing conventions.
 - [References](proposal/references.tex): bibliography entries used by the report.
@@ -16,17 +17,18 @@ The initial asset universe is SPY, QQQ and DIA, plus AAPL, MSFT, NVDA, AMZN and 
 ```text
 FYP/
 ├── README.md                 # Team entry point and collaboration workflow
-├── .gitignore                # Generated output and local-file exclusions
+├── .gitignore                # Build intermediates and local-file exclusions
 ├── .gitattributes            # Consistent text line endings and binary assets
 └── proposal/
     ├── README.md             # Detailed section-to-file map
     ├── proposal.tex          # Compile this file
+    ├── proposal.pdf          # Compiled report, committed with source changes
     ├── references.tex        # Manually maintained bibliography
     ├── sections/             # Cover and report content, split for collaboration
     └── figures/              # UI images and generation prompts
 ```
 
-`proposal/proposal.pdf` is generated locally and ignored by Git. The `tmp/` folder, if present, contains local review material and is also ignored.
+`proposal/proposal.pdf` is committed so teammates can read the report directly. Rebuild it after report changes and include the updated PDF in the same pull request. LaTeX auxiliary files and the local review folder `tmp/` remain ignored.
 
 ## Build the proposal
 
@@ -58,10 +60,10 @@ git pull --ff-only
 git switch -c report/update-methodology
 ```
 
-After editing, build the proposal and inspect the affected pages. Then stage only the intended source changes; for example:
+After editing, build the proposal and inspect the affected pages. Then stage the intended source changes and the rebuilt PDF; for example:
 
 ```sh
-git add proposal/sections/08-architecture.tex
+git add proposal/sections/08-architecture.tex proposal/proposal.pdf
 git diff --cached --check
 git diff --cached
 git commit -m "Clarify the implementation approach"
@@ -70,7 +72,7 @@ git push -u origin report/update-methodology
 
 These commands assume the team repository is configured as `origin`. Open a pull request into `main`, summarise the content changes, and state whether the PDF compiled and its layout was checked. Have another teammate review it before merging. Keep each pull request focused on a section or a related set of edits to reduce conflicts.
 
-Commit `.tex` files, documentation and required figure assets. Generated PDFs, LaTeX auxiliary files, local review material and credentials should stay out of commits. Share a compiled PDF as a review attachment or release artifact when needed. Ignore rules do not remove files that Git already tracks.
+Commit `.tex` files, documentation, required figure assets and `proposal/proposal.pdf`. Before merging, ensure the PDF was built from the final source in the pull request. If parallel edits cause a PDF conflict, resolve the source conflicts first, rebuild the PDF and stage the regenerated file. Documentation-only changes do not require a rebuild. LaTeX auxiliary files, local review material and credentials should stay out of commits.
 
 ## Before requesting review
 
