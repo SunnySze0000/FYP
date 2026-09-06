@@ -19,12 +19,15 @@ Federal Reserve & Meeting dates, statements and announced rate decisions. & Esta
 \end{tabularx}
 \end{table}
 
-The initial audit will test real sample downloads for all eight securities and the chosen event family before fixing the provider. If access is insufficient, the team will use a documented, permitted university dataset or equivalent licensed export through the same schema. Provider, adjustment convention and coverage will be fixed for each experiment; overlapping series will be compared before any switch.
+\subsubsection{How on-chain data benefits EventLens}
+Public settlement records link activity to addresses and outcome tokens \cite{polymarketorder}. EventLens will use these histories to measure historically informative wallets' directional exposure, agreement and concentration across covered events. Separating transfers and token lifecycle operations from purchases avoids treating every balance increase as a new prediction.
+
+Users can trace contributions to recorded transactions, and researchers can check indexed data against chain receipts. Addresses represent pseudonymous accounts, not verified people or independent decision-makers. Comparing models with and without wallet features will test whether this Web3 evidence improves forecasts; provenance alone does not establish skill.
 
 \subsubsection{A bounded collection strategy}
-We will enumerate eligible events, collect their public metadata, and backfill only relevant market and wallet histories. We will not mirror the entire blockchain or all Polymarket positions. Goldsky documents a 2026 contract migration and warns that legacy public subgraphs may be incomplete; the audit must therefore verify version-specific coverage rather than assume one continuous dataset \cite{goldsky}.
+We will backfill only eligible events and relevant wallet histories, using indexed data and hosted RPC without running a blockchain node. Goldsky warns that legacy subgraphs may be incomplete after the 2026 contract migration; the audit will verify version-specific coverage \cite{goldsky}.
 
-Forward market snapshots will be retained from the start of the project, while equity bars will be refreshed after the trading session. Historical options quotes are a separate acquisition decision and are not required for the core dashboard. No provider subscription or historical depth is assumed to have been secured by this proposal.
+The audit will test sample downloads and fix provider, adjustment convention and coverage for each experiment. Forward market snapshots will be collected from project start and equity bars refreshed after each session. Permitted university data are a fallback. Access and historical depth remain unconfirmed; options quotes are optional.
 
 \clearpage
 \subsubsection{Turning source records into research inputs}
