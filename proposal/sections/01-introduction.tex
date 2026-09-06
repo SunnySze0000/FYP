@@ -1,22 +1,21 @@
 \section{Introduction}
-\subsection{Overview}
-Investors regularly face questions such as whether a central bank will change interest rates and how that decision might affect their holdings. News explains the event, price charts show market reactions, and prediction markets provide a changing estimate of the event's likelihood. Connecting these sources into a clear assessment of portfolio risk requires substantial data collection and specialist analysis.
+\subsection{Background and Motivation}
+Financial assets are repeatedly repriced around discrete events such as central-bank decisions, elections, and geopolitical developments. Investors can observe news, asset prices, and volatility indicators, but these sources do not directly show a continuously updated probability of the underlying event. Prediction markets such as Polymarket aggregate the beliefs of market participants into continuously updated probabilities, which can serve as a useful predictor of the real-world events \cite{wolfers2004}.
 
-Prediction-market prices are useful starting points, but their reliability can vary with liquidity and the participants trading in a market. Public wallet records offer another possible source of information: some participants may have a stronger forecasting record than others. A large position or a profitable trade alone, however, does not demonstrate forecasting skill. The value of wallet information must be measured against what the public price already reveals.
+Beyond these aggregate probabilities, Polymarket adds a distinctive Web3 dimension through a hybrid trading architecture. Orders are created and matched through an off-chain central limit order book, while matched trades settle on Polygon. Its blockchain-based infrastructure provides transparent transaction histories that enable the behaviour and historical performance of individual participants to be analysed. This creates an opportunity to investigate whether information embedded in prediction-market activity can provide useful signals for traditional financial markets. 
 
-Even an accurate event probability does not directly tell an investor how much an equity might move. EventLens will make this second step explicit by linking selected events to historical asset responses or clearly labelled scenario assumptions. The interface will show both the estimated impact and the uncertainty in that mapping.
+This project aims to develop a machine-learning-assisted quantitative analysis framework that extracts information from Polymarket and evaluates its value in forecasting financial asset volatility. 
 
 \subsubsection{Research question}
-Does historically informative Polymarket wallet activity improve event-probability estimates beyond market prices and anonymous trading flow, and does any improvement help explain or forecast risk in selected indices and equities?
 
-The project has three connected questions: whether wallet information improves probability forecasts, whether event information improves asset-risk forecasts, and whether an evidence-grounded AI interface helps users understand the results. Each question will be evaluated separately so that a useful interface does not conceal weak forecasting performance.
+Could information embedded in Polymarket's on-chain trading activity improve conventional financial-market volatility forecasts and provide actionable insights for investors?
 
 \subsection{Objectives}
 \begin{enumerate}
-\item \textbf{Build a trustworthy data foundation.} Join prediction-market definitions, prices, wallet activity and equity returns into a dataset that can reconstruct what was known at a particular time.
-\item \textbf{Test a wallet-informed probability model.} Compare raw prices, calibrated prices, anonymous flow and wallet-aware flow using the same historical events.
-\item \textbf{Explore event-related risk.} Estimate conditional portfolio outcomes and investigate whether event signals add value to conventional volatility forecasts.
-\item \textbf{Deliver a readable research product.} Present sources, assumptions and results through a dashboard, scenario workspace and tool-using AI assistant.
+\item \textbf{Develop a smart-wallet identification model} using historical Polymarket on-chain trading behavior to distinguish informative traders from noise, hedging, and other non-predictive activity.
+\item \textbf{Construct adjusted event probabilities} by weighting prediction-market information according to the estimated informativeness of smart wallets, and compare it with raw probability inferred from the bets.
+\item \textbf{Develop a volatility forecasting model} that incorporates Polymarket-derived signals alongside a conventional market volatility baseline.
+\item \textbf{Evaluate whether Polymarket data provides incremental predictive value} through historical backtesting and comparison against benchmark volatility forecasts, and present the results through an interactive AI-assisted dashboard.
 \end{enumerate}
 
-The intended users are students, research-oriented retail investors and analysts who understand basic portfolio concepts but do not have their own blockchain and modelling infrastructure. The contribution is an evaluated connection from public event evidence to asset risk, supported by a reproducible product. It does not depend on discovering profitable traders or achieving positive investment returns.
+The primary target user is a research-oriented retail investor or finance professional who understands basic portfolio concepts but lacks the infrastructure to query blockchains, evaluate prediction-market participants, and construct event-conditioned risk models. EventLens is intended as a research and paper-decision tool rather than personalised financial advice.
