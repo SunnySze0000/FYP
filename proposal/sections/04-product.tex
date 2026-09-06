@@ -1,9 +1,9 @@
 \pagechapter{Methodology}
 \subsection{Design}
 \subsubsection{A guided research journey}
-A user begins with an index, an equity or a small paper portfolio and selects a time horizon. EventLens then presents eligible events, explains why they may matter, and allows the user to inspect the probability evidence before opening a portfolio scenario. A contextual AI assistant can answer questions at each step. A saved report preserves the analysis for later review.
+A user selects a supported asset or paper portfolio and a time horizon. EventLens presents relevant events, compares market and wallet-informed probabilities, and lets the user investigate the underlying wallet activity before exploring portfolio scenarios. A contextual AI assistant explains the evidence, and saved reports preserve the analysis for later review.
 
-For example, a user researching SPY and MSFT over the next five trading days could inspect an upcoming rate decision, compare the market and adjusted probabilities, and explore a lower-exposure paper allocation. If the announcement lies outside the selected horizon or the equity-response estimate is unsupported, the interface will explain the limitation and withhold the affected calculation.
+For example, a user researching SPY over five trading days could inspect an upcoming rate decision, identify which tracked wallets are increasing YES or NO exposure, and compare the resulting risk scenarios. An incompatible announcement horizon or unsupported asset-response estimate will be explained before withholding the affected calculation.
 
 \begin{table}[H]
 \smalltable
@@ -14,7 +14,7 @@ For example, a user researching SPY and MSFT over the next five trading days cou
 \midrule
 Overview and watchlist & Supported assets, upcoming eligible events, source freshness and coverage. & Select holdings, choose a horizon and open an event. \\
 Event detail & Exact question, resolution rule, announcement time, raw and adjusted probability history. & Compare the estimates and inspect uncertainty and liquidity. \\
-Wallet evidence & Historical sample size, directional flow, concentration and provisional skill status. & Examine why wallet activity changed the estimate without treating a ranking as certainty. \\
+Smart-wallet tracker & Tracked addresses, prior event history, YES/NO exposure, recent activity and evidence quality. & Follow wallets, inspect their records and compare their contribution to an event signal. \\
 Scenario studio & YES/NO outcomes, portfolio loss estimates, VaR, expected shortfall and response assumptions. & Change a reviewed stress assumption or compare a bounded paper allocation. \\
 Research assistant & An explanation tied to the selected event, portfolio, horizon and evidence. & Ask follow-up questions and open the supporting sources. \\
 Saved research & Analysis date, inputs, model and scenario versions, source links and limitations. & Revisit a frozen run and export a readable report with a machine-readable result. \\
@@ -22,12 +22,12 @@ Saved research & Analysis date, inputs, model and scenario versions, source link
 \end{tabularx}
 \end{table}
 
-\subsubsection{Design principles}
-The interface will use a black-and-white visual scheme with neutral grayscale accents, clear typography and consistent navigation. The event question and its implication for the selected assets take priority. Technical details, such as wallet-score components and model settings, appear in expandable evidence panels. Probability and loss charts will use labelled axes, legends and line styles so that interpretation does not rely on colour alone.
+\subsubsection{Smart-wallet tracking and evidence inspection}
+Users can browse wallets in covered events, filter by history and activity, and follow public addresses in a research watchlist without connecting a wallet. Profiles show earlier resolved-event decisions, entry prices, subsequent price movements, reconstructed positions and an activity timeline. A provisional ``smart'' label denotes historically informative behaviour, supported by a dated score, sample size and coverage assessment.
 
-Every result will display its horizon, unit and as-of time. Observed prices, model estimates and user-entered assumptions will have distinct labels. Loading, missing data, stale data and model-unavailable states will be designed explicitly. A failed calculation will never appear as a zero-risk result. Keyboard navigation, readable contrast and accessible table alternatives will be included in the implementation.
+Within an event, users can compare wallets' YES/NO exposure changes, agreement and concentration, then inspect their contributions to the adjusted estimate. Personal watchlists do not change model-selection rules. Source and blockchain transaction links support inspection, with sampled verification distinguished from unchecked records.
 
-The assistant remains next to the evidence being discussed. Selecting a cited result will open its source or calculation details; changing the horizon or portfolio will require a new calculation and visibly update the analysis context.
+Results show their horizon, as-of time and missing evidence, separating observations from estimates and assumptions. Users can request explanations and save analyses. Insufficient wallet history leaves the adjustment unavailable while retaining supported market information.
 
 \clearpage
 \subsubsection{Concept screens}

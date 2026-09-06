@@ -4,11 +4,11 @@ We propose a modular Python backend and a TypeScript web frontend. One deployabl
 \begin{figure}[H]
 \centering
 \begin{tikzpicture}[node distance=5mm and 8mm]
-\node[flowbox,text width=13.8cm] (ui) {\textbf{Next.js / React frontend}\par Watchlist\quad Event detail\quad Scenario studio\quad Contextual assistant};
-\node[flowbox,text width=8.35cm,below=of ui.south west,anchor=north west] (api) {\textbf{FastAPI backend}\par Validated API and tool gateway\par Probability, scenario and report modules};
+\node[flowbox,text width=13.8cm] (ui) {\textbf{Next.js / React frontend}\par Event detail\quad Wallet tracker\quad Scenario studio\quad Assistant};
+\node[flowbox,text width=8.35cm,below=of ui.south west,anchor=north west] (api) {\textbf{FastAPI backend}\par Validated API and tool gateway\par Wallet, probability, scenario and report modules};
 \node[flowbox,text width=4.1cm,right=of api] (agent) {\textbf{Agent orchestrator}\par Retrieval and explanation\par Hosted model API};
-\node[flowbox,text width=6.25cm,below=of api.south west,anchor=north west] (db) {\textbf{PostgreSQL + Parquet}\par Events and snapshots\par Results and raw evidence};
-\node[flowbox,text width=6.25cm,right=of db] (jobs) {\textbf{Background worker}\par Collection, features and model evaluation};
+\node[flowbox,text width=6.25cm,below=of api.south west,anchor=north west] (db) {\textbf{PostgreSQL + Parquet}\par Events, wallet activity and score snapshots\par Results and chain evidence};
+\node[flowbox,text width=6.25cm,right=of db] (jobs) {\textbf{Background worker}\par API / indexed chain ingestion\par Receipt checks and wallet feature updates};
 \draw[flowarrow] (ui.south -| api.north)--(api.north);
 \draw[flowarrow] (ui.south -| agent.north)--(agent.north);
 \draw[flowarrow] (agent.west)--(api.east);
@@ -18,22 +18,14 @@ We propose a modular Python backend and a TypeScript web frontend. One deployabl
 \caption{Proposed application architecture. The dashboard and assistant share the same calculation services and stored results.}
 \end{figure}
 
-\begin{table}[H]
-\smalltable
-\caption{Preferred choices and the reasons for them.}
-\begin{tabularx}{\linewidth}{@{}L{30mm}L{45mm}Y@{}}
-\toprule\tablehead
-\textbf{Layer} & \textbf{Choice} & \textbf{Reason and trade-off} \\
-\midrule
-Frontend & Next.js, React, TypeScript & Reusable charts and forms; client components for interaction and server components for page/data composition \cite{nextjs}. \\
-Backend & FastAPI and Pydantic & Keep numerical work in Python; typed validation and OpenAPI contracts support both UI and agent tools \cite{fastapi}. \\
-Research & Polars/Pandas, NumPy, scikit-learn; statsmodels as needed & Familiar data and statistical tooling; begin with interpretable models. \\
-Storage & PostgreSQL and Parquet & Relational identifiers and run metadata alongside efficient research files. TimescaleDB is optional if measured volume justifies it. \\
-Jobs and deployment & Python worker, Docker Compose & Move long ingestion/training jobs out of request handling; use one shared deployment before considering distributed services. \\
-\bottomrule
-\end{tabularx}
-\end{table}
+\subsubsection{Application services}
+Next.js and React will provide interactive views; FastAPI and Pydantic will validate requests and share calculation services with the assistant \cite{nextjs,fastapi}. Polars/Pandas, NumPy and scikit-learn will support research. PostgreSQL will hold linked records and run metadata, while Parquet preserves raw evidence and research datasets. A Python worker and Docker Compose will support one manageable deployment.
 
-The frontend will receive model outputs, units, quality flags and run identifiers from the backend rather than reimplement financial calculations. Long analyses return a job identifier with queued, running, completed or failed status. Cached results are keyed by data, model, scenario, portfolio and horizon so a changed input cannot silently reuse an incompatible result.
+\subsubsection{Smart-wallet tracking pipeline}
+The worker will discover candidate addresses from covered markets and incrementally collect their relevant histories through activity APIs and version-compatible indexed chain data. It will map condition and outcome-token identifiers, deduplicate logs, and reconcile fills with transfers, splits, merges and redemptions. Checkpoints and retries make collection resumable. Polygon receipt checks will verify sampled records; block references and verification status will accompany the evidence.
 
-The deployment will use authenticated team access, server-side secrets, persistent database and raw-data volumes, and scheduled backups. An API-hosted language model avoids local model training; a small evaluation will select the provider based on grounded-answer quality, latency and cost. Model versions and prompts will be recorded. The dashboard will remain usable for direct research when the assistant is unavailable.
+Separate tables will store wallet activity, position snapshots, dated skill scores, event-level contributions and user watchlists. Scores will be recomputed when eligible outcomes resolve; new activity will refresh exposure and aggregate flow. Each snapshot records its information cut-off, coverage and model version. Incomplete histories are flagged and excluded from calculations that require complete positions.
+
+Backend endpoints will supply wallet search, profiles, watchlist updates, activity timelines and event contributions to both the tracker and assistant. The frontend will show the latest completed snapshot and refresh status. Watching an address does not make it model-eligible; scoring follows the shared research rules.
+
+Long analyses return a job identifier and status. Cached results include data, wallet-score, model, scenario, portfolio and horizon versions. Authenticated team access, server-side secrets, persistent volumes and backups protect the deployment. Hosted-model prompts and versions will be recorded, and direct research remains available when the assistant is unavailable.
