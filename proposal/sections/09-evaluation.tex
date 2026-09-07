@@ -6,23 +6,23 @@ Testing checks that the implementation is \emph{correct}, that the code and pipe
 
 \textbf{Calculation tests.} The probability model, wallet-scoring routine and the scenario/risk engine will be unit-tested against reference cases with known outputs: event probabilities of exactly zero and one, a missing asset, a one-sided or illiquid order book, and a singular or near-singular covariance matrix. API-level tests will enforce structural invariants -- portfolio weights non-negative and summing to one, horizons restricted to supported values, VaR and expected shortfall computed consistently with their definitions -- so that a broken invariant fails loudly rather than producing a plausible-looking wrong number.
 
-\textbf{Workflow and agent tests.} End-to-end tests will exercise the full path from event selection to a saved, shareable report, including stale or unavailable upstream data. Agent-specific tests will cover malformed or out-of-scope tool requests and adversarial instructions embedded in retrieved market or news text, since retrieved content is treated as untrusted data rather than instructions. The standing requirement is that every number shown to the user, including any number referenced by the AI assistant, traces back to a saved, versioned result rather than to generated text; this will itself be checked by a small set of tests that compare assistant output against the underlying stored result.
+\textbf{Workflow and agent tests.} End-to-end tests will exercise the full path from event selection to a saved, shareable report, including stale or unavailable upstream data. Agent-specific tests will cover malformed or out-of-scope tool requests and adversarial instructions embedded in retrieved market or news text, since retrieved content is treated as untrusted data rather than instructions. The standing requirement is that every number shown to the user, including any number referenced by the AI assistant, traces back to a saved, versioned result rather than to generated text. This will itself be checked by a small set of tests that compare assistant output against the underlying stored result.
 
-\textbf{Indicative metrics.} Pass/fail against the reference cases and invariants above; automated-test coverage of the ingestion and calculation modules; zero duplicate records after a replayed or interrupted collection run; and successful, byte-identical reproduction of a prior run's results from its stored data manifest, configuration and random seed.
+\textbf{Indicative metrics.} Pass/fail against the reference cases and invariants above, automated-test coverage of the ingestion and calculation modules, zero duplicate records after a replayed or interrupted collection run, and successful, byte-identical reproduction of a prior run's results from its stored data manifest, configuration and random seed.
 
 \subsection{Evaluation}
 Evaluation asks whether the finished system meets the objectives in Section~1.2.
 
 \begin{table}[H]
 \smalltable
-\caption{How each objective will be evaluated (indicative; refined after the feasibility audit).}
+\caption{How each objective will be evaluated (indicative and subject to refinement after the feasibility audit).}
 \begin{tabularx}{\linewidth}{@{}L{20mm} L{42mm} Y@{}}
 \toprule\tablehead
 \textbf{Objective} & \textbf{Question} & \textbf{Indicative metric} \\
 \midrule
-Wallet identification & Does the smart-wallet score capture information beyond chance? & Backtested accuracy/Brier score vs.\ a label-shuffled baseline; sensitivity to the eligibility threshold \\
+Wallet identification & Does the smart-wallet score capture information beyond chance? & Backtested accuracy/Brier score vs.\ a label-shuffled baseline, with sensitivity to the eligibility threshold \\
 Adjusted probability & Does wallet-weighting improve on the raw market price? & Brier score and log loss across the baseline ladder (raw price $\rightarrow$ +liquidity $\rightarrow$ +anonymous flow $\rightarrow$ +wallet signal) \\
-Volatility forecasting & Does the augmented model beat a conventional baseline? & Variance error and QLIKE vs.\ historical/EWMA volatility; VaR exceedance rate \\
+Volatility forecasting & Do event features improve the same regression model? & MSE and QLIKE for the recent-return baseline and its augmented version on identical forecast dates \\
 Dashboard and assistant & Is the system usable, and does it stay evidence-linked? & Formative user study: task completion, numerical agreement between assistant and dashboard, correct abstention on insufficient data \\
 \bottomrule
 \end{tabularx}
@@ -31,7 +31,7 @@ Dashboard and assistant & Is the system usable, and does it stay evidence-linked
 \subsubsection{Experimental design}
 Comparisons will use a chronological train/validation/test split, with each event's contracts and snapshots kept together and overlapping return windows purged at split boundaries, so that no test-period information leaks backward. The final test interval stays unopened until models and thresholds are fixed. Wallet scores, calibration and scenario inputs will use only information available as of each historical forecast time, matching the point-in-time discipline enforced in testing.
 
-Given the likely small number of independent announcement dates, results will be reported with confidence intervals rather than as single numbers, and a broader macro sample would require a documented scope revision rather than an informal expansion mid-project. Multiple wallet-level significance tests will use a false-discovery correction rather than being read individually. A null result -- no measurable improvement from wallet or event signals -- is a valid and reportable outcome; profitability is explicitly not a success criterion.
+Given the likely small number of independent announcement dates, results will be reported with confidence intervals rather than as single numbers, and a broader macro sample would require a documented scope revision rather than an informal expansion mid-project. Multiple wallet-level significance tests will use a false-discovery correction rather than being read individually. A null result -- no measurable improvement from wallet or event signals -- is a valid and reportable outcome. Profitability is explicitly not a success criterion.
 
 \subsubsection{Usability evaluation}
 A small formative study (target 6--8 participants) will ask users to find an event, explain a probability difference, compare portfolio scenarios and identify a stated limitation, while we record task completion, time and errors. Fixed questions will compare three configurations -- the full assistant, the dashboard alone, and a retrieval-only assistant without the calculation gateway -- measured on source coverage, numerical agreement with the underlying stored result, correct abstention when evidence is insufficient, latency and estimated cost per query.
@@ -44,13 +44,13 @@ A small formative study (target 6--8 participants) will ask users to find an eve
 \toprule\tablehead
 \textbf{Risk} & \textbf{Response} \\
 \midrule
-Too few independent events for reliable fitting & Report a descriptive pilot instead of a fitted comparison; widen the event family only via a documented revision. \\
-Selection bias in "smart" wallets & Freeze the wallet universe and score cut-offs before the test window opens; apply shrinkage to low-sample scores. \\
-Confounded asset response to an event & Use reviewed stress ranges and sensitivity analysis; keep event-probability and event-to-asset uncertainty separate. \\
+Too few independent events for reliable fitting & Report a descriptive pilot instead of a fitted comparison. Widen the event family only via a documented revision. \\
+Selection bias in "smart" wallets & Freeze the wallet universe and score cut-offs before the test window opens. Apply shrinkage to low-sample scores. \\
+Confounded asset response to an event & Use reviewed stress ranges and sensitivity analysis. Keep event-probability and event-to-asset uncertainty separate. \\
 Multiple-comparison inflation & Apply false-discovery control across wallet-level and baseline-ladder tests before reporting significance. \\
 Unsupported AI claims in the user study & Restrict tool arguments, link every numeric claim to a stored result, and test missing-data abstention explicitly. \\
 \bottomrule
 \end{tabularx}
 \end{table}
 
-Success requires reproducible data and experiment configuration, a controlled baseline comparison, a tested risk engine, and a usable, evidence-linked interface; positive, negative and null findings will all be reported. Exact sample sizes, thresholds and the final participant count will be confirmed once the data-feasibility audit (Section~2.1) fixes what history is actually available.
+Success requires reproducible data and experiment configuration, a controlled baseline comparison, a tested risk engine, and a usable, evidence-linked interface. Positive, negative and null findings will all be reported. Exact sample sizes, thresholds and the final participant count will be confirmed once the data-feasibility audit (Section~2.1) fixes what history is actually available.

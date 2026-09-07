@@ -5,13 +5,13 @@ We will begin with a raw probability based on the YES bid/ask midpoint, recordin
 A simple regularised logistic model will calibrate this estimate using earlier resolved events. The wallet-informed model will then add a small number of signals: overall directional flow, the flow of historically informative wallets and market-quality controls. Coefficients will be fitted on training data, rather than chosen to produce a desired adjustment. Beta calibration is a possible robustness check if justified by the sample \cite{kull}.
 
 \subsubsection{Select and track informative wallets}
-An informative wallet is an observed account whose earlier decisions contain information beyond the contemporaneous market price. Our first score will examine whether the wallet repeatedly chose the eventual outcome at informative prices, whether prices subsequently moved in its direction, and how broad its prior history was. Returns after fees will be a supporting diagnostic; profitable liquidity provision alone is not proof of forecasting skill.
+An informative wallet is an observed account whose earlier decisions contain information beyond the contemporaneous market price. Our first score will examine whether the wallet repeatedly chose the eventual outcome at informative prices, whether prices subsequently moved in its direction, and how broad its prior history was. Returns after fees will be a supporting diagnostic. Profitable liquidity provision alone is not proof of forecasting skill.
 
 Repeated fills will be consolidated into wallet--event decisions. Balanced YES and NO holdings will be distinguished from directional exposure. Scores based on few independent events will be pulled towards the population average, a technique called shrinkage. A provisional eligibility rule is ten earlier resolved events across at least three announcement dates, with five- and twenty-event thresholds checked in sensitivity analysis. If the history cannot support this rule, the wallet signal will be unavailable rather than assigned artificial confidence.
 
-Wallet eligibility and scores will use only records available and outcomes resolved by each forecast cut-off. New activity updates exposure; newly resolved events update later scores. Frozen snapshots prevent today's successful wallets from being retrospectively selected for earlier tests.
+Wallet eligibility and scores will use only records available and outcomes resolved by each forecast cut-off. New activity updates exposure. Newly resolved events update later scores. Frozen snapshots prevent today's successful wallets from being retrospectively selected for earlier tests.
 
-Contributions combine earlier skill, direction, recency and capped size so one large wallet cannot dominate. Comparing total and eligible-wallet flow tests whether selection adds information. Profiles expose these components, timestamps, concentration and disagreement; new-wallet anomalies remain separate from historical skill.
+Contributions combine earlier skill, direction, recency and capped size so one large wallet cannot dominate. Comparing total and eligible-wallet flow tests whether selection adds information. Profiles expose these components, timestamps, concentration and disagreement. New-wallet anomalies remain separate from historical skill.
 
 \subsubsection{Link events to assets}
 The event research agent may suggest that a rate decision matters to SPY or MSFT, but numerical impacts will come from matched historical event windows and conventional market controls. The mapping must account for surprise relative to the expectation already embedded in prices. Sparse asset-specific estimates will be pooled or replaced by explicitly reviewed stress ranges.
@@ -34,35 +34,28 @@ The engine will report scenario returns, horizon volatility, a chosen loss-thres
 
 Paper comparisons will hold the event and model version constant while comparing the current allocation with a user-selected reduction in a supported holding and a corresponding increase in cash. Weights must sum to one and remain non-negative. Any displayed benefit must be considered alongside turnover, transaction-cost assumptions and estimation uncertainty.
 
-\subsubsection{Volatility Forecasting \& Delta-Hedged Trading Strategy Extension}
+\subsubsection{Volatility forecasting and a trading extension}
 
-Once the on-chain-adjusted probability $p_{\text{adj}}$ is obtained, EventLens bridges prediction-market dynamics to traditional asset volatility through a dedicated Volatility Forecasting and Delta-Hedged Trading Strategy extension. This pipeline automates contract selection, feature extraction, volatility model fitting, and delta-hedged paper trading to evaluate the forecasting performance of on-chain signals.
+After estimating event probabilities, we will test whether prediction-market information improves a simple forecast of asset-price variation. The comparison uses one regression baseline and an augmented version of that same model. A separate trading extension would explore the forecasts' possible financial use.
 
 \paragraph{Recurring event series and contract selection}
 Polymarket serves as the sole source of prediction-market data for EventLens. The platform provides continuous tracking across recurring event families, including macroeconomic releases (e.g., FOMC rate decisions, CPI releases) as well as binary Polymarket contracts on equity index closing levels (e.g., S\&P 500 / NASDAQ daily and weekly target closes) and precious metals price targets (e.g., Gold and Silver closes).
 
 To maintain temporal consistency across continuous volatility forecasting horizons, an automated contract selection engine identifies and locks onto the closest-to-expiry market contract for any chosen event family. When event resolutions overlap or liquidity is fragmented across multiple contracts, the selection engine filters for active contracts meeting minimum volume and bid-ask spread thresholds, continuously rolling to the next active contract upon resolution.
 
-\paragraph{Feature engineering pipeline}
-The feature extraction layer constructs point-in-time predictive signals derived from the adjusted probability $p_{\text{adj}}$ alongside raw market microstructure variables. Users are given interactive control to toggle and configure exogenous inputs depending on their desired baseline.
-
-\begin{itemize}
-    \item \textbf{Probability Signal Metrics}: Includes $p_{\text{adj}}$, raw probability $p_{\text{raw}}$, probability spread $(p_{\text{adj}} - p_{\text{raw}})$, model confidence bands, and probability jump/surprise signals ($\Delta p_{\text{adj}}$ measured over historical lookback windows up to the forecast cutoff).
-    \item \textbf{User-Configurable Exogenous Baselines}: Allows optional inclusion of benchmark volatility proxies (e.g., VIX, MOVE) and historical realized volatility as regime controls.
-\end{itemize}
-
-\paragraph{Realized volatility forecasting models}
-The extracted signals serve as exogenous features to forecast future realized volatility over standard horizons (e.g., 1-day, 5-day). The core target over $H$ trading days is defined as the sum of squared daily log returns:
+\clearpage
+\paragraph{One baseline and one augmented model}
+The forecast target over $H$ trading days will be the sum of squared daily log returns:
 \begin{equation}
 RV_{t,H}=\sum_{h=1}^{H} r_{t+h}^{2}.
 \end{equation}
+This is a daily-data proxy for realised variance, not volatility itself. It measures the size of price movements without treating gains and losses as cancellations, but is noisy, especially for one day. Comparisons will use the same horizon and units. Any displayed volatility will be the square root of the corresponding variance estimate.
 
-EventLens implements three core volatility model structures:
-\begin{itemize}
-    \item \textbf{HAR-RV-X (Heterogeneous Autoregressive with Exogenous Signals)}: Extends the classical HAR-RV framework (which models realized volatility via daily, weekly, and monthly components) by adding linear exogenous terms for $p_{\text{adj}}$ and probability jump signals. Assumes a linear, multi-frequency structure for volatility persistence.
-    \item \textbf{GARCH-X}: Incorporates exogenous prediction-market jump and log-odds signals directly into the conditional variance equation of a standard GARCH model. Assumes stationarity and clustering in conditional volatility returns.
-    \item \textbf{Machine Learning Baselines (XGBoost / Random Forest)}: Non-linear tree ensemble models fitted on historical volatility features, probability spreads, and regime signals. Evaluated using standard robust loss functions such as QLIKE (Quasi-Likelihood) and Mean Squared Error (MSE) to prevent extreme volatility outliers from distorting model fitting.
-\end{itemize}
+\textbf{Baseline.} We will fit a linear regression with an intercept and one input: the average squared daily return over the preceding 20 trading days. This provides a simple forecast based only on recent asset-price variation and requires no intraday data. A separate fit will be made for each supported asset and horizon using ordinary least squares on the training period.
+
+\textbf{Augmented model.} The same regression will retain that input and add two event features: the market-implied probability $p_{\text{raw}}$ and the wallet adjustment $p_{\text{adj}}-p_{\text{raw}}$. Here $p_{\text{adj}}$ is the experimental wallet-informed probability. Both versions will use identical forecast dates, targets and training windows, restricted to dates with usable event evidence. The augmented model therefore tests the combined contribution of prediction-market information. The separate probability experiments assess whether wallet histories themselves add information.
+
+Forecasts from both versions will use the same small positive floor, fixed before testing. Event features for training and evaluation will be generated using only data and probability-model fits available before each forecast date. Mean squared error (MSE) and quasi-likelihood loss (QLIKE) will compare forecasts on later, unseen observations \cite{patton}. These are evaluation measures, not claims of resistance to outliers. The interface will display the fixed comparison rather than let users change the baseline or feature set during evaluation.
 
 \paragraph{Delta-hedged backtesting framework}
 To demonstrate the practical utility of the forecasted realized volatility, EventLens runs an automated delta-hedged backtest. The backtest engine compares the model's forecasted realized volatility against current option-implied volatility (IV) from option market quotes to identify implied-versus-forecasted variance gaps. 
