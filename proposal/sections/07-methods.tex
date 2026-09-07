@@ -34,12 +34,37 @@ The engine will report scenario returns, horizon volatility, a chosen loss-thres
 
 Paper comparisons will hold the event and model version constant while comparing the current allocation with a user-selected reduction in a supported holding and a corresponding increase in cash. Weights must sum to one and remain non-negative. Any displayed benefit must be considered alongside turnover, transaction-cost assumptions and estimation uncertainty.
 
-\subsubsection{Test whether event signals improve volatility forecasts}
-The core forecasting experiment will compare a conventional daily-return volatility baseline with the same baseline augmented by event probabilities, their recent changes and the difference between adjusted and raw estimates. Rolling historical variance and exponentially weighted variance provide simple benchmarks. The initial observed target over $H$ trading days will be the sum of squared daily log returns:
+\subsubsection{Volatility Forecasting \& Delta-Hedged Trading Strategy Extension}
+
+Once the on-chain-adjusted probability $p_{\text{adj}}$ is obtained, EventLens bridges prediction-market dynamics to traditional asset volatility through a dedicated Volatility Forecasting and Delta-Hedged Trading Strategy extension. This pipeline automates contract selection, feature extraction, volatility model fitting, and delta-hedged paper trading to evaluate the forecasting performance of on-chain signals.
+
+\paragraph{Recurring event series and contract selection}
+Polymarket serves as the sole source of prediction-market data for EventLens. The platform provides continuous tracking across recurring event families, including macroeconomic releases (e.g., FOMC rate decisions, CPI releases) as well as binary Polymarket contracts on equity index closing levels (e.g., S\&P 500 / NASDAQ daily and weekly target closes) and precious metals price targets (e.g., Gold and Silver closes).
+
+To maintain temporal consistency across continuous volatility forecasting horizons, an automated contract selection engine identifies and locks onto the closest-to-expiry market contract for any chosen event family. When event resolutions overlap or liquidity is fragmented across multiple contracts, the selection engine filters for active contracts meeting minimum volume and bid-ask spread thresholds, continuously rolling to the next active contract upon resolution.
+
+\paragraph{Feature engineering pipeline}
+The feature extraction layer constructs point-in-time predictive signals derived from the adjusted probability $p_{\text{adj}}$ alongside raw market microstructure variables. Users are given interactive control to toggle and configure exogenous inputs depending on their desired baseline.
+
+\begin{itemize}
+    \item \textbf{Probability Signal Metrics}: Includes $p_{\text{adj}}$, raw probability $p_{\text{raw}}$, probability spread $(p_{\text{adj}} - p_{\text{raw}})$, model confidence bands, and probability jump/surprise signals ($\Delta p_{\text{adj}}$ measured over historical lookback windows up to the forecast cutoff).
+    \item \textbf{User-Configurable Exogenous Baselines}: Allows optional inclusion of benchmark volatility proxies (e.g., VIX, MOVE) and historical realized volatility as regime controls.
+\end{itemize}
+
+\paragraph{Realized volatility forecasting models}
+The extracted signals serve as exogenous features to forecast future realized volatility over standard horizons (e.g., 1-day, 5-day). The core target over $H$ trading days is defined as the sum of squared daily log returns:
 \begin{equation}
 RV_{t,H}=\sum_{h=1}^{H} r_{t+h}^{2}.
 \end{equation}
-This is a noisy daily-data proxy for realised variation; at one day it is especially noisy. It differs from the variance of the terminal portfolio return above. We will compare like-for-like targets and annualisation conventions and will not insert the terminal mixture's between-outcome term into a path-variance formula. If suitable intraday histories exist, a richer realised-variance measure and HAR-RV, GARCH-X or a tree model can be explored. These are candidate methods, not commitments to implement all models.
 
-\subsubsection{Optional volatility trading study}
-A delta-hedged paper options backtest may compare forecast variance with option-implied variance only after acquiring historical quotes with matching underlying, horizon and expiry. Costs, bid/ask spreads, hedge frequency and execution assumptions must be included. Results would report after-cost profit and loss, drawdown and sensitivity rather than promise a variance premium. This extension is optional and will not displace the core probability, risk or interface evaluation.
+EventLens implements three core volatility model structures:
+\begin{itemize}
+    \item \textbf{HAR-RV-X (Heterogeneous Autoregressive with Exogenous Signals)}: Extends the classical HAR-RV framework (which models realized volatility via daily, weekly, and monthly components) by adding linear exogenous terms for $p_{\text{adj}}$ and probability jump signals. Assumes a linear, multi-frequency structure for volatility persistence.
+    \item \textbf{GARCH-X}: Incorporates exogenous prediction-market jump and log-odds signals directly into the conditional variance equation of a standard GARCH model. Assumes stationarity and clustering in conditional volatility returns.
+    \item \textbf{Machine Learning Baselines (XGBoost / Random Forest)}: Non-linear tree ensemble models fitted on historical volatility features, probability spreads, and regime signals. Evaluated using standard robust loss functions such as QLIKE (Quasi-Likelihood) and Mean Squared Error (MSE) to prevent extreme volatility outliers from distorting model fitting.
+\end{itemize}
+
+\paragraph{Delta-hedged backtesting framework}
+To demonstrate the practical utility of the forecasted realized volatility, EventLens runs an automated delta-hedged backtest. The backtest engine compares the model's forecasted realized volatility against current option-implied volatility (IV) from option market quotes to identify implied-versus-forecasted variance gaps. 
+
+When a variance gap is detected, the strategy simulates a delta-neutral position (e.g., ATM options hedged continuously against the underlying asset) to harvest the variance risk premium. Costs, bid/ask spreads, hedge frequency, and execution assumptions are included. This simplified backtest framework provides the user with an intuitive evaluation of forecast performance, displaying backtested Sharpe ratios, maximum drawdowns, and simulated trade logs directly on the research dashboard.
