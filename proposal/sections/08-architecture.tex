@@ -61,8 +61,8 @@ Market/time and wallet/event/cut-off indexes support dated lookups. Numeric resu
 \toprule\tablehead
 \textbf{Task / one row} & \textbf{Candidate features $X_t$} & \textbf{Target / output} \\
 \midrule
-Volatility / asset-date & Past 20-day mean $r^2$, raw event probability, adjusted minus raw probability & Future $RV_{t,H}$ for $H=1,5,20$ \\
-Probability / event-date & Raw probability, spread, anonymous directional flow, eligible-wallet weighted flow & Resolved YES/NO label, then $p_{\mathrm{adj}}$ \\
+Volatility / asset-date & Past 20-day mean $r^2$, HAR daily/weekly/monthly components, raw event probability, adjusted minus raw probability ($p_{\mathrm{adj}} - p_{\mathrm{raw}}$), probability jump ($\Delta p_{\mathrm{adj}}$), VIX/MOVE baselines & Future $RV_{t,H}$ for $H=1,5,20$ \\
+Probability / event-date & Raw probability, spread, anonymous directional flow, eligible-wallet weighted flow, fresh-wallet anomaly flow & Resolved YES/NO label, then $p_{\mathrm{adj}}$ \\
 Clustering / wallet-date & Turnover/capital, net YES--NO exposure, event concentration, typical holding duration & Behaviour group, with no outcome label \\
 \bottomrule
 \end{tabularx}
@@ -76,13 +76,15 @@ Clustering / wallet-date & Turnover/capital, net YES--NO exposure, event concent
 
 \begin{table}[H]
 \smalltable
-\caption{Candidate implementations in \href{https://scikit-learn.org/stable/supervised_learning.html}{scikit-learn}. The team will explore all five techniques and retain models supported by validation.}
+\caption{Candidate implementations in \href{https://scikit-learn.org/stable/supervised_learning.html}{scikit-learn}, \href{https://www.statsmodels.org/stable/index.html}{statsmodels}/\href{https://arch.readthedocs.io/en/latest/}{arch}, and \href{https://xgboost.readthedocs.io/en/stable/}{XGBoost}. The team will explore all techniques and retain models supported by validation.}
 \begin{tabularx}{\linewidth}{@{}L{32mm}L{49mm}Y@{}}
 \toprule\tablehead
 \textbf{Technique} & \textbf{Estimator / role} & \textbf{Initial exploration} \\
 \midrule
 Linear regression & LinearRegression / variance & Recent-return baseline and event-augmented fit. \\
+HAR-RV \& GARCH-X & OLS / GARCH(1,1) with Volatility Process & Multi-frequency HAR components and conditional variance modeling augmented with exogenous prediction-market signals ($p_{\mathrm{adj}}$, $\Delta p_{\mathrm{adj}}$). \\
 Logistic regression & LogisticRegression / probability & Regularisation strength and wallet-feature contribution. \\
+Random Forest \& XGBoost & RandomForestRegressor / XGBRegressor & Non-linear feature interactions across probability spreads, liquidity controls, and macro regime indicators using QLIKE/MSE loss objectives. \\
 SVM & SVC / outcome, SVR / variance & Linear or RBF kernel, $C$, gamma. Calibrate classifier scores chronologically. \\
 MLP & MLPClassifier / MLPRegressor & One small hidden layer, e.g.\ 8 or 16 units, L2 penalty. \\
 Clustering & StandardScaler + KMeans & Explore $k=2$--$5$, separation and stability across dated samples. \\
@@ -100,7 +102,7 @@ Clustering & StandardScaler + KMeans & Explore $k=2$--$5$, separation and stabil
 \end{tikzpicture}
 \caption{Scenario execution preserves joint asset returns. The seed and evidence manifest are saved.}
 \end{figure}
-\textbf{Experiment controls.} Pipeline will fit scaling/imputation on training folds only. Chronological, event-grouped validation will purge overlapping targets, including for MLP tuning. Scores, clusters and probability fits use past data only. The regression baseline stays fixed. Clusters do not establish skill or ownership. Incomplete positions exclude affected features. Insufficient scenario evidence triggers an unavailable result or a labelled, reviewed stress assumption.
+\textbf{Experiment controls.} Pipeline will fit scaling/imputation on training folds only. Chronological, event-grouped validation will purge overlapping targets, including for GARCH-X, Random Forest, XGBoost, and MLP tuning. Scores, clusters and probability fits use past data only. Model evaluation for volatility forecasts will report standard robust loss functions (e.g., QLIKE, MSE) alongside directional accuracy. The regression baseline stays fixed. Clusters do not establish skill or ownership. Incomplete positions exclude affected features. Insufficient scenario evidence triggers an unavailable result or a labelled, reviewed stress assumption.
 
 \clearpage
 \subsubsection{Research assistant integration}
