@@ -1,0 +1,76 @@
+\subsubsection{Data Acquisition and normalization}
+The data platform combines prediction-market information, public blockchain settlement records and conventional financial data. These sources serve different purposes.
+
+\begin{table}[H]
+\smalltable
+\caption{Planned sources, with access decisions made during the feasibility audit.}
+\begin{tabularx}{\linewidth}{@{}L{35mm}Y Y@{}}
+\toprule\tablehead
+\textbf{Source} & \textbf{Data to acquire} & \textbf{Use and limitation} \\
+\midrule
+Polymarket metadata API (Gamma) & Event definitions, rules, identifiers, outcome prices and available price history. & Define the forecast target and archive changes to mutable metadata \cite{polymarketdata}. \\
+Polymarket CLOB and activity Data API & Bid/ask snapshots, liquidity and public wallet activity. & Measure market quality and candidate wallet flow. Historical book depth may need prospective collection. \\
+Goldsky Polymarket datasets & Indexed fills, matched trades and relevant position records. & Targeted historical reconstruction, subject to version coverage and access cost \cite{goldsky}. \\
+Polygon RPC & Transaction receipts, contract logs and block references. & Verify a stratified sample of settlements. Older state may require archival access. \\
+Alpha Vantage or an approved equivalent & Daily equity/ETF prices, splits and dividends, with intraday data if available. & Proposed primary price-provider adapter. Adjusted daily data are a premium function. Coverage and academic-use terms must be checked \cite{alphavantage}. \\
+Federal Reserve & Meeting dates, statements and announced rate decisions. & Establish announcement timing and validate event labels separately from platform resolution \cite{fed}. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+
+\subsubsection{Logical data model}
+Figure~\ref{fig:logical-data-model} shows the principal persisted records and relationships. It deliberately omits physical columns and indexes, which depend on the implementation choices in Section~2.2.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[x=1cm,y=1cm,
+ entity/.style={draw=line,fill=pale,rounded corners=1.5pt,align=center,font=\scriptsize\sffamily,
+  text width=2.05cm,minimum height=0.72cm,inner sep=4pt},
+ relation/.style={draw=muted,line width=0.65pt}]
+\node[entity] (event) at (0.5,0) {Event};
+\node[entity] (market) at (3.2,0) {Market};
+\node[entity] (outcome) at (5.9,0) {Outcome};
+\node[entity] (snapshot) at (8.6,0) {Market snapshot};
+
+\node[entity] (wallet) at (0.5,-1.5) {Wallet};
+\node[entity] (activity) at (3.2,-1.5) {Wallet activity};
+\node[entity] (score) at (5.9,-1.5) {Wallet-score snapshot};
+\node[entity] (probability) at (8.6,-1.5) {Probability estimate};
+
+\node[entity] (mapping) at (0.5,-3.0) {Event--asset mapping};
+\node[entity] (asset) at (3.2,-3.0) {Asset};
+\node[entity] (observation) at (5.9,-3.0) {Asset observation};
+\node[entity] (forecast) at (8.6,-3.0) {Forecast run};
+
+\node[entity] (portfolio) at (0.5,-4.5) {Portfolio};
+\node[entity] (holding) at (3.2,-4.5) {Portfolio holding};
+\node[entity] (scenario) at (5.9,-4.5) {Scenario run};
+\node[entity] (research) at (8.6,-4.5) {Research run};
+
+\draw[relation,-{Stealth[length=1.7mm]}] (event)--node[above,font=\tiny]{1:N}(market);
+\draw[relation,-{Stealth[length=1.7mm]}] (market)--node[above,font=\tiny]{1:N}(outcome);
+\draw[relation,-{Stealth[length=1.7mm]}] (market.north) -- ++(0,0.48) -| node[pos=0.72,above,font=\tiny]{1:N}(snapshot.north);
+\draw[relation,-{Stealth[length=1.7mm]}] (wallet)--node[above,font=\tiny]{1:N}(activity);
+\draw[relation,-{Stealth[length=1.7mm]}] (activity)--node[right,font=\tiny]{N:1}(outcome);
+\draw[relation,-{Stealth[length=1.7mm]}] (wallet.south) -- ++(0,-0.42) -| node[pos=0.7,below,font=\tiny]{1:N}(score.south);
+\draw[relation,-{Stealth[length=1.7mm]}] (snapshot)--(probability);
+\draw[relation,-{Stealth[length=1.7mm]}] (score)--(probability);
+
+\draw[relation,-{Stealth[length=1.7mm]}] (event.west) -- ++(-0.75,0) |- node[pos=0.78,left,font=\tiny]{1:N}(mapping.west);
+\draw[relation,-{Stealth[length=1.7mm]}] (asset)--node[above,font=\tiny]{1:N}(observation);
+\draw[relation,-{Stealth[length=1.7mm]}] (asset)--node[above,font=\tiny]{1:N}(mapping);
+\draw[relation,-{Stealth[length=1.7mm]}] (mapping.south) -- ++(0,-0.42) -| (forecast.south);
+\draw[relation,-{Stealth[length=1.7mm]}] (observation)--(forecast);
+\draw[relation,-{Stealth[length=1.7mm]}] (probability)--(forecast);
+
+\draw[relation,-{Stealth[length=1.7mm]}] (portfolio)--node[above,font=\tiny]{1:N}(holding);
+\draw[relation,-{Stealth[length=1.7mm]}] (holding)--node[right,font=\tiny]{N:1}(asset);
+\draw[relation,-{Stealth[length=1.7mm]}] (holding)--(scenario);
+\draw[relation,-{Stealth[length=1.7mm]}] (forecast)--(scenario);
+\draw[relation,-{Stealth[length=1.7mm]}] (forecast)--(research);
+\draw[relation,-{Stealth[length=1.7mm]}] (scenario)--(research);
+\end{tikzpicture}
+\caption{Conceptual entity relationships among the principal persisted records.}
+\label{fig:logical-data-model}
+\end{figure}

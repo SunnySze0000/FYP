@@ -14,10 +14,10 @@ Compile [proposal.tex](proposal.tex), which contains the shared typography and a
 | 1.1 Overview; 1.2 Objectives | [01-introduction.tex](sections/01-introduction.tex) | Motivation, research question, objectives and users; opens Section 1 |
 | 1.2 Objectives, continued | [02-scope.tex](sections/02-scope.tex) | Initial asset universe, minimum viable product, extensions and exclusions |
 | 1.3 Literature Survey | [03-related-work.tex](sections/03-related-work.tex) | Related work and research gap |
-| 2.1 Design | [04-product.tex](sections/04-product.tex) | Product journey, UI features and concept images; opens Section 2 |
-| 2.1 Design, continued | [05-agents.tex](sections/05-agents.tex) | AI agent roles, workflow integration and tool access |
-| 2.1 Design, continued | [06-data.tex](sections/06-data.tex) | Data sources, acquisition, processing and provenance |
-| 2.1 Design, continued | [07-methods.tex](sections/07-methods.tex) | Proposed probability, wallet, scenario and risk calculations |
+| 2.1 Design | [04-design-overview.tex](sections/04-design-overview.tex) | System overview, logical architecture and component responsibilities; opens Section 2 |
+| 2.1 Design, continued | [05-data-design.tex](sections/05-data-design.tex) | Data sources, acquisition, logical data model and provenance |
+| 2.1 Design, continued | [06-analytics.tex](sections/06-analytics.tex) | Probability, wallet, relevance, forecasting, scenario and backtest methods |
+| 2.1 Design, continued | [07-delivery.tex](sections/07-delivery.tex) | Controlled assistant, user journey, evidence inspection and concept screens |
 | 2.2 Implementation | [08-architecture.tex](sections/08-architecture.tex) | Architecture and backend/frontend choices |
 | 2.3 Testing; 2.4 Evaluation | [09-evaluation.tex](sections/09-evaluation.tex) | Tests, baselines, evaluation measures, risks and acceptance criteria |
 | 3.1 Division of Work; 3.2 GANTT Chart | [10-delivery.tex](sections/10-delivery.tex) | Work tracks, schedule and milestones; opens Section 3 |
@@ -67,7 +67,7 @@ The bibliography is currently split across two pages using two `thebibliography`
 - [scenario-ui.png](figures/scenario-ui.png): scenario-analysis concept.
 - [image-prompts.md](figures/image-prompts.md): generation prompts and provenance.
 
-The UI concepts are embedded raster images in `04-product.tex`; keep them black and white, with readable labels at their printed size. Their fictional values are illustrative, not research results. Commit replacement images with the source and update their provenance when applicable. Workflow and architecture diagrams remain editable TikZ in their section files.
+The UI concepts are embedded raster images in `07-delivery.tex`; keep them black and white, with readable labels at their printed size. Their fictional values are illustrative, not research results. Commit replacement images with the source and update their provenance when applicable. Logical architecture, data-model and implementation diagrams remain editable TikZ in their section files.
 
 Use relative figure paths so a fresh clone or Overleaf upload can compile. Keep the report monochrome, without callout boxes or a keywords block. Do not reduce fonts or margins simply to fit extra content; shorten the text first.
 

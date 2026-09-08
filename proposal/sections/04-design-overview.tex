@@ -1,0 +1,67 @@
+\pagechapter{Methodology}
+\subsection{Design}
+\subsubsection{System overview}
+EventLens is a Polymarket-informed research system for forecasting volatility and examining event-conditioned portfolio risk. It acquires prediction-market, indexed settlement and conventional financial data, preserves the evidence with its original timing, and converts it into versioned research features. Analytical services identify historically informative wallets, estimate market and wallet-informed event probabilities, map events to supported assets, and compare baseline and augmented volatility forecasts. The same validated calculations drive portfolio scenarios, the investor dashboard and a controlled research assistant. Walk-forward evaluation determines which model versions may be used; user selections and reviewed relevance feedback shape an analysis, but cannot change wallet eligibility or fitted results.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[x=1cm,y=1cm,
+ sourcebox/.style={flowbox,text width=3.55cm,minimum height=0.9cm,font=\scriptsize\sffamily},
+ smallbox/.style={flowbox,text width=2.75cm,minimum height=0.9cm,font=\scriptsize\sffamily},
+ databox/.style={flowbox,text width=7.75cm,minimum height=0.9cm,font=\scriptsize\sffamily},
+ widebox/.style={flowbox,text width=5.8cm,minimum height=0.9cm,font=\scriptsize\sffamily},
+ layer/.style={font=\scriptsize\bfseries\sffamily,anchor=e,text=muted}]
+\node[layer] at (-0.15,0) {Sources};
+\node[sourcebox] (poly) at (2.0,0) {Polymarket API and Polygon\\markets, activity, receipts};
+\node[sourcebox] (market) at (6.2,0) {Financial-market data\\prices and options IV};
+\node[sourcebox] (user) at (10.4,0) {User inputs\\assets, horizon, portfolio};
+
+\node[layer] at (-0.15,-1.45) {Data};
+\node[databox] (ingest) at (4.1,-1.45) {\textbf{Acquisition and normalization}\\ingestion, reconciliation and evidence storage};
+
+\node[layer] at (-0.15,-3.05) {Analytics};
+\node[smallbox] (wallet) at (1.55,-3.05) {\textbf{Wallet intelligence}\\history and exposure\\dated score};
+\node[smallbox] (prob) at (4.75,-3.05) {\textbf{Probability}\\\textbf{and relevance}\\event-probability estimates};
+\node[smallbox] (relevance) at (7.95,-3.05) {Event--asset mappings\\reviewed relevance};
+\node[widebox] (forecast) at (3.15,-4.55) {\textbf{Forecasting and scenarios}\\baseline and augmented volatility};
+\node[widebox] (scenario) at (9.55,-4.55) {Portfolio scenario and tail risk\\outcome-conditioned distributions};
+
+\node[layer] at (-0.15,-6.1) {Delivery};
+\node[widebox] (gateway) at (3.15,-6.1) {\textbf{Delivery and explanation}\\shared calculation and tool gateway};
+\node[smallbox] (dashboard) at (7.95,-6.1) {Investor dashboard};
+\node[smallbox] (assistant) at (11.15,-6.1) {Research assistant};
+
+\foreach \s in {poly,market} {\draw[flowarrow] (\s.south)--(\s.south |- ingest.north);}
+\foreach \d in {wallet,prob,relevance} {\draw[flowarrow] (ingest.south -| \d.north)--(\d.north);}
+\draw[flowarrow] (wallet.east)--(prob.west);
+\draw[flowarrow] (user.east) -- ++(0.45,0) |- (relevance.east);
+\draw[flowarrow] (prob.south)--(prob.south |- forecast.north);
+\draw[flowarrow] (relevance.south) -- ++(0,-0.35) -| (forecast.north east);
+\draw[flowarrow] (forecast.east)--(scenario.west);
+\draw[flowarrow] (user.east) -- ++(0.65,0) |- (scenario.east);
+\draw[flowarrow] (forecast.south)--(forecast.south |- gateway.north);
+\draw[flowarrow] (scenario.south)--(scenario.south |- gateway.north);
+\draw[flowarrow] (gateway.east)--(dashboard.west);
+\draw[flowarrow] (dashboard.east)--(assistant.west);
+\end{tikzpicture}
+\caption{Logical system architecture. Arrows carry evidence or calculation results.}
+\label{fig:logical-architecture}
+\end{figure}
+
+\subsubsection{Components and responsibilities}
+\begin{table}[H]
+\smalltable
+\caption{Logical system components and their responsibilities.}
+\label{tab:design-components}
+\begin{tabularx}{\linewidth}{@{}L{31mm}Y Y@{}}
+\toprule\tablehead
+\textbf{Component} & \textbf{Principal inputs and responsibility} & \textbf{Principal outputs} \\
+\midrule
+Acquisition and normalization & Market APIs, indexed settlement records, Polygon receipts and financial feeds; normalize records and align as-of cut-offs. & Immutable raw and time-series evidence with quality and provenance flags. \\
+Wallet intelligence & Past wallet decisions, reconstructed exposure and resolved outcomes; estimate historical informativeness. & Dated eligibility, skill, concentration and confidence measures. \\
+Probability and relevance & Market state, wallet signals, event rules, asset coverage and reviewed mappings. & Raw and wallet-informed probabilities plus event--asset relationships. \\
+Forecasting and scenarios & Versioned event features, asset returns, baseline volatility and paper portfolios. & Volatility forecasts, uncertainty, scenario losses, VaR and expected shortfall. \\
+Delivery and explanation & Calculation results, evidence links and user context. & Dashboard views and supported assistant answers. \\
+\bottomrule
+\end{tabularx}
+\end{table}

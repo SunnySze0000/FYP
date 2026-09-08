@@ -1,0 +1,40 @@
+\subsubsection{Select and track informative wallets}
+An informative "smart wallet" is an observed account whose earlier decisions contain information beyond market. The first score will examine whether the wallet repeatedly chose the eventual outcome at informative prices, whether prices subsequently moved in its direction, and how broad its prior history was. Note that a wallet may be informative for one event but not another, and that a wallet's informativeness may change over time. The score will therefore be dated and event-specific, with a separate eligibility test for each forecast cut-off.
+
+Repeated fills will be consolidated into wallet--event decisions. Balanced YES and NO holdings will be distinguished from directional exposure. Scores based on few independent events will be pulled towards the population average, a technique called shrinkage. A provisional eligibility rule is ten earlier resolved events across at least three announcement dates, with five- and twenty-event thresholds checked in sensitivity analysis. If history cannot support this rule, the wallet signal will be unavailable rather than assigned confidence.
+
+Wallet eligibility and scores will use only records available and outcomes resolved by each forecast cut-off. New activity updates exposure, while newly resolved events update only later scores. Frozen snapshots prevent today's successful wallets from being retrospectively selected for earlier tests.
+
+\subsubsection{Estimate market and wallet-informed probabilities}
+The raw event probability will begin with the YES bid/ask midpoint, recording spread, depth and timestamp. When both outcome books are usable, their midpoints can be normalised for consistency. A missing or one-sided book will be flagged rather than silently replaced by an unrelated latest trade.
+
+A regularised logistic model will calibrate the raw estimate using earlier resolved events and add a small number of wallet signals: overall directional flow, the flow of historically informative wallets and market-quality controls. Coefficients will be fitted on training data rather than chosen to produce a desired adjustment. Beta calibration is a possible robustness check if justified by the sample \cite{kull}. The raw and adjusted estimates will remain separately visible so the wallet contribution can be evaluated directly.
+
+\subsubsection{Link events to assets}
+The event research agent may suggest that a rate decision matters to SPY or MSFT, but numerical impacts will come from matched historical event windows and conventional market controls. The mapping must account for surprise relative to the expectation already embedded in prices. For the MVP, we will explore using an AI agent to suggest candidate mappings, then review and approve them manually by the user.
+
+\subsubsection{Forecast volatility}
+After estimating event probabilities, EventLens will test whether prediction-market information improves a simple forecast of asset-price variation. The comparison uses one regression baseline and an augmented version of the same model.
+
+The forecast target over $H$ trading days will be the sum of squared daily log returns:
+\begin{equation}
+RV_{t,H}=\sum_{h=1}^{H} r_{t+h}^{2}.
+\end{equation}
+This daily-data proxy for realised variance measures the size of price movements without treating gains and losses as cancellations, but is noisy, especially for one day. Comparisons use the same horizon and units; displayed volatility is the square root of the corresponding variance estimate.
+
+\textbf{Baseline.} A linear regression with an intercept and the average squared daily return over the preceding 20 trading days provides a simple forecast based only on recent asset-price variation. A separate ordinary-least-squares fit will be made for each supported asset and horizon.
+
+\textbf{Augmented model.} The same regression retains that input and adds the market-implied probability $p_{\text{raw}}$ and wallet adjustment $p_{\text{adj}}-p_{\text{raw}}$. Both versions use identical forecast dates, targets and training windows restricted to dates with usable event evidence. The augmented model therefore tests the combined contribution of prediction-market information, while separate probability experiments test whether wallet histories themselves add information.
+
+Forecasts use the same small positive floor, fixed before testing. Event features for training and evaluation are generated only from data and probability-model fits available before each forecast date. Mean squared error (MSE) and quasi-likelihood loss (QLIKE) compare later, unseen observations \cite{patton}. The interface displays this fixed comparison rather than allowing users to change the baseline or feature set during evaluation.
+
+\subsubsection{Explore portfolio scenarios and tail risk}
+For a selected portfolio, the engine combines conditional return distributions for the YES and NO outcomes. Let $p$ be the event probability, and let $\mu$ and $\sigma^2$ be the portfolio mean and variance over the same horizon:
+\begin{align}
+\mu_{\mathrm{mix}} &= p\mu_{\mathrm{YES}}+(1-p)\mu_{\mathrm{NO}}, \\
+\sigma^2_{\mathrm{mix}} &= p\sigma^2_{\mathrm{YES}}+(1-p)\sigma^2_{\mathrm{NO}}
+ +p(1-p)(\mu_{\mathrm{YES}}-\mu_{\mathrm{NO}})^2.
+\end{align}
+The last term captures uncertainty about which outcome occurs. Consequently, a higher adverse-event probability can worsen expected loss without necessarily increasing variance. For multiple holdings, the engine preserves cross-asset dependence when sampling returns, then applies the user's weights to each joint scenario.
+
+Outputs include scenario returns, horizon volatility, a chosen loss-threshold probability, 95\% VaR and 95\% expected shortfall. VaR is a threshold, not the maximum loss. Expected shortfall is the average of the worst 5\% of the weighted loss distribution, including fractional threshold mass where needed. Empirical or heavy-tailed scenarios will be checked for sensitivity to probability and asset-response assumptions.
