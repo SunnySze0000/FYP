@@ -20,7 +20,7 @@ The forecast target over $H$ trading days will be the sum of squared daily log r
 \begin{equation}
 RV_{t,H}=\sum_{h=1}^{H} r_{t+h}^{2}.
 \end{equation}
-This daily-data proxy for realised variance measures the size of price movements without treating gains and losses as cancellations, but is noisy, especially for one day. Comparisons use the same horizon and units; displayed volatility is the square root of the corresponding variance estimate.
+This daily-data proxy for realised variance measures the size of price movements without treating gains and losses as cancellations, but is noisy, especially for one day. Comparisons use the same horizon and units. Displayed volatility is the square root of the corresponding variance estimate.
 
 \textbf{Baseline.} A linear regression with an intercept and the average squared daily return over the preceding 20 trading days provides a simple forecast based only on recent asset-price variation. A separate ordinary-least-squares fit will be made for each supported asset and horizon.
 

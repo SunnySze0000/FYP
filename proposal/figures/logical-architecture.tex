@@ -1,0 +1,27 @@
+\begin{tikzpicture}[x=1cm,y=1cm,
+box/.style={draw=line,fill=pale,rounded corners=2pt,text width=4.25cm,minimum height=1.35cm,align=center,font=\small\sffamily,inner sep=6pt},
+wide/.style={box,text width=9.45cm},arr/.style={flowarrow}]
+\node[box] (p) at (0,0) {\textbf{Market evidence}\\Polymarket APIs\\Polygon receipts};
+\node[box] (f) at (5.2,0) {\textbf{Financial data}\\Asset prices\\Event calendars};
+\node[box] (u) at (10.4,0) {\textbf{User inputs}\\Assets and horizon\\Paper portfolio};
+\node[wide] (d) at (2.6,-1.8) {\textbf{Acquisition and normalization}\\Dated evidence, reconciliation and quality checks};
+\node[box] (w) at (0,-3.6) {\textbf{Wallet intelligence}\\Directional exposure\\Dated skill scores};
+\node[box] (q) at (5.2,-3.6) {\textbf{Event probability}\\Market estimate\\Wallet adjustment};
+\node[box] (m) at (10.4,-3.6) {\textbf{Event--asset mapping}\\Reviewed relevance\\Announcement timing};
+\node[box] (v) at (5.2,-5.4) {\textbf{Volatility forecasting}\\Baseline model\\Augmented model};
+\node[box] (s) at (10.4,-5.4) {\textbf{Portfolio scenarios}\\Outcome return samples\\Portfolio tail risk};
+\node[wide] (g) at (7.8,-7.2) {\textbf{Shared results and evidence gateway}\\Saved runs, assumptions and provenance};
+\node[box] (dash) at (5.2,-9) {\textbf{Investor dashboard}\\Compare results\\Inspect evidence};
+\node[box] (a) at (10.4,-9) {\textbf{Research assistant}\\Retrieve evidence\\Explain results};
+\foreach \n in {p,f} \draw[arr] (\n.south)--(\n.south |- d.north);
+\foreach \n in {w,q} \draw[arr] (d.south -| \n.north)--(\n.north);
+\draw[arr] (w)--(q);
+\draw[arr] (u)--(m);
+\draw[arr] (d.east)--++(0.5,0)-|(m.north);
+\draw[arr] (q)--(v);
+\draw[arr] (m)--(s);
+\draw[arr] (v)--(s);
+\draw[arr] (u.east)--++(0.38,0)|-(s.east);
+\foreach \n in {v,s} \draw[arr] (\n.south)--(\n.south |- g.north);
+\foreach \n in {dash,a} \draw[arr] (g.south -| \n.north)--(\n.north);
+\end{tikzpicture}

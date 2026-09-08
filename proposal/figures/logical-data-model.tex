@@ -1,0 +1,40 @@
+\begin{tikzpicture}[x=1cm,y=1cm,
+card/.style={draw=line,rounded corners=2pt,fill=pale,minimum width=7.4cm,minimum height=3.45cm},
+entity/.style={draw=muted,fill=white,rounded corners=1pt,text width=1.85cm,minimum height=0.72cm,align=center,font=\small\sffamily,inner sep=4pt},
+lab/.style={font=\small\bfseries\sffamily,anchor=west},
+rel/.style={flowarrow},mult/.style={font=\scriptsize,fill=pale,inner sep=2pt}]
+\node[card] at (3.7,-1.72) {};
+\node[card] at (11.65,-1.72) {};
+\node[card] at (3.7,-5.72) {};
+\node[card] at (11.65,-5.72) {};
+\node[lab] at (0.25,-0.35) {Market definitions and observations};
+\node[entity] (e) at (1.2,-1.25) {Event};
+\node[entity] (m) at (3.7,-1.25) {Market};
+\node[entity] (o) at (6.2,-1.25) {Outcome};
+\node[entity] (s) at (3.7,-2.7) {Market\\snapshot};
+\draw[rel] (e)--node[mult,above]{1:N}(m);
+\draw[rel] (m)--node[mult,above]{1:N}(o);
+\draw[rel] (m)--node[mult,right]{1:N}(s);
+\node[lab] at (8.2,-0.35) {Wallet history and dated scores};
+\node[entity] (w) at (9.4,-1.25) {Wallet};
+\node[entity] (act) at (13.4,-1.25) {Wallet activity};
+\node[entity] (score) at (9.4,-2.7) {Score snapshot};
+\node[font=\scriptsize\sffamily,align=left,text width=3.4cm] at (13.4,-2.7) {Activity links to outcome ID.\\Scores link to event and cut-off.};
+\draw[rel] (w)--node[mult,above]{1:N}(act);
+\draw[rel] (w)--node[mult,right]{1:N}(score);
+\node[lab] at (0.25,-4.35) {Assets and paper portfolios};
+\node[entity] (port) at (1.2,-5.25) {Portfolio};
+\node[entity] (hold) at (3.7,-5.25) {Holding};
+\node[entity] (asset) at (6.2,-5.25) {Asset};
+\node[font=\scriptsize\sffamily,align=left,text width=6.5cm] at (3.7,-6.7) {Asset 1:N asset observation\\Event + asset IDs join in a reviewed mapping.};
+\draw[rel] (port)--node[mult,above]{1:N}(hold);
+\draw[rel] (asset)--node[mult,above]{1:N}(hold);
+\node[lab] at (8.2,-4.35) {Versioned analysis and reports};
+\node[entity] (prob) at (9.4,-5.25) {Probability\\estimate};
+\node[entity] (forecast) at (13.4,-5.25) {Forecast run};
+\node[entity] (scenario) at (9.4,-6.7) {Scenario run};
+\node[entity] (run) at (13.4,-6.7) {Research run};
+\draw[rel,dashed] (prob)--(forecast);
+\draw[rel,dashed] (forecast)--(run);
+\draw[rel,dashed] (scenario)--(run);
+\end{tikzpicture}

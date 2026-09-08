@@ -18,7 +18,7 @@ Compile [proposal.tex](proposal.tex), which contains the shared typography and a
 | 2.1 Design, continued | [05-data-design.tex](sections/05-data-design.tex) | Data sources, acquisition, logical data model and provenance |
 | 2.1 Design, continued | [06-analytics.tex](sections/06-analytics.tex) | Probability, wallet, relevance, forecasting, scenario and backtest methods |
 | 2.1 Design, continued | [07-delivery.tex](sections/07-delivery.tex) | Controlled assistant, user journey, evidence inspection and concept screens |
-| 2.2 Implementation | [08-architecture.tex](sections/08-architecture.tex) | Architecture and backend/frontend choices |
+| 2.2 Implementation | [08-architecture.tex](sections/08-architecture.tex) | Three-page visual plan: endpoint contracts, physical schema, feature spaces, model candidates, scenarios, CrewAI/RAG/tools/memory and deployment |
 | 2.3 Testing; 2.4 Evaluation | [09-evaluation.tex](sections/09-evaluation.tex) | Tests, baselines, evaluation measures, risks and acceptance criteria |
 | 3.1 Division of Work; 3.2 GANTT Chart | [10-delivery.tex](sections/10-delivery.tex) | Work tracks, schedule and milestones; opens Section 3 |
 | 4.1 Hardware Requirements; 4.2 Software Requirements | [11-resources.tex](sections/11-resources.tex) | Equipment, software and access constraints; opens Section 4 |
@@ -66,8 +66,15 @@ The bibliography is currently split across two pages using two `thebibliography`
 - [overview-ui.png](figures/overview-ui.png): research dashboard concept.
 - [scenario-ui.png](figures/scenario-ui.png): scenario-analysis concept.
 - [image-prompts.md](figures/image-prompts.md): generation prompts and provenance.
+- [logical-architecture.tex](figures/logical-architecture.tex): system layers with consistent box sizes and routed connectors.
+- [logical-data-model.tex](figures/logical-data-model.tex): records grouped by domain, with relationship and dependency arrows distinguished.
+- [research-journey.tex](figures/research-journey.tex): shared six-step user journey.
+- [model-illustrations.tex](figures/model-illustrations.tex): PGFPlots illustrations of regression, clustering and scenario loss.
+- [model_illustrations.py](figures/src/model_illustrations.py): reproducible synthetic data generator for [model-coordinates.tex](figures/model-coordinates.tex).
 
-The UI concepts are embedded raster images in `07-delivery.tex`; keep them black and white, with readable labels at their printed size. Their fictional values are illustrative, not research results. Commit replacement images with the source and update their provenance when applicable. Logical architecture, data-model and implementation diagrams remain editable TikZ in their section files.
+The UI concepts are embedded raster images in `07-delivery.tex`. Keep them black and white, with readable labels at their printed size. Their fictional values are illustrative, not research results. Commit replacement images with the source and update their provenance when applicable. Design diagrams live in the figure sources above. Scenario and assistant diagrams remain editable TikZ in `08-architecture.tex`.
+
+Section 2.2 is limited to three pages including tables and figures. Its model settings, schemas and assistant tools are proposed implementation choices. The plotted data are synthetic and must never be described as backtest results. PGFPlots renders vector charts during the normal LaTeX build, with no shell escape or external plotting service. To regenerate the checked-in synthetic coordinates, run `python3 figures/src/model_illustrations.py` from this directory with NumPy available, then rebuild the PDF. Ordinary builds use the committed coordinates and do not require Python.
 
 Use relative figure paths so a fresh clone or Overleaf upload can compile. Keep the report monochrome, without callout boxes or a keywords block. Do not reduce fonts or margins simply to fit extra content; shorten the text first.
 

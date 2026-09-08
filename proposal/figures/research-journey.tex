@@ -1,0 +1,15 @@
+\begin{tikzpicture}[x=1cm,y=1cm,
+role/.style={draw=line,rounded corners=2pt,text width=4.2cm,minimum height=0.75cm,font=\small\sffamily,align=center,inner sep=5pt},
+journeybox/.style={role,fill=pale,minimum height=1.45cm},arr/.style={flowarrow}]
+\node[role] (r1) at (0,0) {Retail investor};
+\node[role] (r2) at (5.2,0) {Finance professional};
+\node[role] (r3) at (10.4,0) {Researcher / evaluator};
+\node[font=\small\sffamily] at (5.2,-0.95) {Shared research journey for all user roles};
+\node[journeybox] (a) at (0,-2.2) {\textbf{1. Select context}\\Assets and horizon\\Relevant events};
+\node[journeybox] (b) at (5.2,-2.2) {\textbf{2. Compare}\\Market probability\\Adjusted estimate};
+\node[journeybox] (c) at (10.4,-2.2) {\textbf{3. Inspect wallets}\\History and score\\Coverage checks};
+\node[journeybox] (d) at (10.4,-4.4) {\textbf{4. Run scenarios}\\Portfolio risk\\Allocation comparison};
+\node[journeybox] (e) at (5.2,-4.4) {\textbf{5. Ask the assistant}\\Results explained\\Assumptions checked};
+\node[journeybox] (f) at (0,-4.4) {\textbf{6. Save research}\\Run and evidence\\Shareable report};
+\draw[arr] (a)--(b);\draw[arr] (b)--(c);\draw[arr] (c)--(d);\draw[arr] (d)--(e);\draw[arr] (e)--(f);
+\end{tikzpicture}

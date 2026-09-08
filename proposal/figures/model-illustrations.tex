@@ -1,0 +1,35 @@
+\input{figures/model-coordinates}
+\begin{tikzpicture}
+\begin{axis}[name=reg,width=5.2cm,height=4.4cm,scale only axis=false,
+ title={\textbf{Regression}},title style={font=\small\sffamily},
+ xlabel={Past 20-day mean $r^2$},ylabel={Next 5-day $RV$},
+ label style={font=\scriptsize},tick label style={font=\scriptsize},
+ xmin=0,xmax=3,ymin=0,ymax=3,xtick={0,1,2,3},ytick={0,1,2,3},
+ axis lines=left,grid=major,grid style={gray!15},clip=false]
+\addplot[only marks,mark=*,mark size=1.3pt,gray] coordinates {\regpoints};
+\addplot[black,thick,domain=0:3]{\regintercept+\regslope*x};
+\node[font=\tiny,anchor=north west] at (rel axis cs:0,1) {Units: $10^{-4}$};
+\end{axis}
+\begin{axis}[name=clust,at={(reg.east)},anchor=west,xshift=1.2cm,width=5.2cm,height=4.4cm,
+ title={\textbf{Wallet clustering}},title style={font=\small\sffamily},
+ xlabel={Turnover / capital per day},ylabel={Directional exposure},
+ label style={font=\scriptsize},tick label style={font=\scriptsize},
+ xmin=0,xmax=1,ymin=-1,ymax=1,xtick={0,.5,1},ytick={-1,0,1},axis lines=left,grid=major,grid style={gray!15}]
+\addplot[only marks,mark=o,mark size=1.5pt,black] coordinates {\csname cluster0\endcsname};
+\addplot[only marks,mark=triangle*,mark size=1.5pt,gray] coordinates {\csname cluster1\endcsname};
+\addplot[only marks,mark=square*,mark size=1.4pt,black] coordinates {\csname cluster2\endcsname};
+\addplot[only marks,mark=x,mark size=4pt,very thick,black] coordinates {\clustercentres};
+\end{axis}
+\begin{axis}[at={(clust.east)},anchor=west,xshift=1.2cm,width=5.2cm,height=4.4cm,
+ title={\textbf{Scenario loss}},title style={font=\small\sffamily},
+ xlabel={Portfolio loss (\%)},ylabel={Density},label style={font=\scriptsize},tick label style={font=\scriptsize},
+ xmin=-3,xmax=6,ymin=0,ymax=.34,xtick={-2,0,2,4,6},ytick={0,.15,.3},axis lines=left,
+ declare function={mix(\x)=.6*exp(-((\x-2)/1.4)^2/2)/(1.4*sqrt(2*pi))+.4*exp(-((\x+.5)/.8)^2/2)/(.8*sqrt(2*pi));}]
+\addplot[draw=none,fill=gray!40,domain=\toyvar:6,samples=40]{mix(x)}\closedcycle;
+\addplot[black,thick,domain=-3:6,samples=100]{mix(x)};
+\draw[dashed] (axis cs:\toyvar,0)--(axis cs:\toyvar,.26);
+\node[font=\tiny,anchor=east] at (axis cs:\toyvar,.28) {95\% VaR};
+\draw[dotted] (axis cs:\toyes,0)--(axis cs:\toyes,.17);
+\node[font=\tiny,anchor=west] at (axis cs:\toyes,.19) {ES};
+\end{axis}
+\end{tikzpicture}
