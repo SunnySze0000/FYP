@@ -33,24 +33,17 @@ Comparisons will use a chronological train/validation/test split, with each even
 
 Given the likely small number of independent announcement dates, results will be reported with confidence intervals rather than as single numbers, and a broader macro sample would require a documented scope revision rather than an informal expansion mid-project. Multiple wallet-level significance tests will use a false-discovery correction rather than being read individually. A null result -- no measurable improvement from wallet or event signals -- is a valid and reportable outcome. Profitability is explicitly not a success criterion.
 
-\subsubsection{Usability evaluation}
-A small formative study (target 6--8 participants) will ask users to find an event, explain a probability difference, compare portfolio scenarios and identify a stated limitation, while we record task completion, time and errors. Fixed questions will compare three configurations -- the full assistant, the dashboard alone, and a retrieval-only assistant without the calculation gateway -- measured on source coverage, numerical agreement with the underlying stored result, correct abstention when evidence is insufficient, latency and estimated cost per query.
+\subsubsection{Non-functional evaluation}
+Beyond whether the numbers are right, the dashboard needs to be evaluated on qualities that determine whether it is actually usable for research in practice.
 
-\subsubsection{Risks to the evaluation itself}
-\begin{table}[H]
-\smalltable
-\caption{Risks specific to producing a trustworthy evaluation, and planned responses.}
-\begin{tabularx}{\linewidth}{@{}L{35mm}Y@{}}
-\toprule\tablehead
-\textbf{Risk} & \textbf{Response} \\
-\midrule
-Too few independent events for reliable fitting & Report a descriptive pilot instead of a fitted comparison. Widen the event family only via a documented revision. \\
-Selection bias in "smart" wallets & Freeze the wallet universe and score cut-offs before the test window opens. Apply shrinkage to low-sample scores. \\
-Confounded asset response to an event & Use reviewed stress ranges and sensitivity analysis. Keep event-probability and event-to-asset uncertainty separate. \\
-Multiple-comparison inflation & Apply false-discovery control across wallet-level and baseline-ladder tests before reporting significance. \\
-Unsupported AI claims in the user study & Restrict tool arguments, link every numeric claim to a stored result, and test missing-data abstention explicitly. \\
-\bottomrule
-\end{tabularx}
-\end{table}
+\textbf{Data freshness.} The interface implies near-real-time market and wallet state, so freshness itself needs to be measured rather than assumed: the lag between a Polymarket price update or a new on-chain fill and its appearance on the Overview and Event detail screens, and the lag between an FOMC announcement and the corresponding event being marked resolved. Data is never truly instantaneous once indexing and reconciliation are involved, so the target is a bounded, disclosed lag rather than zero latency -- the evidence panel already surfaces an as-of time for this reason, and that timestamp's accuracy is itself something to check, not just display.
+
+\textbf{Responsiveness.} Interactive screens (watchlist, event detail, scenario studio) should remain usable while heavier jobs run in the background. Response time will be measured separately for cached/precomputed views versus a fresh scenario run or wallet backfill, since the latter are expected to be slower and are already designed to return a job identifier rather than block the interface.
+
+\textbf{Reliability.} Uptime and error rate of the deployed prototype will be logged informally over the evaluation period (e.g.\ during the formative study and demonstration), along with the frequency of upstream provider failures (rate limits, stale feeds) and whether the system degrades to a clear "data unavailable" state rather than showing an unlabelled stale number.
+
+\textbf{Cost.} Hosted-model and data-provider cost per research query and per full wallet backfill will be tracked, since this bounds how often scores can realistically be refreshed and how many events the assistant can be exercised against during the evaluation itself.
+
+These are secondary to the correctness and research findings above, and will be reported descriptively (typical and worst-case figures) rather than against hard service-level targets, which would not be meaningful for a research prototype at this scale.
 
 Success requires reproducible data and experiment configuration, a controlled baseline comparison, a tested risk engine, and a usable, evidence-linked interface. Positive, negative and null findings will all be reported. Exact sample sizes, thresholds and the final participant count will be confirmed once the data-feasibility audit (Section~2.1) fixes what history is actually available.
