@@ -40,3 +40,5 @@ Desktop.ini
 .env
 .env.*
 !.env.example
+.codex-build
+.codex-finalizer

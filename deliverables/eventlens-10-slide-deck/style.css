@@ -1,0 +1,199 @@
+/* knowledge-arch-blueprint — 奶油纸 + 建筑蓝图风 */
+.tpl-knowledge-arch-blueprint{
+  --kb-bg:#F0EAE0;
+  --kb-ink:#1a1a1a;
+  --kb-ink2:#555;
+  --kb-ink3:#aaa;
+  --kb-rust:#B5392A;
+  --kb-rust-soft:rgba(181,57,42,.08);
+  --kb-line:#cec8be;
+  background:var(--kb-bg);
+  color:var(--kb-ink);
+  font-family:'Inter','Noto Sans SC',-apple-system,sans-serif;
+}
+.tpl-knowledge-arch-blueprint .slide{background:var(--kb-bg);color:var(--kb-ink);padding:64px 80px}
+.tpl-knowledge-arch-blueprint .kb-grid-bg{position:absolute;inset:0;pointer-events:none;opacity:.35;background-image:linear-gradient(rgba(26,26,26,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(26,26,26,.06) 1px,transparent 1px);background-size:48px 48px;mask-image:radial-gradient(ellipse at center,black 40%,transparent 85%)}
+.tpl-knowledge-arch-blueprint .slide > *{position:relative;z-index:2}
+.tpl-knowledge-arch-blueprint .kb-kicker{font-size:13px;font-weight:800;letter-spacing:4px;text-transform:uppercase;color:var(--kb-rust);margin-bottom:12px}
+.tpl-knowledge-arch-blueprint .kb-h1{font-size:66px;font-weight:900;line-height:1.08;color:#111;margin:0 0 14px;letter-spacing:-.02em}
+.tpl-knowledge-arch-blueprint .kb-h1 span.rust{color:var(--kb-rust)}
+.tpl-knowledge-arch-blueprint .kb-sub{font-size:20px;color:#666;line-height:1.55;max-width:780px}
+.tpl-knowledge-arch-blueprint .kb-insight{display:inline-block;background:var(--kb-rust);color:#fff;border-radius:10px;padding:16px 22px;font-size:14px;font-weight:700;line-height:1.5;max-width:340px;box-shadow:0 8px 24px rgba(181,57,42,.22)}
+.tpl-knowledge-arch-blueprint .kb-insight .kk{font-size:10px;letter-spacing:2px;opacity:.7;display:block;margin-bottom:6px;font-weight:800}
+.tpl-knowledge-arch-blueprint .kb-section-label{font-size:11px;font-weight:800;letter-spacing:3.5px;text-transform:uppercase;color:#aaa;margin:30px 0 12px;display:flex;align-items:center;gap:14px}
+.tpl-knowledge-arch-blueprint .kb-section-label::after{content:'';flex:1;height:1px;background:var(--kb-line)}
+.tpl-knowledge-arch-blueprint .kb-pipeline{display:flex;align-items:stretch;gap:14px;margin-top:24px}
+.tpl-knowledge-arch-blueprint .kb-step{flex:1;border:2px solid #1a1a1a;border-radius:12px;padding:22px 18px;background:#fff;position:relative;min-height:200px;display:flex;flex-direction:column}
+.tpl-knowledge-arch-blueprint .kb-step.hero{background:var(--kb-rust);border-color:var(--kb-rust);color:#fff;flex:1.25;box-shadow:0 10px 32px rgba(181,57,42,.28);transform:translateY(-10px)}
+.tpl-knowledge-arch-blueprint .kb-step-num{font-size:10px;font-weight:800;letter-spacing:2.5px;color:#bbb;margin-bottom:8px;text-transform:uppercase}
+.tpl-knowledge-arch-blueprint .kb-step.hero .kb-step-num{color:rgba(255,255,255,.6)}
+.tpl-knowledge-arch-blueprint .kb-step-title{font-size:22px;font-weight:900;line-height:1.15;color:#111;margin-bottom:8px}
+.tpl-knowledge-arch-blueprint .kb-step.hero .kb-step-title{color:#fff}
+.tpl-knowledge-arch-blueprint .kb-step-body{font-size:13px;line-height:1.55;color:#555;margin-top:auto}
+.tpl-knowledge-arch-blueprint .kb-step.hero .kb-step-body{color:rgba(255,255,255,.88)}
+.tpl-knowledge-arch-blueprint .kb-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:24px}
+.tpl-knowledge-arch-blueprint .kb-card{background:#fff;border:2px solid #1a1a1a;border-radius:12px;padding:22px 24px}
+.tpl-knowledge-arch-blueprint .kb-card h4{font-size:20px;font-weight:900;margin-bottom:6px}
+.tpl-knowledge-arch-blueprint .kb-card p{font-size:14px;color:#555;line-height:1.55}
+.tpl-knowledge-arch-blueprint .kb-legend{display:flex;gap:18px;flex-wrap:wrap;margin-top:22px;font-size:12px;color:#666}
+.tpl-knowledge-arch-blueprint .kb-legend .d{display:flex;align-items:center;gap:8px}
+.tpl-knowledge-arch-blueprint .kb-legend .b{width:14px;height:14px;border:2px solid #1a1a1a;border-radius:3px}
+.tpl-knowledge-arch-blueprint .kb-legend .b.rust{background:var(--kb-rust);border-color:var(--kb-rust)}
+.tpl-knowledge-arch-blueprint .kb-footer{position:absolute;left:80px;right:80px;bottom:36px;display:flex;justify-content:space-between;font-size:11px;color:#999;letter-spacing:.15em;text-transform:uppercase;border-top:1px solid var(--kb-line);padding-top:16px}
+.tpl-knowledge-arch-blueprint .kb-mono{font-family:'JetBrains Mono',monospace}
+.tpl-knowledge-arch-blueprint .kb-codebox{background:#1a1a1a;color:#f0eae0;border-radius:12px;padding:22px 26px;font-family:'JetBrains Mono',monospace;font-size:14px;line-height:1.8;margin-top:20px;border:2px solid #1a1a1a}
+.tpl-knowledge-arch-blueprint .kb-codebox .cm{color:#7a766c}
+.tpl-knowledge-arch-blueprint .kb-codebox .kw{color:#e8a87c}
+.tpl-knowledge-arch-blueprint .kb-codebox .st{color:#b3d1bc}
+.tpl-knowledge-arch-blueprint .kb-codebox .hl{color:var(--kb-rust);background:rgba(255,255,255,.08);padding:0 4px;border-radius:3px}
+.tpl-knowledge-arch-blueprint .kb-big-num{font-family:'Playfair Display',Georgia,serif;font-size:200px;font-weight:900;line-height:.9;color:var(--kb-rust);letter-spacing:-.04em}
+
+/* EventLens deck additions. The structural language stays faithful to the
+   knowledge-arch-blueprint template: paper, grid, ink, one research accent. */
+.tpl-knowledge-arch-blueprint{
+  --kb-bg:#F3EEE5;
+  --kb-rust:#A33D2E;
+  --kb-rust-soft:rgba(163,61,46,.09);
+  --kb-navy:#173A5E;
+  --kb-teal:#2C6E68;
+}
+.tpl-knowledge-arch-blueprint .slide{padding:58px 76px 70px}
+.tpl-knowledge-arch-blueprint .slide-title{font-size:50px;margin-bottom:22px;max-width:1100px}
+.tpl-knowledge-arch-blueprint .cover-copy{margin-top:18px;max-width:980px}
+.tpl-knowledge-arch-blueprint .cover-title{font-size:118px;letter-spacing:-.055em;margin:0}
+.tpl-knowledge-arch-blueprint .cover-subtitle{font-family:'Playfair Display',Georgia,serif;font-size:38px;line-height:1.18;font-weight:700;margin:2px 0 20px;color:var(--kb-ink)}
+.tpl-knowledge-arch-blueprint .cover-thesis{font-size:22px;max-width:760px}
+.tpl-knowledge-arch-blueprint .cover-meta{position:absolute;right:76px;top:70px;text-align:right;font-size:13px;line-height:1.7;color:var(--kb-ink2);font-weight:650}
+.tpl-knowledge-arch-blueprint .cover-chain{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:46px;max-width:1120px}
+.tpl-knowledge-arch-blueprint .cover-chain>div{border-top:3px solid var(--kb-ink);padding:15px 10px 0 0;font-size:16px;font-weight:800;line-height:1.35}
+.tpl-knowledge-arch-blueprint .cover-chain>div.accent{border-color:var(--kb-rust);color:var(--kb-rust)}
+.tpl-knowledge-arch-blueprint .cover-chain span{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--kb-ink3);display:block;margin-bottom:8px;letter-spacing:.14em}
+
+.tpl-knowledge-arch-blueprint .research-grid{margin-top:8px}
+.tpl-knowledge-arch-blueprint .flat-card,.tpl-knowledge-arch-blueprint .accent-card{min-height:205px;padding:24px 28px}
+.tpl-knowledge-arch-blueprint .accent-card{background:var(--kb-rust-soft);border-color:var(--kb-rust)}
+.tpl-knowledge-arch-blueprint .card-index,.tpl-knowledge-arch-blueprint .mini-label{font-size:10px;font-weight:850;letter-spacing:.16em;color:var(--kb-rust);margin-bottom:10px}
+.tpl-knowledge-arch-blueprint .research-grid h4{font-size:22px;line-height:1.25;margin-bottom:12px}
+.tpl-knowledge-arch-blueprint .research-grid p{font-size:15px}
+.tpl-knowledge-arch-blueprint .evidence-strip{display:grid;grid-template-columns:.8fr .8fr 1.6fr;gap:18px;margin-top:20px;align-items:stretch}
+.tpl-knowledge-arch-blueprint .evidence-strip>div{border-top:1px solid var(--kb-line);padding-top:13px;display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:start}
+.tpl-knowledge-arch-blueprint .evidence-strip strong{font-family:'Playfair Display',Georgia,serif;font-size:38px;color:var(--kb-rust);line-height:1}
+.tpl-knowledge-arch-blueprint .evidence-strip span{font-size:12px;line-height:1.35;color:var(--kb-ink2)}
+.tpl-knowledge-arch-blueprint .evidence-strip .question{display:block;border:2px solid var(--kb-ink);padding:14px 18px;background:#fff}
+.tpl-knowledge-arch-blueprint .evidence-strip .question span{font-size:10px;font-weight:850;letter-spacing:.14em;text-transform:uppercase;display:block;margin-bottom:7px;color:var(--kb-rust)}
+.tpl-knowledge-arch-blueprint .evidence-strip .question strong{font-family:inherit;font-size:16px;line-height:1.35;color:var(--kb-ink)}
+
+.tpl-knowledge-arch-blueprint .scope-layout{display:grid;grid-template-columns:1.55fr .8fr;gap:36px;align-items:start;margin-top:6px}
+.tpl-knowledge-arch-blueprint .scope-list{border-top:2px solid var(--kb-ink)}
+.tpl-knowledge-arch-blueprint .scope-list>div{display:grid;grid-template-columns:170px 1fr;gap:20px;border-bottom:1px solid var(--kb-line);padding:15px 4px}
+.tpl-knowledge-arch-blueprint .scope-list span{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--kb-rust);font-weight:850}
+.tpl-knowledge-arch-blueprint .scope-list strong{font-size:19px}
+.tpl-knowledge-arch-blueprint .scope-aside{display:flex;flex-direction:column;gap:22px}
+.tpl-knowledge-arch-blueprint .scope-aside .kb-insight{display:block;max-width:none;border-radius:0;padding:20px 22px;font-size:17px}
+.tpl-knowledge-arch-blueprint .scope-note{border-left:3px solid var(--kb-ink);padding-left:18px}
+.tpl-knowledge-arch-blueprint .scope-note h4{font-size:19px}
+.tpl-knowledge-arch-blueprint .scope-note p{font-size:14px;color:var(--kb-ink2);line-height:1.5}
+
+.tpl-knowledge-arch-blueprint .source-line{font-size:15px;font-weight:750;border-bottom:1px solid var(--kb-line);padding:0 0 12px;color:var(--kb-navy)}
+.tpl-knowledge-arch-blueprint .source-line span{color:var(--kb-rust);padding:0 9px}
+.tpl-knowledge-arch-blueprint .logical-inputs{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:0}
+.tpl-knowledge-arch-blueprint .logical-inputs>div{border:2px solid var(--kb-ink);background:#fff;padding:15px 18px;min-height:118px}
+.tpl-knowledge-arch-blueprint .logical-inputs span,.tpl-knowledge-arch-blueprint .evidence-layer span,.tpl-knowledge-arch-blueprint .architecture-output span{display:block;font-size:9px;font-weight:850;letter-spacing:.16em;color:var(--kb-rust);margin-bottom:5px}
+.tpl-knowledge-arch-blueprint .logical-inputs h4{font-size:18px;margin-bottom:4px}
+.tpl-knowledge-arch-blueprint .logical-inputs p{font-size:11px;line-height:1.35;color:var(--kb-ink2)}
+.tpl-knowledge-arch-blueprint .logical-down{text-align:center;height:28px;font-family:'Playfair Display',serif;font-size:25px;line-height:28px;color:var(--kb-rust);font-weight:900}
+.tpl-knowledge-arch-blueprint .logical-down.triple{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.tpl-knowledge-arch-blueprint .logical-down.compact{height:23px;line-height:23px;font-size:21px}
+.tpl-knowledge-arch-blueprint .evidence-layer{display:grid;grid-template-columns:210px 1fr;align-items:center;border:2px solid var(--kb-rust);background:var(--kb-rust-soft);padding:11px 18px}
+.tpl-knowledge-arch-blueprint .evidence-layer span{margin:0}
+.tpl-knowledge-arch-blueprint .evidence-layer strong{font-size:14px;color:var(--kb-navy)}
+.tpl-knowledge-arch-blueprint .logical-models{display:grid;grid-template-columns:1fr 26px 1fr 26px 1fr 26px 1.12fr;gap:6px;align-items:stretch}
+.tpl-knowledge-arch-blueprint .logical-models>div{border-top:3px solid var(--kb-ink);padding:10px 10px 3px 0;min-height:115px}
+.tpl-knowledge-arch-blueprint .logical-models>div.accent{border-color:var(--kb-rust);background:var(--kb-rust-soft);padding-left:12px}
+.tpl-knowledge-arch-blueprint .logical-models>div>span{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--kb-rust);font-weight:850}
+.tpl-knowledge-arch-blueprint .logical-models h4{font-size:16px;margin:4px 0}
+.tpl-knowledge-arch-blueprint .logical-models p{font-size:10px;line-height:1.3;color:var(--kb-ink2)}
+.tpl-knowledge-arch-blueprint .logical-models>b{align-self:center;text-align:center;font-family:'Playfair Display',serif;font-size:34px;color:var(--kb-rust)}
+.tpl-knowledge-arch-blueprint .architecture-output{display:grid;grid-template-columns:160px 1fr;align-items:center;border-top:2px solid var(--kb-ink);margin-top:10px;padding-top:9px}
+.tpl-knowledge-arch-blueprint .architecture-output span{margin:0}
+.tpl-knowledge-arch-blueprint .architecture-output strong{font-family:'Playfair Display',Georgia,serif;font-size:16px;line-height:1.25}
+.tpl-knowledge-arch-blueprint .pipeline-five{gap:10px;margin-top:34px}
+.tpl-knowledge-arch-blueprint .pipeline-five .kb-step{min-height:226px;padding:18px 15px;border-radius:0}
+.tpl-knowledge-arch-blueprint .pipeline-five .kb-step.hero{transform:translateY(-8px)}
+.tpl-knowledge-arch-blueprint .pipeline-five .kb-step-title{font-size:20px}
+.tpl-knowledge-arch-blueprint .pipeline-five .kb-step-body{font-size:12px}
+.tpl-knowledge-arch-blueprint .pipeline-rule{margin-top:16px;padding:11px 16px;border-left:4px solid var(--kb-rust);background:var(--kb-rust-soft);font-weight:750;font-size:15px}
+
+.tpl-knowledge-arch-blueprint .method-flow{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:4px}
+.tpl-knowledge-arch-blueprint .method-node{border-top:3px solid var(--kb-ink);padding:16px 14px 8px 0;min-height:170px}
+.tpl-knowledge-arch-blueprint .method-node.accent{border-color:var(--kb-rust)}
+.tpl-knowledge-arch-blueprint .method-node>span{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--kb-rust);letter-spacing:.12em}
+.tpl-knowledge-arch-blueprint .method-node h4{font-size:19px;margin:10px 0 8px}
+.tpl-knowledge-arch-blueprint .method-node p{font-size:13px;line-height:1.45;color:var(--kb-ink2)}
+.tpl-knowledge-arch-blueprint .probability-bottom{display:grid;grid-template-columns:.9fr .9fr 1.35fr;gap:14px;margin-top:24px}
+.tpl-knowledge-arch-blueprint .probability-bottom>div{background:#fff;border:2px solid var(--kb-ink);padding:17px 19px;min-height:145px}
+.tpl-knowledge-arch-blueprint .probability-bottom .adjust{border-color:var(--kb-rust);background:var(--kb-rust-soft)}
+.tpl-knowledge-arch-blueprint .probability-bottom .eligibility{background:transparent;border-style:dashed}
+.tpl-knowledge-arch-blueprint .probability-bottom strong{font-family:'Playfair Display',Georgia,serif;font-size:46px;line-height:1;color:var(--kb-rust)}
+.tpl-knowledge-arch-blueprint .probability-bottom p{font-size:12px;line-height:1.4;color:var(--kb-ink2);margin-top:8px}
+
+.tpl-knowledge-arch-blueprint .forecast-layout{display:grid;grid-template-columns:1.25fr .75fr;gap:26px;align-items:stretch}
+.tpl-knowledge-arch-blueprint .formula{font-family:'Playfair Display',Georgia,serif;font-size:41px;font-weight:800;border-bottom:2px solid var(--kb-ink);padding-bottom:16px}
+.tpl-knowledge-arch-blueprint .formula span{font-family:'Inter',sans-serif;font-size:13px;font-weight:700;color:var(--kb-ink2);margin-left:14px}
+.tpl-knowledge-arch-blueprint .model-compare{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:18px}
+.tpl-knowledge-arch-blueprint .model-compare>div{border-left:3px solid var(--kb-ink);padding:10px 15px}
+.tpl-knowledge-arch-blueprint .model-compare>div.accent{border-color:var(--kb-rust);background:var(--kb-rust-soft)}
+.tpl-knowledge-arch-blueprint .model-compare h4{font-size:19px}
+.tpl-knowledge-arch-blueprint .model-compare p{font-size:13px;line-height:1.45;color:var(--kb-ink2)}
+.tpl-knowledge-arch-blueprint .comparison-note{margin-top:18px;color:var(--kb-navy);font-weight:800;font-size:14px}
+.tpl-knowledge-arch-blueprint .risk-output{background:var(--kb-rust);color:#fff;padding:26px 28px}
+.tpl-knowledge-arch-blueprint .risk-output .mini-label{color:rgba(255,255,255,.72)}
+.tpl-knowledge-arch-blueprint .risk-output h3{font-family:'Playfair Display',Georgia,serif;font-size:25px;margin:14px 0 18px}
+.tpl-knowledge-arch-blueprint .risk-output p{font-size:12px;line-height:1.45;color:rgba(255,255,255,.82);margin-top:16px}
+.tpl-knowledge-arch-blueprint .risk-metrics{display:grid;gap:7px}
+.tpl-knowledge-arch-blueprint .risk-metrics b{font-size:14px;padding-bottom:7px;border-bottom:1px solid rgba(255,255,255,.28)}
+
+.tpl-knowledge-arch-blueprint .architecture-flow{display:grid;grid-template-columns:1fr 48px 1.15fr 48px 1fr;gap:8px;align-items:stretch;margin-top:6px}
+.tpl-knowledge-arch-blueprint .arch-layer{border:2px solid var(--kb-ink);background:#fff;padding:22px 24px;min-height:172px}
+.tpl-knowledge-arch-blueprint .arch-layer.accent{border-color:var(--kb-rust);background:var(--kb-rust-soft)}
+.tpl-knowledge-arch-blueprint .arch-layer span{font-size:10px;letter-spacing:.16em;color:var(--kb-rust);font-weight:850}
+.tpl-knowledge-arch-blueprint .arch-layer h4{font-size:21px;margin:12px 0 8px}
+.tpl-knowledge-arch-blueprint .arch-layer p{font-size:13px;line-height:1.45;color:var(--kb-ink2)}
+.tpl-knowledge-arch-blueprint .arch-link{font-family:'Playfair Display',serif;font-size:52px;text-align:center;align-self:center;color:var(--kb-rust)}
+.tpl-knowledge-arch-blueprint .assistant-roles{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:21px}
+.tpl-knowledge-arch-blueprint .assistant-roles>div{display:grid;grid-template-columns:28px 1fr;column-gap:9px;border-top:1px solid var(--kb-ink);padding-top:12px}
+.tpl-knowledge-arch-blueprint .assistant-roles span{grid-row:1/3;font-family:'Playfair Display',serif;font-size:27px;color:var(--kb-rust)}
+.tpl-knowledge-arch-blueprint .assistant-roles strong{font-size:15px}
+.tpl-knowledge-arch-blueprint .assistant-roles p{font-size:11px;line-height:1.4;color:var(--kb-ink2);margin-top:4px}
+.tpl-knowledge-arch-blueprint .guardrail{margin-top:14px;text-align:center;font-size:13px;font-weight:800;color:var(--kb-navy)}
+
+.tpl-knowledge-arch-blueprint .screen-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;align-items:start}
+.tpl-knowledge-arch-blueprint .screen-grid figure{margin:0}
+.tpl-knowledge-arch-blueprint .screen-grid img{width:100%;height:330px;object-fit:contain;background:#fff;border:2px solid var(--kb-ink);padding:7px}
+.tpl-knowledge-arch-blueprint .screen-grid figcaption{font-size:13px;line-height:1.45;color:var(--kb-ink2);margin-top:10px}
+.tpl-knowledge-arch-blueprint .screen-grid figcaption b{color:var(--kb-ink)}
+.tpl-knowledge-arch-blueprint .concept-label{position:absolute;right:76px;bottom:82px;font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:var(--kb-rust);font-weight:850}
+
+.tpl-knowledge-arch-blueprint .evaluation-layout{display:grid;grid-template-columns:1.5fr .78fr;gap:24px;align-items:start}
+.tpl-knowledge-arch-blueprint .eval-table{border-top:2px solid var(--kb-ink)}
+.tpl-knowledge-arch-blueprint .eval-row{display:grid;grid-template-columns:1.05fr 1.45fr .9fr;gap:14px;border-bottom:1px solid var(--kb-line);padding:13px 8px;font-size:12px;line-height:1.35}
+.tpl-knowledge-arch-blueprint .eval-row.header{font-size:10px;font-weight:850;letter-spacing:.12em;text-transform:uppercase;color:var(--kb-rust)}
+.tpl-knowledge-arch-blueprint .eval-row strong{font-size:13px}
+.tpl-knowledge-arch-blueprint .eval-aside{display:grid;gap:9px}
+.tpl-knowledge-arch-blueprint .eval-aside>div{display:grid;grid-template-columns:38px 1fr;align-items:center;border:1px solid var(--kb-line);background:#fff;padding:10px 12px}
+.tpl-knowledge-arch-blueprint .eval-aside>div.accent{border-color:var(--kb-rust);background:var(--kb-rust-soft)}
+.tpl-knowledge-arch-blueprint .eval-aside span{font-family:'Playfair Display',serif;font-size:24px;color:var(--kb-rust)}
+.tpl-knowledge-arch-blueprint .eval-aside p{font-size:11px;line-height:1.35;color:var(--kb-ink2)}
+
+.tpl-knowledge-arch-blueprint .timeline{position:relative;height:205px;margin:18px 8px 12px}
+.tpl-knowledge-arch-blueprint .timeline-track{position:absolute;left:25px;right:25px;top:82px;height:4px;background:var(--kb-ink)}
+.tpl-knowledge-arch-blueprint .milestone{position:absolute;top:58px;width:150px;text-align:center;transform:translateX(-50%)}
+.tpl-knowledge-arch-blueprint .milestone::before{content:'';display:block;width:18px;height:18px;background:var(--kb-bg);border:4px solid var(--kb-ink);margin:15px auto 10px}
+.tpl-knowledge-arch-blueprint .milestone.accent::before{background:var(--kb-rust);border-color:var(--kb-rust)}
+.tpl-knowledge-arch-blueprint .milestone span{position:absolute;top:0;left:0;right:0;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--kb-rust);font-weight:850}
+.tpl-knowledge-arch-blueprint .milestone b{font-size:11px;line-height:1.3;display:block}
+.tpl-knowledge-arch-blueprint .m1{left:4%}.tpl-knowledge-arch-blueprint .m2{left:22%}.tpl-knowledge-arch-blueprint .m3{left:41%}.tpl-knowledge-arch-blueprint .m4{left:61%}.tpl-knowledge-arch-blueprint .m5{left:80%}.tpl-knowledge-arch-blueprint .m6{left:96%}
+.tpl-knowledge-arch-blueprint .closing-statement{display:grid;grid-template-columns:180px 1fr;gap:22px;border-top:2px solid var(--kb-rust);padding-top:18px;align-items:start}
+.tpl-knowledge-arch-blueprint .closing-statement span{font-size:10px;font-weight:850;letter-spacing:.16em;color:var(--kb-rust)}
+.tpl-knowledge-arch-blueprint .closing-statement h2{font-family:'Playfair Display',Georgia,serif;font-size:25px;line-height:1.25;margin:0}
+.tpl-knowledge-arch-blueprint .team-line{position:absolute;right:76px;bottom:82px;font-size:11px;letter-spacing:.13em;color:var(--kb-ink2)}
