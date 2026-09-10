@@ -13,6 +13,12 @@ A regularised logistic model will calibrate the raw estimate using earlier resol
 \subsubsection{Link events to assets}
 The event research agent may suggest that a rate decision matters to SPY or MSFT, but numerical impacts will come from matched historical event windows and conventional market controls. The mapping must account for surprise relative to the expectation already embedded in prices. For the MVP, we will explore using an AI agent to suggest candidate mappings, then review and approve them manually by the user.
 
+\textbf{Related-event extension.}
+Different Polymarket contracts may contain overlapping information because they refer to the same entity, topic, time period or underlying outcome. Subject to data availability, EventLens will test whether features from reviewed related events provide incremental predictive value beyond the selected target event. Candidate relationships may be proposed from timestamped contract metadata by the research agent, but will be retained only after deterministic or manual review. The study will interpret these relationships as predictive associations and will not claim causality without a separate causal identification design.
+
+\textbf{Agent ablation.}
+The contribution of the research agent will be evaluated by comparing three configurations: fixed rule-based event selection, agent-proposed event selection and a hybrid configuration in which agent proposals undergo deterministic or manual review. All configurations will use the same point-in-time data, forecast dates and downstream statistical model. The LLM will propose and explain relationships; numerical forecasts will continue to come from reproducible calculation tools.
+
 \subsubsection{Forecast volatility}
 After estimating event probabilities, EventLens will test whether prediction-market information improves a simple forecast of asset-price variation. The comparison uses one regression baseline and an augmented version of the same model.
 

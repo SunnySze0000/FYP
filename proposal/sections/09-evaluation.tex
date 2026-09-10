@@ -23,6 +23,8 @@ Evaluation asks whether the finished system meets the objectives in Section~1.2.
 Wallet identification & Does the smart-wallet score capture information beyond chance? & Backtested accuracy/Brier score vs.\ a label-shuffled baseline, with sensitivity to the eligibility threshold \\
 Adjusted probability & Does wallet-weighting improve on the raw market price? & Brier score and log loss across the baseline ladder (raw price $\rightarrow$ +liquidity $\rightarrow$ +anonymous flow $\rightarrow$ +wallet signal) \\
 Volatility forecasting & Do event features improve the same regression model? & MSE and QLIKE for the recent-return baseline and its augmented version on identical forecast dates \\
+Related-event features & Do reviewed related events add information beyond the target event? & MSE and QLIKE for target-only versus target-plus-related-event features on identical forecast dates \\
+Agent contribution & Does agent-assisted event selection improve over fixed rules? & Mapping precision and downstream forecast loss for rule-based, agent-assisted and hybrid configurations \\
 Dashboard and assistant & Is the system usable, and does it stay evidence-linked? & Formative user study: task completion, numerical agreement between assistant and dashboard, correct abstention on insufficient data \\
 \bottomrule
 \end{tabularx}
@@ -30,6 +32,8 @@ Dashboard and assistant & Is the system usable, and does it stay evidence-linked
 
 \subsubsection{Experimental design}
 Comparisons will use a chronological train/validation/test split, with each event's contracts and snapshots kept together and overlapping return windows purged at split boundaries, so that no test-period information leaks backward. The final test interval stays unopened until models and thresholds are fixed. Wallet scores, calibration and scenario inputs will use only information available as of each historical forecast time, matching the point-in-time discipline enforced in testing.
+
+Predictive stability will also be reported across rolling and calendar subperiods. This will reveal whether an apparent improvement is persistent or concentrated in an earlier period. A signal that performs well initially but disappears in later unseen data will be reported as unstable rather than presented as general predictive value.
 
 Given the likely small number of independent announcement dates, results will be reported with confidence intervals rather than as single numbers, and a broader macro sample would require a documented scope revision rather than an informal expansion mid-project. Multiple wallet-level significance tests will use a false-discovery correction rather than being read individually. A null result -- no measurable improvement from wallet or event signals -- is a valid and reportable outcome. Profitability is explicitly not a success criterion.
 
