@@ -59,7 +59,7 @@ Write concise, formal prose and explain technical choices in terms of their purp
 
 The bibliography uses `\bibitem{key}` entries in `references.tex` and `\cite{key}` in the section files. Reuse an existing key when citing the same source. There is no `.bib` file and no BibTeX or Biber step.
 
-The bibliography is currently split across two pages using two `thebibliography` environments. The second starts with `\setcounter{enumiv}{11}`: if you change the number of entries in the first group, update that counter to match. Rebuild and check numbering and page breaks after adding references.
+The bibliography is currently split across two pages using two `thebibliography` environments. The second starts with `\setcounter{enumiv}{16}`: if you change the number of entries in the first group, update that counter to match. Rebuild and check numbering and page breaks after adding references.
 
 ### Figures
 
