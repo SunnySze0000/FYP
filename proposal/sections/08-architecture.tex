@@ -7,7 +7,7 @@
 The implementation below is a proposed starting configuration. Named libraries, schemas and model settings will be explored during the feasibility stage.
 
 \subsubsection{Application structure}
-Next.js/React and TypeScript will use \href{https://tanstack.com/query/latest/docs/framework/react/overview}{TanStack Query} for fetching and job polling. FastAPI/Pydantic will validate JSON contracts \cite{nextjs,fastapi}. SQLAlchemy/Alembic will manage database access/migrations. A Python worker will collect data, fit models and run scenarios.
+Next.js and React with TypeScript will use \href{https://tanstack.com/query/latest/docs/framework/react/overview}{TanStack Query} for data fetching and job polling \cite{nextjs}. FastAPI and Pydantic will validate the JSON contracts \cite{fastapi}. SQLAlchemy and Alembic will manage database access and migrations. A Python worker will collect data, fit models and run scenarios.
 
 
 
@@ -31,7 +31,7 @@ Next.js/React and TypeScript will use \href{https://tanstack.com/query/latest/do
 \textbf{AnalysisRequest:} event\_id: UUID, as\_of: UTC timestamp, horizon: $1|5|20$, holdings: [\{asset: string, weight: float\}]. Weights must be non-negative and sum to one. Invalid inputs return 422 with field errors. AssistantAnswer contains text, run IDs and citations. Cache keys include input and data/model versions. Stale or incomplete evidence is flagged.
 
 \subsubsection{Data ingestion and storage}
-HTTPX collectors will fetch incremental pages. Polars/PyArrow will preserve normalised Parquet evidence. Checkpoints, retries and unique source keys will support safe replay. Fills, transfers, splits, merges and redemptions will be reconciled, with sampled Polygon receipt checks.
+HTTPX collectors will fetch incremental pages. Polars/PyArrow will preserve normalized Parquet evidence. Checkpoints, retries and unique source keys will support safe replay. Fills, transfers, splits, merges and redemptions will be reconciled, with sampled Polygon receipt checks.
 
 \begin{table}[H]
 \smalltable
@@ -63,7 +63,7 @@ Market/time and wallet/event/cut-off indexes support dated lookups. Numeric resu
 \midrule
 Volatility / asset-date & Past 20-day mean $r^2$, HAR daily/weekly/monthly components, raw event probability, adjusted minus raw probability ($p_{\mathrm{adj}} - p_{\mathrm{raw}}$), probability jump ($\Delta p_{\mathrm{adj}}$), VIX/MOVE baselines & Future $RV_{t,H}$ for $H=1,5,20$ \\
 Probability / event-date & Raw probability, spread, anonymous directional flow, eligible-wallet weighted flow, fresh-wallet anomaly flow & Resolved YES/NO label, then $p_{\mathrm{adj}}$ \\
-Clustering / wallet-date & Turnover/capital, net YES--NO exposure, event concentration, typical holding duration & Behaviour group, with no outcome label \\
+Clustering / wallet-date & Turnover/capital, net YES--NO exposure, event concentration, typical holding duration & Behavior group, with no outcome label \\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -83,7 +83,7 @@ Clustering / wallet-date & Turnover/capital, net YES--NO exposure, event concent
 \midrule
 Linear regression & LinearRegression / variance & Recent-return baseline and event-augmented fit. \\
 HAR-RV \& GARCH-X & OLS / GARCH(1,1) with Volatility Process & Multi-frequency HAR components and conditional variance modeling augmented with exogenous prediction-market signals ($p_{\mathrm{adj}}$, $\Delta p_{\mathrm{adj}}$). \\
-Logistic regression & LogisticRegression / probability & Regularisation strength and wallet-feature contribution. \\
+Logistic regression & LogisticRegression / probability & Regularization strength and wallet-feature contribution. \\
 Random Forest \& XGBoost & RandomForestRegressor / XGBRegressor & Non-linear feature interactions across probability spreads, liquidity controls, and macro regime indicators using QLIKE/MSE loss objectives. \\
 SVM & SVC / outcome, SVR / variance & Linear or RBF kernel, $C$, gamma. Calibrate classifier scores chronologically. \\
 MLP & MLPClassifier / MLPRegressor & One small hidden layer, e.g.\ 8 or 16 units, L2 penalty. \\
@@ -102,11 +102,11 @@ Clustering & StandardScaler + KMeans & Explore $k=2$--$5$, separation and stabil
 \end{tikzpicture}
 \caption{Scenario execution preserves joint asset returns. The seed and evidence manifest are saved.}
 \end{figure}
-\textbf{Experiment controls.} Pipeline will fit scaling/imputation on training folds only. Chronological, event-grouped validation will purge overlapping targets, including for GARCH-X, Random Forest, XGBoost, and MLP tuning. Scores, clusters and probability fits use past data only. Model evaluation for volatility forecasts will report standard robust loss functions (e.g., QLIKE, MSE) alongside directional accuracy. The regression baseline stays fixed. Clusters do not establish skill or ownership. Incomplete positions exclude affected features. Insufficient scenario evidence triggers an unavailable result or a labelled, reviewed stress assumption.
+\textbf{Experiment controls.} The pipeline will fit scaling and imputation procedures on the training folds only. Chronological, event-grouped validation will purge overlapping targets, including for GARCH-X, Random Forest, XGBoost, and MLP tuning. Scores, clusters and probability fits use past data only. Model evaluation for volatility forecasts will report standard robust loss functions (e.g., QLIKE, MSE) alongside directional accuracy. The regression baseline stays fixed. Clusters do not establish skill or ownership. Incomplete positions exclude affected features. Insufficient scenario evidence triggers an unavailable result or a labeled, reviewed stress assumption.
 
 \clearpage
 \subsubsection{Research assistant integration}
-\href{https://docs.crewai.com/en/concepts/flows}{CrewAI Flows} is the proposed orchestrator. A typed Pydantic state will hold session\_id, event\_id, assets, horizon, as\_of, evidence IDs and run IDs. Three agent roles will work inside an explicit retrieve--calculate--explain flow. The workflow graph controls execution. Event--asset relationships will initially use relational joins, with knowledge-graph retrieval reserved for later exploration.
+\href{https://docs.crewai.com/en/concepts/flows}{CrewAI Flows} is the proposed orchestrator. A typed Pydantic state will hold session\_id, event\_id, assets, horizon, as\_of, evidence IDs and run IDs. Three agent roles will work inside an explicit retrieve--calculate--explain flow. The workflow graph controls execution. Event--asset mappings will initially use relational joins, with knowledge-graph retrieval reserved for later exploration.
 
 \begin{figure}[H]
 \centering
@@ -134,8 +134,8 @@ Clustering & StandardScaler + KMeans & Explore $k=2$--$5$, separation and stabil
 \toprule\tablehead
 \textbf{Mechanism} & \textbf{Proposed implementation} \\
 \midrule
-RAG + embeddings & Archive event rules, official releases and reviewed mappings. Split into about 180 model-token chunks with 30-token overlap. Sentence Transformers \href{https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2}{all-MiniLM-L6-v2} produces 384-dimensional embeddings. Store source, date and embedding version with every chunk. \\
-Retrieval & \href{https://github.com/pgvector/pgvector}{pgvector} cosine search plus PostgreSQL keyword search. Merge ranked matches and return an initial top five. Filter by event, user access and information cut-off before ranking. Exact prices and positions come from SQL tools. \\
+RAG + embeddings & Archive event rules, official releases and reviewed mappings. Split the documents into chunks of approximately 180 model tokens, with an overlap of 30 tokens. The Sentence Transformers model \href{https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2}{\texttt{all-MiniLM-L6-v2}} produces 384-dimensional embeddings. Store source, date and embedding version with every chunk. \\
+Retrieval & \href{https://github.com/pgvector/pgvector}{pgvector} cosine search plus PostgreSQL keyword search. Merge ranked matches and return an initial set of five results. Filter by event, user access and information cut-off before ranking. Exact prices and positions come from SQL tools. \\
 Function / tool use & CrewAI \href{https://docs.crewai.com/en/concepts/tools}{BaseTool} with Pydantic arguments: search\_evidence(query, event\_id, as\_of), get\_wallet\_evidence(address, event\_id, as\_of), run\_analysis(AnalysisRequest), get\_run(run\_id). Tools return evidence IDs, job IDs or typed results. \\
 MCP option & A \href{https://docs.crewai.com/en/mcp/overview}{CrewAI MCP adapter} may expose the same approved functions to other clients. MCP is a tool interface, not a memory store. Direct Python tools are sufficient for the initial single deployment. \\
 Context + memory & Load selected inputs, the latest six messages, a session summary, retrieved chunks and referenced results into a bounded prompt. Store owner-scoped summaries/preferences in PostgreSQL. Reload numerical facts from run IDs. Summaries never become research evidence. \\

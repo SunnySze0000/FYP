@@ -4,14 +4,14 @@ Financial markets are repeatedly repriced around discrete events such as central
 
 \textbf{Prediction markets.} Prediction markets such as Polymarket aggregate the beliefs of market participants into continuously updated probabilities. Market participants can trade YES and NO shares on the occurrence of events. A YES share pays one dollar if the specified outcome occurs and zero otherwise. A price of 60 cents can therefore be interpreted as an approximate market-implied probability of 60\% \cite{wolfers2004,wolfers2006}.
 
-\textbf{Wallets and blockchain records.} Web3 prediction markets such as Polymarket record trade settlements on the blockchain. Their blockchain-based infrastructure provides transparent transaction histories that enable the behaviour and historical performance of individual participants (identified by their wallet addresses) to be analysed. This creates an opportunity to investigate whether information embedded in prediction-market activity, particularly from informed traders or "smart wallets", could provide useful signals for traditional financial markets.
+\textbf{Wallets and blockchain records.} Web3 prediction markets such as Polymarket record trade settlements on the blockchain. Their blockchain-based infrastructure provides transparent transaction histories that enable the behavior and historical performance of individual participants (identified by their wallet addresses) to be analyzed. This creates an opportunity to investigate whether information embedded in prediction-market activity, particularly from informed traders or "smart wallets", could provide useful signals for traditional financial markets.
 
 \subsection{Objectives}
 \begin{enumerate}
 \item \textbf{Develop a smart-wallet identification model} using historical on-chain trading behavior to identify addresses whose decisions may add information beyond the market price.
-\item \textbf{Construct smart-wallet-adjusted event probabilities} using wallet evidence and compare these experimental estimates with market-implied probabilities.
+\item \textbf{Construct wallet-informed event probabilities} using wallet evidence and compare these experimental estimates with market-implied probabilities.
 \item \textbf{Develop an event-relevance framework} using statistical methods and a controlled LLM research agent to identify both relationships among prediction-market events and their relevance to selected indices and ETFs.
 \item \textbf{Evaluate whether Polymarket data provides incremental and time-stable predictive value} through walk-forward backtesting, ablation studies and comparison against benchmark volatility forecasts, and present the results through an interactive AI-assisted dashboard.
 \end{enumerate}
 
-The primary target user is a research-oriented retail investor or finance professional who understands basic portfolio concepts but lacks the infrastructure to query blockchains, evaluate prediction-market participants, and construct event-conditioned risk models. EventLens is intended as a research and paper-decision tool rather than personalised financial advice.
+The primary target user is a research-oriented retail investor or finance professional who understands basic portfolio concepts but lacks the infrastructure to query blockchains, evaluate prediction-market participants, and construct event-conditioned risk models. EventLens is intended as a research and decision-support tool for hypothetical portfolios rather than personalized financial advice.

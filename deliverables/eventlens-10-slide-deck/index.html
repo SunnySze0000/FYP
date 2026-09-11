@@ -43,7 +43,7 @@
       <div class="kb-card accent-card">
         <div class="card-index">RESEARCH OPPORTUNITY</div>
         <h4>Prediction markets expose both prices and participant histories</h4>
-        <p>Contract prices provide market-implied probabilities. Public settlement records make dated wallet behaviour observable for research.</p>
+        <p>Contract prices provide market-implied probabilities. Public settlement records make dated wallet behavior observable for research.</p>
       </div>
     </div>
     <div class="evidence-strip">
@@ -65,20 +65,20 @@
       <div><span>FINANCIAL CONTEXT</span><h4>ETF and event data</h4><p>Adjusted returns, supported assets and Federal Reserve timing</p></div>
     </div>
     <div class="logical-down triple"><span>↓</span><span>↓</span><span>↓</span></div>
-    <div class="evidence-layer"><span>VERSIONED EVIDENCE LAYER</span><strong>Normalise identifiers and timestamps, apply historical cut-offs, preserve provenance</strong></div>
+    <div class="evidence-layer"><span>VERSIONED EVIDENCE LAYER</span><strong>Normalize identifiers and timestamps, apply historical cut-offs, preserve provenance</strong></div>
     <div class="logical-down compact">↓</div>
     <div class="logical-models anim-stagger-list">
       <div><span>01</span><h4>Wallet intelligence</h4><p>Dated eligibility and informativeness scores</p></div>
       <b>›</b>
       <div><span>02</span><h4>Probability research</h4><p>Raw and wallet-informed event probabilities</p></div>
       <b>›</b>
-      <div><span>03</span><h4>Event-to-asset mapping</h4><p>Reviewed links and matched historical windows</p></div>
+      <div><span>03</span><h4>Event–asset mapping</h4><p>Reviewed links and matched historical windows</p></div>
       <b>›</b>
       <div class="accent"><span>04</span><h4>Financial risk engine</h4><p>Volatility forecasts, scenarios, VaR and expected shortfall</p></div>
     </div>
     <div class="architecture-output"><span>RESEARCH OUTPUT</span><strong>Does prediction-market information improve out-of-sample asset volatility forecasts?</strong></div>
     <div class="kb-footer"><span>Sources · Evidence · Models · Financial output</span><span>03 / 08</span></div>
-    <div class="notes"><strong>End-to-end flow.</strong> Polymarket provides event definitions and market probabilities. Polygon and Goldsky provide wallet-level activity, while financial feeds provide ETF returns and the Federal Reserve provides announcement timing. The evidence layer normalises and freezes these records at each historical cut-off. Wallet scores feed the probability model. Reviewed event-to-asset mappings then connect those probabilities to volatility forecasts and portfolio scenarios. Source: proposal Sections 2.1 and 2.2.</div>
+    <div class="notes"><strong>End-to-end flow.</strong> Polymarket provides event definitions and market probabilities. Polygon and Goldsky provide wallet-level activity, while financial feeds provide ETF returns and the Federal Reserve provides announcement timing. The evidence layer normalizes and freezes these records at each historical cut-off. Wallet scores feed the probability model. Reviewed event–asset mappings then connect those probabilities to volatility forecasts and portfolio scenarios. Source: proposal Sections 2.1 and 2.2.</div>
   </section>
 
   <section class="slide" data-title="MVP scope">
@@ -102,7 +102,7 @@
       </div>
     </div>
     <div class="kb-footer"><span>MVP commitments</span><span>04 / 08</span></div>
-    <div class="notes"><strong>Scope discipline.</strong> The MVP prioritises data feasibility and a valid experiment. It starts with Polymarket on Polygon, Federal Reserve decisions and index-tracking assets. The horizons match the proposal. Extensions only proceed if historical coverage and model stability support them. This prevents the team from broadening the sample informally after seeing early results. Source: proposal Section 1.2 and evaluation design.</div>
+    <div class="notes"><strong>Scope discipline.</strong> The MVP prioritizes data feasibility and a valid experiment. It starts with Polymarket on Polygon, Federal Reserve decisions and index-tracking assets. The horizons match the proposal. Extensions only proceed if historical coverage and model stability support them. This prevents the team from broadening the sample informally after seeing early results. Source: proposal Section 1.2 and evaluation design.</div>
   </section>
 
   <section class="slide" data-title="Wallet-informed probability">
@@ -124,16 +124,16 @@
       </div>
       <div class="method-node">
         <span>04</span><h4>Calibrate probability</h4>
-        <p>Add wallet flow and market-quality controls to a regularised logistic model.</p>
+        <p>Add wallet flow and market-quality controls to a regularized logistic model.</p>
       </div>
     </div>
     <div class="probability-bottom">
       <div><span class="mini-label">MARKET ESTIMATE</span><strong>p<sub>raw</sub></strong><p>YES bid/ask midpoint with spread, depth and timestamp.</p></div>
-      <div class="adjust"><span class="mini-label">EXPERIMENTAL ESTIMATE</span><strong>p<sub>adj</sub></strong><p>Calibrated model with eligible-wallet flow.</p></div>
+      <div class="adjust"><span class="mini-label">WALLET-INFORMED PROBABILITY</span><strong>p<sub>adj</sub></strong><p>Calibrated model with eligible-wallet flow.</p></div>
       <div class="eligibility"><span class="mini-label">PROVISIONAL ELIGIBILITY</span><strong>≥10</strong><p>Earlier resolved events across at least 3 announcement dates. Test 5 and 20 in sensitivity analysis.</p></div>
     </div>
     <div class="kb-footer"><span>Dated scoring · Calibration · Separate estimates</span><span>05 / 08</span></div>
-    <div class="notes"><strong>Wallet method.</strong> A smart-wallet label remains provisional and dated. Repeated fills become one wallet-event decision. The first eligibility rule requires at least ten earlier resolved events across three announcement dates, with sensitivity checks at five and twenty. If history is insufficient, the wallet signal is unavailable. Raw and adjusted probabilities stay visible separately so we can measure the wallet contribution. Source: proposal Section 2.1.</div>
+    <div class="notes"><strong>Wallet method.</strong> A smart-wallet label remains provisional and dated. Repeated fills become one wallet-event decision. The first eligibility rule requires at least ten earlier resolved events across three announcement dates, with sensitivity checks at five and twenty. If history is insufficient, the wallet signal is unavailable. Raw and wallet-informed probabilities stay visible separately so we can measure the wallet contribution. Source: proposal Section 2.1.</div>
   </section>
 
   <section class="slide" data-title="Volatility and portfolio risk">
@@ -145,7 +145,7 @@
         <div class="formula">RV<sub>t,H</sub> = Σ r²<sub>t+h</sub> <span>for H = 1, 5, 20 trading days</span></div>
         <div class="model-compare">
           <div><span class="mini-label">BASELINE</span><h4>Recent-return regression</h4><p>Average squared daily return over the preceding 20 trading days.</p></div>
-          <div class="accent"><span class="mini-label">AUGMENTED</span><h4>Same model plus event features</h4><p>Add p<sub>raw</sub> and the wallet adjustment p<sub>adj</sub> − p<sub>raw</sub>.</p></div>
+          <div class="accent"><span class="mini-label">AUGMENTED</span><h4>Same model plus event features</h4><p>Add p<sub>raw</sub> and the wallet-informed probability difference p<sub>adj</sub> − p<sub>raw</sub>.</p></div>
         </div>
         <div class="comparison-note">Compare MSE and QLIKE on identical forecast dates and units.</div>
       </div>
@@ -157,7 +157,7 @@
       </div>
     </div>
     <div class="kb-footer"><span>Baseline comparison · Scenario engine</span><span>06 / 08</span></div>
-    <div class="notes"><strong>Forecast test.</strong> The forecast target is realised variance from daily returns. The baseline uses recent variation only. The augmented model keeps the same regression and adds the raw probability plus the wallet adjustment. That design isolates whether prediction-market features add value. A separate scenario engine combines conditional YES and NO return distributions to calculate hypothetical portfolio risk. Source: proposal Section 2.1.</div>
+    <div class="notes"><strong>Forecast test.</strong> The forecast target is realized variance from daily returns. The baseline uses recent variation only. The augmented model keeps the same regression and adds the raw probability plus the wallet-informed probability difference. That design isolates whether prediction-market features add value. A separate scenario engine combines conditional YES and NO return distributions to calculate hypothetical portfolio risk. Source: proposal Section 2.1.</div>
   </section>
 
   <section class="slide" data-title="System architecture">
@@ -191,7 +191,7 @@
     </div>
     <div class="concept-label">Illustrative concept screens. Values shown are not research results.</div>
     <div class="kb-footer"><span>Inspect · Compare · Explain · Save</span><span>08 / 08</span></div>
-    <div class="notes"><strong>User journey.</strong> A user selects an asset or paper portfolio, chooses a horizon and reviews relevant events. The overview compares raw and adjusted probabilities and links to wallet evidence. The scenario view shows hypothetical risk metrics with assumptions. These are concept screens from the proposal, so every displayed value remains illustrative. Source: proposal Section 2.1 and Figures 5–6.</div>
+    <div class="notes"><strong>User journey.</strong> A user selects an asset or paper portfolio, chooses a horizon and reviews relevant events. The overview compares raw and wallet-informed probabilities and links to wallet evidence. The scenario view shows hypothetical risk metrics with assumptions. These are concept screens from the proposal, so every displayed value remains illustrative. Source: proposal Section 2.1 and Figures 5–6.</div>
   </section>
 
 </div>

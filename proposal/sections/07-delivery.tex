@@ -1,7 +1,7 @@
 \subsubsection{Controlled assistant roles}
 The research assistant has three roles within one controlled workflow. The \textbf{event research agent} retrieves evidence and proposes event--asset mappings for review. The \textbf{analysis coordinator} submits validated calculation requests. The \textbf{explanation agent} presents saved results and answers questions with source references. Section~2.2 specifies the proposed CrewAI, retrieval and tool implementation.
 
-For ``How could the next rate decision affect my SPY and MSFT exposure?'', the assistant resolves the assets, horizon and analysis time. It retrieves an eligible event and proposes an event-to-asset explanation, but numerical responses must come from historical estimates or reviewed stress assumptions. 
+For ``How could the next rate decision affect my SPY and MSFT exposure?'', the assistant resolves the assets, horizon and analysis time. It retrieves an eligible event and proposes an event--asset mapping explanation, but numerical responses must come from historical estimates or reviewed stress assumptions.
 
 \subsubsection{Guided research journey and interface}
 A user selects an asset or hypothetical portfolio and chooses how far ahead to examine risk. EventLens presents relevant events, compares market probabilities with experimental wallet-informed estimates, and lets the user inspect wallet activity before exploring scenarios. The assistant explains the evidence, and saved reports preserve the analysis.
@@ -16,13 +16,13 @@ For example, a user researching SPY over five trading days could inspect an upco
 \end{figure}
 
 \subsubsection{Smart-wallet tracking and evidence inspection}
-Users can browse wallets in covered events, filter by history and activity, and follow public addresses without connecting a wallet. Profiles show earlier resolved-event decisions, entry prices, subsequent price movements, reconstructed positions and an activity timeline. A provisional ``smart'' label denotes historically informative behaviour and is supported by a dated score, sample size and coverage assessment.
+Users can browse wallets in covered events, filter by history and activity, and follow public addresses without connecting a wallet. Profiles show earlier resolved-event decisions, entry prices, subsequent price movements, reconstructed positions and an activity timeline. A provisional ``smart'' label denotes historically informative behavior and is supported by a dated score, sample size and coverage assessment.
 
 \clearpage
 \subsubsection{Concept screens}
 Figures~\ref{fig:overview-ui} and~\ref{fig:scenario-ui} illustrate the intended layout. They are conceptual interface images. Values are illustrative and do not represent research results.
 
-The \textbf{Overview} screen combines the \textbf{Watchlist} with the selected event's \textbf{Market probability}, \textbf{Adjusted estimate}, \textbf{Evidence} status and \textbf{Probability history}. The \textbf{Research assistant} answers contextual questions and links to the \textbf{Probability run} and \textbf{Wallet evidence}. The \textbf{Events} and \textbf{Saved research} navigation items lead to detailed event review and preserved analyses.
+The \textbf{Overview} screen combines the \textbf{Watchlist} with the selected event's \textbf{Market probability}, \textbf{Wallet-informed probability}, \textbf{Evidence} status and \textbf{Probability history}. The \textbf{Research assistant} answers contextual questions and links to the \textbf{Probability run} and \textbf{Wallet evidence}. The \textbf{Events} and \textbf{Saved research} navigation items lead to detailed event review and preserved analyses.
 
 The \textbf{Scenarios} screen is headed \textbf{Portfolio scenario analysis}. Users enter a \textbf{Paper portfolio}, select \textbf{Run scenario}, and review \textbf{95\% VaR}, \textbf{95\% expected shortfall} and \textbf{Event probability}. They can then choose \textbf{Compare allocation}, \textbf{Inspect evidence} or \textbf{Save report}. Inputs and results remain hypothetical and do not place orders.
 \begin{figure}[H]

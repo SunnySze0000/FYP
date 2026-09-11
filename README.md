@@ -70,7 +70,7 @@ git commit -m "Clarify the implementation approach"
 git push -u origin report/update-methodology
 ```
 
-These commands assume the team repository is configured as `origin`. Open a pull request into `main`, summarise the content changes, and state whether the PDF compiled and its layout was checked. Have another teammate review it before merging. Keep each pull request focused on a section or a related set of edits to reduce conflicts.
+These commands assume the team repository is configured as `origin`. Open a pull request into `main`, summarize the content changes, and state whether the PDF compiled and its layout was checked. Have another teammate review it before merging. Keep each pull request focused on a section or a related set of edits to reduce conflicts.
 
 Commit `.tex` files, documentation, required figure assets and `proposal/proposal.pdf`. Before merging, ensure the PDF was built from the final source in the pull request. If parallel edits cause a PDF conflict, resolve the source conflicts first, rebuild the PDF and stage the regenerated file. Documentation-only changes do not require a rebuild. LaTeX auxiliary files, local review material and credentials should stay out of commits.
 

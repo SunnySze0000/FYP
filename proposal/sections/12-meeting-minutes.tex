@@ -13,11 +13,11 @@
 There were no minutes to approve, as this was the first formal group meeting.
 
 \textbf{2. Report on progress} \\
-2.1 All members had reviewed the FYP proposal template and familiarised themselves with the submission requirements. \\
+2.1 All members had reviewed the FYP proposal template and familiarized themselves with the submission requirements. \\
 2.2 The group discussed the overall timeline and key milestones leading up to the proposal deadline.
 
 \textbf{3. Discussion items} \\
-3.1 The group agreed a structured timeline before the proposal submission: idea-sharing on 16 August, buffer sessions on 22 and 29 August, internal deadline (draft to communication tutor) on 3 September, review of tutor comments on 6 September, soft submission deadline on 10 September and hard submission deadline on 11 September. \\
+3.1 The group agreed on a structured timeline before the proposal submission: idea-sharing on 16 August, buffer sessions on 22 and 29 August, internal deadline (draft to communication tutor) on 3 September, review of tutor comments on 6 September, soft submission deadline on 10 September and hard submission deadline on 11 September. \\
 3.2 The objective of the next meeting (16 August) was defined: each member would prepare and share project ideas, with the group deciding on a final topic by the end of that meeting.
 
 \textbf{4. Goals for the coming month} \\
@@ -41,7 +41,7 @@ The meeting was adjourned at 21:12. The next meeting was scheduled for 21:00 on 
 The minutes of the 1st meeting (8 August 2026) were reviewed and approved.
 
 \textbf{2. Report on progress} \\
-2.1 All members had researched candidate FinTech, Web3 and quantitative-trading topics as scheduled. \\
+2.1 All members had researched candidate FinTech, Web3 and quantitative trading topics as scheduled. \\
 2.2 All members prepared proposal ideas to present at this meeting.
 
 \textbf{3. Discussion items} \\
@@ -49,7 +49,7 @@ The minutes of the 1st meeting (8 August 2026) were reviewed and approved.
 3.2 The team agreed the project should be product-centric rather than strategy-centric, to keep a strong engineering and system-design scope. \\
 3.3 The team noted the NLP-backtesting idea risked being too general and hard to backtest reliably for crypto/Web3 dynamics. \\
 3.4 The team reviewed the feasibility of Franklin's Polymarket proposal, noting existing open-source tools already demonstrate reliable extraction of Polymarket on-chain data. \\
-3.5 The team reached consensus on a unified direction: a Web3 intelligence system that ingests on-chain Polymarket data, identifies smart-wallet activity on relevant prediction markets, and translates those signals into insights for financial and equity markets (e.g.\ macro risk indicators).
+3.5 The team reached consensus on a unified direction: a Web3 intelligence system that ingests on-chain Polymarket data, identifies smart-wallet activity on relevant prediction markets, and translates those signals into insights for financial and equity markets (e.g., macro risk indicators).
 
 \textbf{4. Goals for the coming week} \\
 4.1 All members to research the methodology and architecture needed for the Polymarket intelligence platform (data sources, APIs, on-chain indexing and signal mapping). \\
@@ -76,11 +76,11 @@ The minutes of the 2nd meeting (16 August 2026) were reviewed and approved.
 2.2 The draft was found to be substantially over length relative to the expected proposal size.
 
 \textbf{3. Discussion items} \\
-3.1 The team reviewed the proposed user workflow: a user selects a supported market category (e.g.\ a Federal Reserve rate-cut event), the system applies smart-wallet identification to derive an adjusted event probability, and an optional simple backtest of a volatility relative-value strategy is run on the result. \\
-3.2 The team discussed the intended MVP dashboard: user-selected event categories, intermediate outputs (smart wallets, adjusted event probability) and final outputs (volatility and risk metrics such as Value at Risk). \\
-3.3 The team clarified the role of the LLM agent: summarising smart-wallet evidence for the user, mapping a user's watchlist or portfolio to relevant Polymarket events, and offering context-appropriate suggestions once the user has entered their holdings. \\
+3.1 The team reviewed the proposed user workflow: a user selects a supported market category (e.g., a Federal Reserve rate-cut event), the system applies smart-wallet identification to derive a wallet-informed probability, and an optional simple backtest of a volatility relative-value strategy is run on the result. \\
+3.2 The team discussed the intended MVP dashboard: user-selected event categories, intermediate outputs (smart wallets, wallet-informed probability) and final outputs (volatility and risk metrics such as value at risk (VaR)). \\
+3.3 The team clarified the role of the LLM agent: summarizing smart-wallet evidence for the user, mapping a user's watchlist or portfolio to relevant Polymarket events, and offering context-appropriate suggestions once the user has entered their holdings. \\
 3.4 The team confirmed all on-chain and market data would be sourced from Polymarket's API, including its central limit order book. \\
-3.5 Referring to the FYP grading rubric (approximately 60\% objectives/methodology/background, 30\% organisation/clarity/presentation, 10\% planning and timeline), the team agreed the draft needed significant shortening, targeting roughly 10--15 pages, with the Design and Application subsection cut most aggressively. \\
+3.5 Referring to the FYP grading rubric (approximately 60\% objectives/methodology/background, 30\% organization/clarity/presentation, 10\% planning and timeline), the team agreed the draft needed significant shortening, targeting roughly 10--15 pages, with the Design and Application subsection cut most aggressively. \\
 3.6 The team discussed collaborative tooling for the LaTeX draft (Overleaf's per-project collaborator limits versus a Git-based workflow) and agreed to continue evaluating options. \\
 3.7 The team agreed to request a consultation with the supervisor (Prof.\ Shuai Wang) ahead of submission, proposing Monday afternoon or Tuesday morning as candidate slots.
 
@@ -94,6 +94,7 @@ The minutes of the 2nd meeting (16 August 2026) were reviewed and approved.
 The meeting was adjourned. The next meeting was scheduled for 21:00 on 29 August 2026, via Zoom.
 
 \clearpage
+\enlargethispage{\baselineskip}
 \subsection{Minutes of the 4th Project Meeting}
 
 \textbf{Date:} 29 August 2026 (Saturday) \\
@@ -110,14 +111,14 @@ The minutes of the 3rd meeting (22 August 2026) were reviewed and approved.
 2.1 Members had continued drafting their assigned sections following the shortening exercise agreed at the previous meeting.
 
 \textbf{3. Discussion items} \\
-3.1 The team revisited smart-wallet identification in more depth: given the limited history available on Polymarket (approximately three years) and the absence of a labelled dataset, the team agreed to first define rule-based labels (e.g.\ a historical win-rate threshold) and then train a model on these labels so that new, previously unseen wallets can also be scored. \\
-3.2 The team discussed mapping the adjusted event probability to asset volatility, identifying GARCH-family models as a candidate approach for incorporating the adjusted probability as an input feature, while noting this mapping step has less data per event than the wallet-scoring step and needs a simpler, more robust design. \\
+3.1 The team revisited smart-wallet identification in more depth: given the limited history available on Polymarket (approximately three years) and the absence of a labeled dataset, the team agreed to first define rule-based labels (e.g., a historical win-rate threshold) and then train a model on these labels so that new, previously unseen wallets can also be scored. \\
+3.2 The team discussed mapping the wallet-informed probability to asset volatility, identifying GARCH-family models as a candidate approach for incorporating the wallet-informed probability as an input feature, while noting this mapping step has fewer observations per event than the wallet-scoring step and needs a simpler, more robust design. \\
 3.3 The team agreed to narrow the initial asset universe to a small set of index-tracking ETFs, which carry less idiosyncratic risk and are easier to forecast, before considering individual equities in a later phase. \\
-3.4 The team clarified that the machine-learning components (wallet scoring, probability-to-volatility mapping) and the LLM research agent (event-to-asset relevance and user-facing explanation) are complementary rather than overlapping, so the design satisfies the project's AI requirement without redundancy. \\
-3.5 The team discussed two possible uses for the volatility output -- portfolio risk management versus an actively traded volatility strategy -- and agreed to describe both directions in the proposal while prioritising the risk-management framing, since the primary target user is a retail investor rather than a derivatives trader. \\
-3.6 The team agreed to source on-chain settlement data via Polygon RPC, in addition to Polymarket's own API for event metadata, to keep the project's Web3 focus. Initial event coverage will prioritise finance/macroeconomics and politics/geopolitics categories over sports or other categories. \\
+3.4 The team clarified that the machine-learning components (wallet scoring, probability-to-volatility mapping) and the LLM research agent (event--asset mapping and user-facing explanation) are complementary rather than overlapping, so the design satisfies the project's AI requirement without redundancy. \\
+3.5 The team discussed two possible uses for the volatility output -- portfolio risk management versus an actively traded volatility strategy -- and agreed to describe both directions in the proposal while prioritizing the risk-management framing, since the primary target user is a retail investor rather than a derivatives trader. \\
+3.6 The team agreed to source on-chain settlement data via Polygon RPC, in addition to Polymarket's own API for event metadata, to keep the project's Web3 focus. Initial event coverage will prioritize finance/macroeconomics and politics/geopolitics categories over sports or other categories. \\
 3.7 The team reviewed the FYP table of contents and grading rubric and split the remaining proposal-writing workload by section among the four members, agreeing to draft independent sections individually first and reconvene to jointly resolve the more interdependent Design and Methodology content. \\
-3.8 The team noted an open question requiring further work: how to weight and aggregate multiple related Polymarket bets into a single adjusted volatility estimate for a given asset.
+3.8 The team noted an open question requiring further work: how to weight and aggregate multiple related Polymarket bets into a single wallet-informed volatility estimate for a given asset.
 
 \textbf{4. Goals for the coming week} \\
 4.1 All members to continue drafting their assigned proposal sections. \\
@@ -137,13 +138,13 @@ The meeting was adjourned. The next meeting was scheduled ahead of the internal 
 
 \textbf{1. Review of the proposal} \\
 1.1 The supervisor was satisfied with the team's progress and considered the proposal report suitable for submission after final refinement. \\
-1.2 The supervisor did not confirm a preference for passive voice. The team therefore agreed to prioritise clear and consistent academic writing. \\
+1.2 The supervisor did not confirm a preference for passive voice. The team therefore agreed to prioritize clear and consistent academic writing. \\
 
 \textbf{2. Suggestions} \\
 2.1 The supervisor suggested investigating relationships among Polymarket events. Events that are not directly selected for analysis may still contain related information through shared topics, entities or outcomes. \\
 2.2 The supervisor suggested an ablation or comparison study between fixed rule-based signals and analysis assisted by an LLM agent, with a hybrid approach as an additional configuration if capacity permits. \\
 2.3 The team noted that predictive relationships may decay over time and agreed that any proposed signal should be assessed across chronological and rolling evaluation periods. \\
-2.4 The supervisor clarified that the cross-event and agent-ablation studies were suggestions rather than required additions and could be prioritised according to available time and capacity. \\
+2.4 The supervisor clarified that the cross-event and agent-ablation studies were suggestions rather than required additions and could be prioritized according to available time and capacity. \\
 
 \textbf{3. Resources} \\
 3.1 The team asked about funding for external APIs and related services. The supervisor indicated that a total budget in the range of 1,000--2,000 would be reasonable, subject to confirmation, with a possible limited top-up if justified later. \\
