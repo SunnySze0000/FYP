@@ -42,3 +42,7 @@ Desktop.ini
 !.env.example
 .codex-build
 .codex-finalizer
+
+# Python caches from local data collection
+__pycache__/
+*.py[cod]
