@@ -3,6 +3,7 @@
 *.tex text eol=lf
 *.bib text eol=lf
 *.md text eol=lf
+*.csv text eol=lf
 .gitignore text eol=lf
 .gitattributes text eol=lf
 
@@ -12,3 +13,4 @@
 *.jpeg binary
 *.pdf binary
 *.docx binary
+*.gz binary

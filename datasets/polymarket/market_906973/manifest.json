@@ -1,0 +1,595 @@
+{
+  "market_id": "906973",
+  "page_size": 1000,
+  "taker_only": false,
+  "filter_type": "TOKENS",
+  "filter_amount": "0.01",
+  "exported_at_utc": "2026-10-06T15:43:38.469391+00:00",
+  "pages": [
+    {
+      "page": 1,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:36:38.488750+00:00"
+    },
+    {
+      "page": 2,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:36:42.454884+00:00"
+    },
+    {
+      "page": 3,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:36:45.995491+00:00"
+    },
+    {
+      "page": 4,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:36:49.275160+00:00"
+    },
+    {
+      "page": 5,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:36:52.993955+00:00"
+    },
+    {
+      "page": 6,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:36:56.605103+00:00"
+    },
+    {
+      "page": 7,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:36:59.952344+00:00"
+    },
+    {
+      "page": 8,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:37:03.163135+00:00"
+    },
+    {
+      "page": 9,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:37:06.221081+00:00"
+    },
+    {
+      "page": 10,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:37:09.943296+00:00"
+    },
+    {
+      "page": 11,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:37:13.256438+00:00"
+    },
+    {
+      "page": 12,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:37:16.248375+00:00"
+    },
+    {
+      "page": 13,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:37:19.557484+00:00"
+    },
+    {
+      "page": 14,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:37:22.976449+00:00"
+    },
+    {
+      "page": 15,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:37:26.366875+00:00"
+    },
+    {
+      "page": 16,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:37:29.573354+00:00"
+    },
+    {
+      "page": 17,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:37:32.655261+00:00"
+    },
+    {
+      "page": 18,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:37:36.464992+00:00"
+    },
+    {
+      "page": 19,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:37:39.731877+00:00"
+    },
+    {
+      "page": 20,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:37:42.996632+00:00"
+    },
+    {
+      "page": 21,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:37:46.434665+00:00"
+    },
+    {
+      "page": 22,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:37:50.238431+00:00"
+    },
+    {
+      "page": 23,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:37:53.921106+00:00"
+    },
+    {
+      "page": 24,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:37:57.173952+00:00"
+    },
+    {
+      "page": 25,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:38:00.612297+00:00"
+    },
+    {
+      "page": 26,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:38:04.245647+00:00"
+    },
+    {
+      "page": 27,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:38:07.641158+00:00"
+    },
+    {
+      "page": 28,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:38:10.680493+00:00"
+    },
+    {
+      "page": 29,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:38:13.693588+00:00"
+    },
+    {
+      "page": 30,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:38:17.220689+00:00"
+    },
+    {
+      "page": 31,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:38:20.271109+00:00"
+    },
+    {
+      "page": 32,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:38:23.506583+00:00"
+    },
+    {
+      "page": 33,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:38:26.507974+00:00"
+    },
+    {
+      "page": 34,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:38:29.946237+00:00"
+    },
+    {
+      "page": 35,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:38:33.373397+00:00"
+    },
+    {
+      "page": 36,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:38:36.494587+00:00"
+    },
+    {
+      "page": 37,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:38:39.526533+00:00"
+    },
+    {
+      "page": 38,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:38:42.654374+00:00"
+    },
+    {
+      "page": 39,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:38:46.061017+00:00"
+    },
+    {
+      "page": 40,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:38:49.563897+00:00"
+    },
+    {
+      "page": 41,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:38:52.760416+00:00"
+    },
+    {
+      "page": 42,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:38:56.344176+00:00"
+    },
+    {
+      "page": 43,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:39:00.035787+00:00"
+    },
+    {
+      "page": 44,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:39:03.226946+00:00"
+    },
+    {
+      "page": 45,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:39:06.347758+00:00"
+    },
+    {
+      "page": 46,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:39:09.654497+00:00"
+    },
+    {
+      "page": 47,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:39:13.220425+00:00"
+    },
+    {
+      "page": 48,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:39:16.643982+00:00"
+    },
+    {
+      "page": 49,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:39:20.157706+00:00"
+    },
+    {
+      "page": 50,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:39:23.544611+00:00"
+    },
+    {
+      "page": 51,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:39:26.972653+00:00"
+    },
+    {
+      "page": 52,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:39:30.370887+00:00"
+    },
+    {
+      "page": 53,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:39:33.351775+00:00"
+    },
+    {
+      "page": 54,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:39:36.494704+00:00"
+    },
+    {
+      "page": 55,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:39:40.057718+00:00"
+    },
+    {
+      "page": 56,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:39:43.468067+00:00"
+    },
+    {
+      "page": 57,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:39:46.733751+00:00"
+    },
+    {
+      "page": 58,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:39:50.288917+00:00"
+    },
+    {
+      "page": 59,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:39:53.691379+00:00"
+    },
+    {
+      "page": 60,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:39:57.397441+00:00"
+    },
+    {
+      "page": 61,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:40:00.630641+00:00"
+    },
+    {
+      "page": 62,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:40:03.800461+00:00"
+    },
+    {
+      "page": 63,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:40:07.538807+00:00"
+    },
+    {
+      "page": 64,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:40:11.122276+00:00"
+    },
+    {
+      "page": 65,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:40:14.286725+00:00"
+    },
+    {
+      "page": 66,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:40:17.707873+00:00"
+    },
+    {
+      "page": 67,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:40:21.502173+00:00"
+    },
+    {
+      "page": 68,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:40:25.303277+00:00"
+    },
+    {
+      "page": 69,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:40:28.810103+00:00"
+    },
+    {
+      "page": 70,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:40:31.957104+00:00"
+    },
+    {
+      "page": 71,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:40:35.626395+00:00"
+    },
+    {
+      "page": 72,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:40:39.084866+00:00"
+    },
+    {
+      "page": 73,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:40:42.177789+00:00"
+    },
+    {
+      "page": 74,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:40:45.172047+00:00"
+    },
+    {
+      "page": 75,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:40:48.445921+00:00"
+    },
+    {
+      "page": 76,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:40:51.880802+00:00"
+    },
+    {
+      "page": 77,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:40:55.055079+00:00"
+    },
+    {
+      "page": 78,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:40:58.224779+00:00"
+    },
+    {
+      "page": 79,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:41:01.849077+00:00"
+    },
+    {
+      "page": 80,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:41:05.509325+00:00"
+    },
+    {
+      "page": 81,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:41:08.537585+00:00"
+    },
+    {
+      "page": 82,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:41:11.703912+00:00"
+    },
+    {
+      "page": 83,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:41:15.469549+00:00"
+    },
+    {
+      "page": 84,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:41:19.140992+00:00"
+    },
+    {
+      "page": 85,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:41:22.290435+00:00"
+    },
+    {
+      "page": 86,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:41:25.435316+00:00"
+    },
+    {
+      "page": 87,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:41:28.755978+00:00"
+    },
+    {
+      "page": 88,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:41:32.249187+00:00"
+    },
+    {
+      "page": 89,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:41:35.611749+00:00"
+    },
+    {
+      "page": 90,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:41:38.805800+00:00"
+    },
+    {
+      "page": 91,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:41:41.884236+00:00"
+    },
+    {
+      "page": 92,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:41:45.350814+00:00"
+    },
+    {
+      "page": 93,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:41:48.749416+00:00"
+    },
+    {
+      "page": 94,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:41:51.702610+00:00"
+    },
+    {
+      "page": 95,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:41:54.910923+00:00"
+    },
+    {
+      "page": 96,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:41:58.972153+00:00"
+    },
+    {
+      "page": 97,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:42:02.771477+00:00"
+    },
+    {
+      "page": 98,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:42:06.066032+00:00"
+    },
+    {
+      "page": 99,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:42:09.235361+00:00"
+    },
+    {
+      "page": 100,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:42:12.960085+00:00"
+    },
+    {
+      "page": 101,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:42:16.432733+00:00"
+    },
+    {
+      "page": 102,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:42:19.548856+00:00"
+    },
+    {
+      "page": 103,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:42:22.686038+00:00"
+    },
+    {
+      "page": 104,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:42:25.988066+00:00"
+    },
+    {
+      "page": 105,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:42:29.566711+00:00"
+    },
+    {
+      "page": 106,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:42:32.832153+00:00"
+    },
+    {
+      "page": 107,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:42:35.816438+00:00"
+    },
+    {
+      "page": 108,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:42:38.951756+00:00"
+    },
+    {
+      "page": 109,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:42:42.665171+00:00"
+    },
+    {
+      "page": 110,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:42:46.156635+00:00"
+    },
+    {
+      "page": 111,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:42:49.224037+00:00"
+    },
+    {
+      "page": 112,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-06T15:42:52.281110+00:00"
+    },
+    {
+      "page": 113,
+      "rows": 598,
+      "collected_at_utc": "2026-10-06T15:42:55.587806+00:00"
+    }
+  ],
+  "raw_rows": 112598,
+  "clean_rows": 112598,
+  "rejected_rows": 0,
+  "unique_wallets": 7213,
+  "unique_transactions": 43891,
+  "duplicate_fingerprint_rows": 844,
+  "minimum_timestamp_utc": "2025-12-11T08:03:11+00:00",
+  "maximum_timestamp_utc": "2026-06-17T21:12:58+00:00",
+  "side_counts": {
+    "SELL": 41236,
+    "BUY": 71362
+  },
+  "token_outcome_counts": {
+    "NO": 68517,
+    "YES": 44081
+  },
+  "next_cursor": null,
+  "exhausted_api_cursor": true,
+  "coverage_note": "Served API history only: condition queries use a three-year window; minimum-size filter is 0.01 shares. Cursor exhaustion does not establish chain completeness.",
+  "cleaning_note": "Participant records preserved, including repeated fingerprints. Do not sum both participants as market volume. Signed flow is not full holdings."
+}
