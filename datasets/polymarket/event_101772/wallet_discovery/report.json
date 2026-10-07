@@ -1,0 +1,64 @@
+{
+  "event_id": "101772",
+  "selection_cutoff_utc": "2026-05-31T00:00:00+00:00",
+  "input_files": [
+    {
+      "market_id": "906972",
+      "file": "market_906972/wallet_trades.csv.gz",
+      "sha256": "6ee2c6b08bddf36b13ffc2d32da6ccb7807af30c61ea6198e83e49b818e70270"
+    },
+    {
+      "market_id": "906973",
+      "file": "market_906973/wallet_trades.csv.gz",
+      "sha256": "b022938edd18cfdedf257cae87d0c91be7012a7071eda8184cd4801a639298bd"
+    },
+    {
+      "market_id": "906974",
+      "file": "market_906974/wallet_trades.csv.gz",
+      "sha256": "6d9147f2ffca6a9f4f732805bdd85bd5b8c5695048878d9e51759d3d0418a82a"
+    },
+    {
+      "market_id": "906975",
+      "file": "market_906975/wallet_trades.csv.gz",
+      "sha256": "31a8fdd845e52824028f1708d1f02a58ddc1292c005d47f0f0b7f4c72cb3441e"
+    },
+    {
+      "market_id": "906976",
+      "file": "market_906976/wallet_trades.csv.gz",
+      "sha256": "6e1322978484c611abbbcc85790b7b8da3f57b300e354716b572491c5707fd7f"
+    }
+  ],
+  "full_history_participant_rows": 595965,
+  "full_history_wallet_market_pairs": 40164,
+  "full_history_distinct_wallets": 30404,
+  "pre_cutoff_participant_rows": 441581,
+  "excluded_at_or_after_cutoff_rows": 154384,
+  "pre_cutoff_distinct_wallets": 23672,
+  "eligible_wallets": 1596,
+  "exclusion_reason_counts_nonexclusive": {
+    "fewer_than_5_active_days": 21755,
+    "fewer_than_10_transactions": 21409,
+    "more_than_5_percent_duplicate_candidate_rows": 46
+  },
+  "eligible_broad_wallets": 481,
+  "eligible_focused_wallets": 1115,
+  "candidate_wallets": 20,
+  "candidate_wallet_market_pairs": 67,
+  "selection_rules": {
+    "minimum_active_utc_days": 5,
+    "minimum_unique_transactions": 10,
+    "maximum_duplicate_candidate_fraction": "0.05",
+    "exclude_configured_exchanges_and_zero_address": true,
+    "exclude_observed_chain_reconciliation_issues": true,
+    "broad_group": "3+ markets: markets descending, active days descending, transactions descending, address ascending",
+    "focused_group": "1-2 markets: active days descending, transactions descending, address ascending"
+  },
+  "limitations": [
+    "Candidates represent observable activity, not proven skill, profit or a predictive ranking.",
+    "One meeting is one independent event even when a wallet trades multiple outcome markets.",
+    "Cutoff is based on historical trade timestamps in retrospectively collected API records, not a contemporaneously archived snapshot.",
+    "Duplicate candidates are retained; the fraction filter is exploratory and does not establish invalidity.",
+    "Chain-check coverage is sparse and retrospective; it is reported but not used to prefer wallets.",
+    "Trade flow is not full holdings; position operations, transfers and starting balances are not reconstructed."
+  ]
+}

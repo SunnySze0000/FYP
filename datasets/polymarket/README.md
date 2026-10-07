@@ -118,6 +118,24 @@ snapshot. The original market has eight sampled transaction checks; the four add
 four each. Inspect mismatch/ambiguity statuses and reverse-check gaps rather than assuming
 all future runs will agree. Fills outside a market's two-token mapping are separately labeled.
 
+## Combine activity and shortlist candidates
+
+The [wallet discovery guide](event_101772/wallet_discovery/README.md) contains the combined
+wallet/outcome table and 20 candidates. Selection uses only trades strictly before
+`2026-05-31T00:00:00+00:00`, with two groups: ten broadly active across 3+ outcomes and ten
+focused on 1-2 outcomes. Eligibility and ranking are activity-based, not performance scores.
+The full-history activity table is descriptive and separate from pre-cutoff selection inputs.
+
+Run locally without network access or keys:
+
+```sh
+python3 -B scripts/polymarket/discover_wallets.py
+```
+
+See the discovery README for thresholds, every output column, input hashes and limitations.
+Historical timestamps are filtered retrospectively; these are not contemporaneously archived
+API snapshots. Earlier independent meetings are needed before evaluating wallet skill.
+
 ## Source and method references
 
 The reusable scripts are under `scripts/polymarket/`:
@@ -128,6 +146,7 @@ The reusable scripts are under `scripts/polymarket/`:
 | `verify_history.py` | Alchemy CLI receipt/block collection, sampled reconciliation, compressed export |
 | `decode_receipt.py` | Supported V1/V2 fill decoding and participant matching |
 | `build_meeting_index.py` | Validate exported markets, summarize meeting coverage and generate new README/checksum files |
+| `discover_wallets.py` | Aggregate wallet/outcome activity and build an auditable retrospective candidate shortlist |
 | `collect_pilot.py` | Shared validation/CSV helpers and the original bounded-pilot commands; use the history workflow above for this dataset |
 
 - [Gamma market metadata](https://gamma-api.polymarket.com/markets/906973)

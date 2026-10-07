@@ -136,6 +136,8 @@ across {summary['sample_transaction_checks']} market/transaction checks.
 - `summary.json`: union address/transaction counts, additive row/check counts, and limitations.
 - `SHA256SUMS`: hashes of these meeting-index files.
 
+{('[Wallet activity and candidate discovery](wallet_discovery/README.md): combined outcome activity and a pre-cutoff exploratory shortlist.' if (out / 'wallet_discovery' / 'README.md').exists() else '')}
+
 Trade CSVs remain in their individual market folders; the index does not duplicate them.
 Per-market wallet and transaction counts overlap and must not be added to estimate distinct
 participants. One transaction may involve multiple markets. Gross participant notional is not
