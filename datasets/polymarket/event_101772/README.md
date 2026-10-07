@@ -27,6 +27,8 @@ across 24 market/transaction checks.
 
 [Wallet activity and candidate discovery](wallet_discovery/README.md): combined outcome activity and a pre-cutoff exploratory shortlist.
 
+[Earlier candidate meeting histories](prior_history/README.md): independent prior-meeting coverage and explicit zero states.
+
 Trade CSVs remain in their individual market folders; the index does not duplicate them.
 Per-market wallet and transaction counts overlap and must not be added to estimate distinct
 participants. One transaction may involve multiple markets. Gross participant notional is not

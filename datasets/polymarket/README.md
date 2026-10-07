@@ -136,6 +136,22 @@ See the discovery README for thresholds, every output column, input hashes and l
 Historical timestamps are filtered retrospectively; these are not contemporaneously archived
 API snapshots. Earlier independent meetings are needed before evaluating wallet skill.
 
+## Check candidates' earlier Fed histories
+
+The [prior-history guide](event_101772/prior_history/README.md) reports the 20 candidates'
+served records for the seven earlier meetings in the team's existing CSV. Each candidate/meeting
+pair has an explicit row, including zero observed activity. Counts distinguish all served trades
+from trades before a declared cutoff one day before Gamma's meeting endDate.
+
+```sh
+python3 -B scripts/polymarket/collect_prior_history.py
+```
+
+The queries use public wallet+condition filters, a UTC end bound before candidate selection,
+and resumable cursors. They require no API key. Current resolved labels and historical closure
+times are recorded separately from the unverified original resolution timestamps. These histories
+establish whether case-study records exist; they do not establish profit, holdings or predictive skill.
+
 ## Source and method references
 
 The reusable scripts are under `scripts/polymarket/`:
@@ -147,6 +163,7 @@ The reusable scripts are under `scripts/polymarket/`:
 | `decode_receipt.py` | Supported V1/V2 fill decoding and participant matching |
 | `build_meeting_index.py` | Validate exported markets, summarize meeting coverage and generate new README/checksum files |
 | `discover_wallets.py` | Aggregate wallet/outcome activity and build an auditable retrospective candidate shortlist |
+| `collect_prior_history.py` | Collect candidates' earlier team Fed trades and report independent meeting coverage |
 | `collect_pilot.py` | Shared validation/CSV helpers and the original bounded-pilot commands; use the history workflow above for this dataset |
 
 - [Gamma market metadata](https://gamma-api.polymarket.com/markets/906973)
