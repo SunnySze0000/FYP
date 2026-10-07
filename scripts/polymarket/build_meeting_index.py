@@ -140,12 +140,14 @@ across {summary['sample_transaction_checks']} market/transaction checks.
 
 {('[Earlier candidate meeting histories](prior_history/README.md): independent prior-meeting coverage and explicit zero states.' if (out / 'prior_history' / 'README.md').exists() else '')}
 
+{('[Four-wallet decision review](decision_review/README.md): pre-cutoff flows, retrospective diagnostics and a probability-evaluation protocol.' if (out / 'decision_review' / 'README.md').exists() else '')}
+
 Trade CSVs remain in their individual market folders; the index does not duplicate them.
 Per-market wallet and transaction counts overlap and must not be added to estimate distinct
 participants. One transaction may involve multiple markets. Gross participant notional is not
 market volume. API size filtering and sampled verification mean chain completeness is not established.
 The original 25 bp cut snapshot is preserved; the other four were collected afterward.
-Wallet scoring and probability adjustment remain separate next steps.
+Wallet diagnostics remain exploratory; probability adjustment requires separate validation.
 """)
     checksums(out)
     print(json.dumps(summary,indent=2))

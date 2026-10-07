@@ -164,6 +164,13 @@ The reusable scripts are under `scripts/polymarket/`:
 | `build_meeting_index.py` | Validate exported markets, summarize meeting coverage and generate new README/checksum files |
 | `discover_wallets.py` | Aggregate wallet/outcome activity and build an auditable retrospective candidate shortlist |
 | `collect_prior_history.py` | Collect candidates' earlier team Fed trades and report independent meeting coverage |
+| `review_wallet_decisions.py` | Review four wallets' prior outcome flows and descriptive market-relative diagnostics offline |
+
+The [four-wallet decision review](event_101772/decision_review/README.md) examines
+the seven earlier meetings with 1-, 7- and 30-day windows. It includes explicit
+abstentions, sensitivity results and a proposed Brier evaluation protocol for
+future model forecasts. These flow diagnostics are not wallet beliefs, PnL or
+validated smart-wallet scores.
 | `collect_pilot.py` | Shared validation/CSV helpers and the original bounded-pilot commands; use the history workflow above for this dataset |
 
 - [Gamma market metadata](https://gamma-api.polymarket.com/markets/906973)

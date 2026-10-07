@@ -1,5 +1,26 @@
 # Polymarket wallet CSV dictionary
 
+## Four-wallet decision diagnostics
+
+`event_101772/decision_review/` has three derived tables. Full method and column
+interpretation are in its [guide](event_101772/decision_review/README.md).
+`outcome_flows.csv` has one wallet/meeting/market/window row, including explicit
+zero activity, four BUY/SELL × YES/NO share totals, signed YES-direction flow,
+gross shares, a pre-cutoff daily quote, final label and score numerator.
+`meeting_decisions.csv` aggregates markets once per wallet/meeting/window;
+`wallet_diagnostics.csv` averages scored meetings equally per wallet/window.
+Scores and share totals use decimals. IDs and addresses remain strings. Empty
+scores signify abstention with an explicit `status`; empty directional descriptions
+mean no flow with that sign. Booleans use `True`/`False`.
+
+`netting_ratio` is absolute net flow divided by gross traded shares. The
+`flow_alignment_score` divides the sum of net-flow × (result − quote) by gross
+shares. It describes trade-flow association; it is not a probability, return,
+holding, proper forecast score or validated skill measure. `positive_score_meetings`
+counts positive diagnostics, not profitable meetings. Both `validated_smart_wallet`
+and `production_weight_available` are false. These earlier records have
+`chain_verification=not_checked`.
+
 The schema is shared by the `market_<id>/` exports. Counts and coverage are recorded separately
 in each market README and manifest. IDs are strings, timestamps are UTC, and decimal values
 should be read without converting 256-bit token IDs to floating point.
