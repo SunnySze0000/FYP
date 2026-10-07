@@ -1,0 +1,740 @@
+{
+  "market_id": "906972",
+  "page_size": 1000,
+  "taker_only": false,
+  "filter_type": "TOKENS",
+  "filter_amount": "0.01",
+  "exported_at_utc": "2026-10-07T14:29:03.068650+00:00",
+  "pages": [
+    {
+      "page": 1,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:20:28.681877+00:00"
+    },
+    {
+      "page": 2,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:20:31.975779+00:00"
+    },
+    {
+      "page": 3,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:20:35.262073+00:00"
+    },
+    {
+      "page": 4,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:20:38.806745+00:00"
+    },
+    {
+      "page": 5,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:20:42.214087+00:00"
+    },
+    {
+      "page": 6,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:20:45.472487+00:00"
+    },
+    {
+      "page": 7,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:20:48.606280+00:00"
+    },
+    {
+      "page": 8,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:20:52.377664+00:00"
+    },
+    {
+      "page": 9,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:20:55.844507+00:00"
+    },
+    {
+      "page": 10,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:20:59.170086+00:00"
+    },
+    {
+      "page": 11,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:21:02.325902+00:00"
+    },
+    {
+      "page": 12,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:21:06.034640+00:00"
+    },
+    {
+      "page": 13,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:21:09.611135+00:00"
+    },
+    {
+      "page": 14,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:21:12.838817+00:00"
+    },
+    {
+      "page": 15,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:21:15.879701+00:00"
+    },
+    {
+      "page": 16,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:21:19.277663+00:00"
+    },
+    {
+      "page": 17,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:21:23.115886+00:00"
+    },
+    {
+      "page": 18,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:21:26.271619+00:00"
+    },
+    {
+      "page": 19,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:21:29.388147+00:00"
+    },
+    {
+      "page": 20,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:21:32.731905+00:00"
+    },
+    {
+      "page": 21,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:21:36.604525+00:00"
+    },
+    {
+      "page": 22,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:21:40.073557+00:00"
+    },
+    {
+      "page": 23,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:21:43.065918+00:00"
+    },
+    {
+      "page": 24,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:21:46.384981+00:00"
+    },
+    {
+      "page": 25,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:21:50.511037+00:00"
+    },
+    {
+      "page": 26,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:21:54.179243+00:00"
+    },
+    {
+      "page": 27,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:21:57.171049+00:00"
+    },
+    {
+      "page": 28,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:22:00.329914+00:00"
+    },
+    {
+      "page": 29,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:22:03.835549+00:00"
+    },
+    {
+      "page": 30,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:22:07.006263+00:00"
+    },
+    {
+      "page": 31,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:22:10.928734+00:00"
+    },
+    {
+      "page": 32,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:22:14.614885+00:00"
+    },
+    {
+      "page": 33,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:22:17.773215+00:00"
+    },
+    {
+      "page": 34,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:22:21.003862+00:00"
+    },
+    {
+      "page": 35,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:22:24.819796+00:00"
+    },
+    {
+      "page": 36,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:22:28.239947+00:00"
+    },
+    {
+      "page": 37,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:22:31.267894+00:00"
+    },
+    {
+      "page": 38,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:22:34.812996+00:00"
+    },
+    {
+      "page": 39,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:22:38.747514+00:00"
+    },
+    {
+      "page": 40,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:22:42.404351+00:00"
+    },
+    {
+      "page": 41,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:22:45.395136+00:00"
+    },
+    {
+      "page": 42,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:22:48.553517+00:00"
+    },
+    {
+      "page": 43,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:22:52.263712+00:00"
+    },
+    {
+      "page": 44,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:22:55.756742+00:00"
+    },
+    {
+      "page": 45,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:22:58.914251+00:00"
+    },
+    {
+      "page": 46,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:23:01.876343+00:00"
+    },
+    {
+      "page": 47,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:23:05.360693+00:00"
+    },
+    {
+      "page": 48,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:23:08.725127+00:00"
+    },
+    {
+      "page": 49,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:23:11.879626+00:00"
+    },
+    {
+      "page": 50,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:23:14.985540+00:00"
+    },
+    {
+      "page": 51,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:23:18.129766+00:00"
+    },
+    {
+      "page": 52,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:23:21.623842+00:00"
+    },
+    {
+      "page": 53,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:23:24.850869+00:00"
+    },
+    {
+      "page": 54,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:23:27.905784+00:00"
+    },
+    {
+      "page": 55,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:23:30.935801+00:00"
+    },
+    {
+      "page": 56,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:23:34.900537+00:00"
+    },
+    {
+      "page": 57,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:23:38.398136+00:00"
+    },
+    {
+      "page": 58,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:23:41.877694+00:00"
+    },
+    {
+      "page": 59,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:23:44.908009+00:00"
+    },
+    {
+      "page": 60,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:23:47.910350+00:00"
+    },
+    {
+      "page": 61,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:23:51.128580+00:00"
+    },
+    {
+      "page": 62,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:23:59.323696+00:00"
+    },
+    {
+      "page": 63,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:24:02.696584+00:00"
+    },
+    {
+      "page": 64,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:24:08.294240+00:00"
+    },
+    {
+      "page": 65,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:24:12.459803+00:00"
+    },
+    {
+      "page": 66,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:24:15.846337+00:00"
+    },
+    {
+      "page": 67,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:24:21.793338+00:00"
+    },
+    {
+      "page": 68,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:24:26.310760+00:00"
+    },
+    {
+      "page": 69,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:24:29.786008+00:00"
+    },
+    {
+      "page": 70,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:24:35.359058+00:00"
+    },
+    {
+      "page": 71,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:24:40.196857+00:00"
+    },
+    {
+      "page": 72,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:24:43.593138+00:00"
+    },
+    {
+      "page": 73,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:24:57.254348+00:00"
+    },
+    {
+      "page": 74,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:25:00.841882+00:00"
+    },
+    {
+      "page": 75,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:25:05.003300+00:00"
+    },
+    {
+      "page": 76,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:25:08.416767+00:00"
+    },
+    {
+      "page": 77,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:25:11.370470+00:00"
+    },
+    {
+      "page": 78,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:25:14.951400+00:00"
+    },
+    {
+      "page": 79,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:25:18.636012+00:00"
+    },
+    {
+      "page": 80,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:25:22.191366+00:00"
+    },
+    {
+      "page": 81,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:25:25.303478+00:00"
+    },
+    {
+      "page": 82,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:25:29.004133+00:00"
+    },
+    {
+      "page": 83,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:25:32.722395+00:00"
+    },
+    {
+      "page": 84,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:25:36.174402+00:00"
+    },
+    {
+      "page": 85,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:25:39.217095+00:00"
+    },
+    {
+      "page": 86,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:25:42.491029+00:00"
+    },
+    {
+      "page": 87,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:25:46.297709+00:00"
+    },
+    {
+      "page": 88,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:25:50.128710+00:00"
+    },
+    {
+      "page": 89,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:25:53.152430+00:00"
+    },
+    {
+      "page": 90,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:25:56.251806+00:00"
+    },
+    {
+      "page": 91,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:26:00.300675+00:00"
+    },
+    {
+      "page": 92,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:26:03.824477+00:00"
+    },
+    {
+      "page": 93,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:26:06.972009+00:00"
+    },
+    {
+      "page": 94,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:26:10.053703+00:00"
+    },
+    {
+      "page": 95,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:26:13.394308+00:00"
+    },
+    {
+      "page": 96,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:26:16.886008+00:00"
+    },
+    {
+      "page": 97,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:26:20.491444+00:00"
+    },
+    {
+      "page": 98,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:26:23.562535+00:00"
+    },
+    {
+      "page": 99,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:26:26.658058+00:00"
+    },
+    {
+      "page": 100,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:26:30.189434+00:00"
+    },
+    {
+      "page": 101,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:26:34.045820+00:00"
+    },
+    {
+      "page": 102,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:26:37.306958+00:00"
+    },
+    {
+      "page": 103,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:26:41.187707+00:00"
+    },
+    {
+      "page": 104,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:26:45.781145+00:00"
+    },
+    {
+      "page": 105,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:26:49.380228+00:00"
+    },
+    {
+      "page": 106,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:26:52.826240+00:00"
+    },
+    {
+      "page": 107,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:26:57.758559+00:00"
+    },
+    {
+      "page": 108,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:27:02.799785+00:00"
+    },
+    {
+      "page": 109,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:27:06.182457+00:00"
+    },
+    {
+      "page": 110,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:27:12.304746+00:00"
+    },
+    {
+      "page": 111,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:27:16.432148+00:00"
+    },
+    {
+      "page": 112,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:27:19.354923+00:00"
+    },
+    {
+      "page": 113,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:27:22.483636+00:00"
+    },
+    {
+      "page": 114,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:27:26.023404+00:00"
+    },
+    {
+      "page": 115,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:27:29.148964+00:00"
+    },
+    {
+      "page": 116,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:27:32.126251+00:00"
+    },
+    {
+      "page": 117,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:27:35.343031+00:00"
+    },
+    {
+      "page": 118,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:27:38.868842+00:00"
+    },
+    {
+      "page": 119,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:27:42.560501+00:00"
+    },
+    {
+      "page": 120,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:27:45.854337+00:00"
+    },
+    {
+      "page": 121,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:27:49.212747+00:00"
+    },
+    {
+      "page": 122,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:27:53.004718+00:00"
+    },
+    {
+      "page": 123,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:27:56.703337+00:00"
+    },
+    {
+      "page": 124,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:27:59.960372+00:00"
+    },
+    {
+      "page": 125,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:28:03.036915+00:00"
+    },
+    {
+      "page": 126,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:28:06.446539+00:00"
+    },
+    {
+      "page": 127,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:28:10.052793+00:00"
+    },
+    {
+      "page": 128,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:28:13.472755+00:00"
+    },
+    {
+      "page": 129,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:28:16.609229+00:00"
+    },
+    {
+      "page": 130,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:28:20.163553+00:00"
+    },
+    {
+      "page": 131,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:28:23.675637+00:00"
+    },
+    {
+      "page": 132,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:28:26.711310+00:00"
+    },
+    {
+      "page": 133,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:28:29.823977+00:00"
+    },
+    {
+      "page": 134,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:28:33.043752+00:00"
+    },
+    {
+      "page": 135,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:28:36.938496+00:00"
+    },
+    {
+      "page": 136,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:28:40.226124+00:00"
+    },
+    {
+      "page": 137,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:28:43.398590+00:00"
+    },
+    {
+      "page": 138,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:28:47.376865+00:00"
+    },
+    {
+      "page": 139,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:28:51.332944+00:00"
+    },
+    {
+      "page": 140,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:28:54.373115+00:00"
+    },
+    {
+      "page": 141,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:28:57.364582+00:00"
+    },
+    {
+      "page": 142,
+      "rows": 769,
+      "collected_at_utc": "2026-10-07T14:29:00.335972+00:00"
+    }
+  ],
+  "raw_rows": 141769,
+  "clean_rows": 141769,
+  "rejected_rows": 0,
+  "unique_wallets": 10860,
+  "unique_transactions": 62422,
+  "duplicate_fingerprint_rows": 258,
+  "minimum_timestamp_utc": "2025-12-11T06:32:09+00:00",
+  "maximum_timestamp_utc": "2026-06-17T19:19:37+00:00",
+  "side_counts": {
+    "BUY": 87622,
+    "SELL": 54147
+  },
+  "token_outcome_counts": {
+    "YES": 52523,
+    "NO": 89246
+  },
+  "next_cursor": null,
+  "exhausted_api_cursor": true,
+  "coverage_note": "Served API history only: condition queries use a three-year window; minimum-size filter is 0.01 shares. Cursor exhaustion does not establish chain completeness.",
+  "cleaning_note": "Participant records preserved, including repeated fingerprints. Do not sum both participants as market volume. Signed flow is not full holdings."
+}

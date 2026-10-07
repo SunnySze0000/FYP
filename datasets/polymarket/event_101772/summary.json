@@ -1,0 +1,20 @@
+{
+  "event_id": "101772",
+  "meeting_month": "2026-06",
+  "markets": 5,
+  "participant_rows": 595965,
+  "unique_wallets_across_markets": 30404,
+  "unique_transactions_across_markets": 247968,
+  "sample_transaction_checks": 24,
+  "unique_sample_transactions_across_markets": 24,
+  "sample_api_rows": 61,
+  "matched_api_rows": 61,
+  "rejected_rows": 0,
+  "all_served_api_cursors_exhausted": true,
+  "notes": [
+    "Wallet/transaction counts are set unions; per-market counts overlap.",
+    "Participant rows include both sides and retained duplicate candidates; their sum is not market volume.",
+    "Different markets were collected separately, not as a synchronized chain snapshot.",
+    "Receipt verification is sampled. The fixed three-year API window and 0.01-share floor limit coverage."
+  ]
+}

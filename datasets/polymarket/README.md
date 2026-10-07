@@ -1,23 +1,24 @@
 # Polymarket Fed wallet dataset
 
-Start with [the collected dataset and CSV dictionary](market_906973/README.md).
-This snapshot covers **one binary market**: whether the Fed would cut rates by 25 bps
-at its June 2026 meeting (market `906973`). It connects the team's probability CSV to
-public wallet trades and sampled Polygon settlement records.
+Start with [the June meeting inventory](event_101772/README.md) and
+[the shared CSV dictionary](SCHEMA.md). The exports cover **all five June 2026 Fed outcome
+markets** in the team's probability CSV: 50+ bp decrease, 25 bp decrease, no change,
+25 bp increase, and 50+ bp increase. Each question has separate YES/NO tokens.
 
-| File | Use |
+| File / directory | Use |
 |---|---|
-| `market_906973/wallet_trades.csv.gz` | Full cleaned participant trade table; decompress or read gzip directly |
-| `market_906973/wallet_activity.csv` | Browse wallet activity and identify candidates for later analysis |
-| `market_906973/market_tokens.csv` | Join market/event IDs to condition and YES/NO token IDs |
-| `market_906973/manifest.json` | Collection counts, dates, request settings, and page coverage |
-| `market_906973/verification/` | Small readable CSVs showing sampled API/chain agreement and an observed gap |
-| `market_906973/SHA256SUMS` | Integrity checks for the shared snapshot files |
+| `event_101772/market_inventory.csv` | Per-market record counts, dates, conditions and sample-check coverage |
+| `event_101772/market_tokens.csv` | Combined mapping for five conditions and ten YES/NO tokens |
+| `event_101772/summary.json` | Combined record counts and distinct address/transaction counts |
+| `market_<id>/wallet_trades.csv.gz` | Full cleaned participant records for that market |
+| `market_<id>/wallet_activity.csv` | Per-wallet descriptive activity for that market |
+| `market_<id>/verification/` | Small readable tables comparing sampled API records with Polygon fills |
+| `market_<id>/SHA256SUMS` | Integrity checks for that shared market snapshot |
 
-The snapshot has **112,598 participant rows**, **7,213 addresses**, and **43,891 transactions**,
-from December 11, 2025 through June 17, 2026, UTC. Eight sampled transactions yielded
-17 uniquely matched API rows and one additional tiny on-chain fill absent from the API.
-This is served API history, not a complete chain archive or a smart-wallet score.
+See the inventory for measured coverage. The original 25 bp cut snapshot is preserved;
+the other four were collected afterward. The exports contain served API history with
+sampled Polygon verification, not a complete chain archive or smart-wallet scores.
+Per-market wallet and transaction counts overlap; the meeting summary uses set unions.
 
 ## Read the data without collecting it again
 
@@ -33,8 +34,8 @@ with gzip.open("datasets/polymarket/market_906973/wallet_trades.csv.gz", "rt", n
 ```
 
 Keep IDs as strings, particularly 256-bit token IDs. All timestamps have explicit UTC offsets.
-See the [CSV dictionary](market_906973/README.md) for units, row meanings, and join keys.
-The main CSV is approximately 50 MB uncompressed and 8.84 MB compressed.
+See the [CSV dictionary](SCHEMA.md) for units, row meanings, and join keys.
+The original 25 bp cut CSV is approximately 50 MB uncompressed and 8.84 MB compressed; sizes vary by market.
 
 ## Reproduce collection and cleaning
 
@@ -88,6 +89,35 @@ this committed snapshot. Re-exporting collection alone resets local verification
 rerun verification before packaging. After intentionally replacing the shared snapshot,
 refresh its documented counts and `SHA256SUMS` before committing.
 
+## Reproduce the four additional markets and meeting index
+
+Use explicit market IDs and separate local directories. The same resume and coverage rules apply:
+
+```sh
+for market in 906972 906974 906975 906976; do
+  python3 -B scripts/polymarket/collect_history.py --market-id "$market" \
+    --output "tmp/polymarket/history_market_$market" --max-pages 2000
+done
+```
+
+With your Alchemy key exported as above, verify and package each new market:
+
+```sh
+for market in 906972 906974 906975 906976; do
+  python3 -B scripts/polymarket/verify_history.py \
+    --history-dir "tmp/polymarket/history_market_$market" --sample-count 4 \
+    --export-dir "datasets/polymarket/market_$market"
+done
+python3 -B scripts/polymarket/build_meeting_index.py
+```
+
+The index builder validates all five completed exports against the team's event/market list,
+writes the meeting inventory and combined token mapping, computes union counts, and creates
+README/checksum files for the new market folders. It preserves the original `market_906973/`
+snapshot. The original market has eight sampled transaction checks; the four additions use
+four each. Inspect mismatch/ambiguity statuses and reverse-check gaps rather than assuming
+all future runs will agree. Fills outside a market's two-token mapping are separately labeled.
+
 ## Source and method references
 
 The reusable scripts are under `scripts/polymarket/`:
@@ -97,6 +127,7 @@ The reusable scripts are under `scripts/polymarket/`:
 | `collect_history.py` | Resumable public API collection, cleaning, wallet activity, coverage manifest |
 | `verify_history.py` | Alchemy CLI receipt/block collection, sampled reconciliation, compressed export |
 | `decode_receipt.py` | Supported V1/V2 fill decoding and participant matching |
+| `build_meeting_index.py` | Validate exported markets, summarize meeting coverage and generate new README/checksum files |
 | `collect_pilot.py` | Shared validation/CSV helpers and the original bounded-pilot commands; use the history workflow above for this dataset |
 
 - [Gamma market metadata](https://gamma-api.polymarket.com/markets/906973)
@@ -106,6 +137,6 @@ The reusable scripts are under `scripts/polymarket/`:
 - [Pinned historical settlement/fee logic](https://github.com/Polymarket/ctf-exchange/blob/ed5c7708b7be3aa98bf5f0c6602b57cc498e2ef4/src/exchange/mixins/Trading.sol)
 - [Pinned V2 fill ABI](https://github.com/Polymarket/ctf-exchange-v2/blob/ccc0596074f4dfd62c944fbca4de252893b82b4b/src/exchange/mixins/Events.sol)
 
-The current collector covers a single market, not all 43 team markets. Wallet scores, full
-holdings, position lifecycle decoding, and adjusted probabilities are future work. Eligibility
+The collected exports cover five of the 43 team markets. Wallet scores, full holdings,
+position lifecycle decoding, and adjusted probabilities are future work. Eligibility
 and scores must use only information available before each forecast cutoff.

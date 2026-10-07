@@ -1,0 +1,22 @@
+{
+  "method": "Nearest available transaction to equally spaced UTC time targets, with earliest/latest included",
+  "requested_transactions": 4,
+  "transactions": [
+    {
+      "transaction_hash": "0xd7b2a309ad0e12a59ec856512c54b66427605f716c7e86e7ca8bcc909f59c096",
+      "api_timestamp_utc": "2025-12-11T08:03:11+00:00"
+    },
+    {
+      "transaction_hash": "0x0c501c00a4de06ee7f3b08fb08c74038bbac35d11e3066b43ea12f0dbcb5e6ee",
+      "api_timestamp_utc": "2026-02-12T03:59:07+00:00"
+    },
+    {
+      "transaction_hash": "0x99457d854031f395841565b3997ae39c9b2f97db6c097bcae50e9a3008d8ea40",
+      "api_timestamp_utc": "2026-04-16T00:29:56+00:00"
+    },
+    {
+      "transaction_hash": "0x35dcd1cf0db7c141ff50d7cb47d9e6cd0ce3cfb8adfebc23ad4ebcbb8293a17d",
+      "api_timestamp_utc": "2026-06-17T20:35:47+00:00"
+    }
+  ]
+}

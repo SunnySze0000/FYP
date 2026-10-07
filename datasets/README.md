@@ -3,10 +3,11 @@
 | Dataset | Start here |
 |---|---|
 | Existing Fed probability CSVs | Structure and examples below |
-| Polymarket Fed wallet trades and sampled Polygon fills | [Dataset overview](polymarket/README.md) · [CSV dictionary](polymarket/market_906973/README.md) |
+| Polymarket Fed wallet trades and sampled Polygon fills | [Dataset overview](polymarket/README.md) · [CSV dictionary](polymarket/SCHEMA.md) |
 
-The wallet snapshot currently covers one June 2026 outcome market. It can be joined to the
-probability data using `market_id`; it does not cover the whole decision distribution yet.
+The wallet exports cover all five June 2026 outcome markets. See the
+[meeting inventory](polymarket/event_101772/README.md) for counts and coverage. Join using
+`market_id` plus an explicitly chosen observation date/cutoff for daily analysis.
 
 ## Forward rate-probability datasets
 
