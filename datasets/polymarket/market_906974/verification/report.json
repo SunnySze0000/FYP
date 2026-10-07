@@ -1,0 +1,75 @@
+{
+  "verified_at_utc": "2026-10-07T14:31:24.000781+00:00",
+  "sample_transactions": 4,
+  "sample_api_rows": 8,
+  "status_counts": {
+    "matched_unique": 8
+  },
+  "chain_fill_status_counts": {
+    "matched_api_row": 8
+  },
+  "transactions": [
+    {
+      "transaction_hash": "0x7a40cf9a10e9b5a23ab19c57b7d10f99131362c6d55d96027bf22696e7a0fd74",
+      "timestamp_utc": "2025-12-11T08:03:11+00:00",
+      "receipt_status": 1,
+      "receipt_logs": 20,
+      "decoded_fills": 2,
+      "api_rows": 2,
+      "status_counts": {
+        "matched_unique": 2
+      },
+      "exchange_versions": [
+        "CTF_V1"
+      ]
+    },
+    {
+      "transaction_hash": "0x8b220e1fd1f62c7efbbee1288c24d1978ec770b53c6355681e900c505737cbf8",
+      "timestamp_utc": "2026-02-12T04:29:23+00:00",
+      "receipt_status": 1,
+      "receipt_logs": 9,
+      "decoded_fills": 2,
+      "api_rows": 2,
+      "status_counts": {
+        "matched_unique": 2
+      },
+      "exchange_versions": [
+        "CTF_V1"
+      ]
+    },
+    {
+      "transaction_hash": "0xf2de5c781fe3f72e19faf2913b1825638604b5abc63252c06427583e8176b7b4",
+      "timestamp_utc": "2026-04-16T00:43:46+00:00",
+      "receipt_status": 1,
+      "receipt_logs": 20,
+      "decoded_fills": 2,
+      "api_rows": 2,
+      "status_counts": {
+        "matched_unique": 2
+      },
+      "exchange_versions": [
+        "CTF_V1"
+      ]
+    },
+    {
+      "transaction_hash": "0xfb424b09fba3fcfb00e0b117eeac02ada7910d9509cae0c94eb8e97f4a621c3d",
+      "timestamp_utc": "2026-06-17T20:56:14+00:00",
+      "receipt_status": 1,
+      "receipt_logs": 22,
+      "decoded_fills": 2,
+      "api_rows": 2,
+      "status_counts": {
+        "matched_unique": 2
+      },
+      "exchange_versions": [
+        "CTF_V2"
+      ]
+    }
+  ],
+  "limitations": [
+    "Deterministic time-spread sample, not a statistical completeness test or chain-wide collection.",
+    "Only configured CTF V1/V2 fill layouts supported; other logs remain in the audit.",
+    "Participant notionals exclude fees; preserve raw integer amounts and transaction/log keys.",
+    "Unsampled rows remain not_checked. Matching fields does not prove wallet skill."
+  ]
+}

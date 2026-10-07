@@ -21,7 +21,7 @@ def reverse_reconcile(fills, comparisons):
     return [{"transaction_hash":r["transaction_hash"], "log_index":r["log_index"],
              "market_id":r["market_id"], "token_id":r["token_id"], "shares":r["shares"],
              "unique_api_matches":matched[(r["transaction_hash"],str(r["log_index"]))],
-             "status":"matched_api_row" if matched[(r["transaction_hash"],str(r["log_index"]))] else "no_unique_api_match"}
+             "status":"matched_api_row" if matched[(r["transaction_hash"],str(r["log_index"]))] else "outside_local_market_mapping" if not r["market_id"] else "no_unique_api_match"}
             for r in fills]
 
 
