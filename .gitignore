@@ -34,6 +34,12 @@ Desktop.ini
 *.swo
 *~
 *.bak
+
+# Python caches and local virtual environments
+__pycache__/
+*.py[cod]
+.venv/
+venv/
 /proposal/.texpadtmp/
 
 # Local credentials; a documented example may be committed

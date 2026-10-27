@@ -11,6 +11,7 @@ The initial asset universe is SPY, QQQ and DIA, plus AAPL, MSFT, NVDA, AMZN and 
 - [Section guide](proposal/README.md): find the file for each printed section and follow the editing conventions.
 - [References](proposal/references.tex): bibliography entries used by the report.
 - [UI image prompts](proposal/figures/image-prompts.md): provenance of the embedded interface concepts.
+- [Forecasting models](models/README.md): annotated SPY return/volatility experiments, validation results and limitations.
 
 ## Repository structure
 
@@ -19,6 +20,8 @@ FYP/
 ├── README.md                 # Team entry point and collaboration workflow
 ├── .gitignore                # Build intermediates and local-file exclusions
 ├── .gitattributes            # Consistent text line endings and binary assets
+├── datasets/                 # Market and prediction-probability inputs
+├── models/                   # Annotated notebooks, scripts and experiment results
 └── proposal/
     ├── README.md             # Detailed section-to-file map
     ├── proposal.tex          # Compile this file
