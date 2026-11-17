@@ -1,0 +1,17 @@
+{
+  "snapshot_id": "fed_20260531_v1",
+  "selection_cutoff_utc": "2026-05-31T00:00:00+00:00",
+  "observation_start_utc": "2025-12-01T00:00:00+00:00",
+  "history_event_ids": [
+    "35090",
+    "45883",
+    "67284",
+    "75478"
+  ],
+  "target_event_id": "101772",
+  "seed": 42,
+  "target_wallets": 150,
+  "workers": 4,
+  "max_pages": 1000,
+  "collection_budget_seconds": 3600
+}

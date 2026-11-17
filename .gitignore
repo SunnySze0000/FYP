@@ -39,6 +39,7 @@ Desktop.ini
 __pycache__/
 *.py[cod]
 .venv/
+.venv-wallet-pilot/
 venv/
 /proposal/.texpadtmp/
 

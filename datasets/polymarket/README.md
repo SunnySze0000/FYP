@@ -1,5 +1,9 @@
 # Polymarket Fed wallet dataset
 
+The [frozen multi-meeting wallet clustering pilot](wallet_cluster_pilot/fed_20260531_v1/README.md)
+contains 150 sampled wallets, 30 behavioural features, 37 eligible wallets in two provisional
+clusters, and daily June cluster signals. Its earlier activity panel is descriptive only.
+
 Start with [the June meeting inventory](event_101772/README.md) and
 [the shared CSV dictionary](SCHEMA.md). The exports cover **all five June 2026 Fed outcome
 markets** in the team's probability CSV: 50+ bp decrease, 25 bp decrease, no change,

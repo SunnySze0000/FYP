@@ -1,0 +1,25 @@
+{
+  "snapshot_id": "fed_20260531_v1",
+  "exported_at_utc": "2026-11-17T14:22:21.672707+00:00",
+  "wallets_requested": 150,
+  "wallets_complete": 150,
+  "participant_rows": 27618,
+  "rejected_rows": 0,
+  "coverage_status_counts": {
+    "complete": 600
+  },
+  "history_event_ids": [
+    "35090",
+    "45883",
+    "67284",
+    "75478"
+  ],
+  "size_filter_shares": "0.01",
+  "selection_cutoff_utc": "2026-05-31T00:00:00+00:00",
+  "query_start_utc": "2025-12-01T00:00:00+00:00",
+  "query_end_utc_exclusive": "2026-05-31T00:00:00+00:00",
+  "availability_basis": "retrospective_trade_timestamp_only",
+  "population_scope": "June_event_pre_cutoff_eligible_wallets; not a historical all-wallet universe",
+  "historical_activity_before_selection_is_descriptive_only": true,
+  "api_completion_is_not_chain_completeness": true
+}

@@ -1,0 +1,906 @@
+{
+  "identifiers": "Read wallet, token, market, condition, transaction, event and cluster IDs as strings; never parse token IDs as floating point",
+  "timestamps": "ISO8601 UTC; all interval end bounds are exclusive",
+  "nulls": "Empty CSV fields represent missing values; complete empty activity has zero counts and sums, but undefined ratios remain missing",
+  "numerics": "Trade shares, price, notional and signed share fields retain source decimal strings. Derived features and signals use floating point. dtype describes the in-memory build frame, not enforced CSV typing.",
+  "primary_keys": {
+    "cohort.csv": [
+      "snapshot_id",
+      "wallet_address"
+    ],
+    "wallet_features.csv": [
+      "snapshot_id",
+      "wallet_address"
+    ],
+    "cluster_membership.csv": [
+      "model_version",
+      "wallet_address"
+    ],
+    "daily_cluster_signals.csv": [
+      "asof_utc",
+      "event_id",
+      "market_id",
+      "cluster_id",
+      "model_version"
+    ],
+    "historical_cluster_activity.csv": [
+      "asof_utc",
+      "event_id",
+      "market_id",
+      "cluster_id",
+      "model_version"
+    ],
+    "market_map.csv": [
+      "event_id",
+      "market_id",
+      "token_id"
+    ],
+    "trades.csv.gz": [
+      "source_snapshot_id",
+      "source_query",
+      "source_page",
+      "source_row"
+    ]
+  },
+  "daily_field_notes": {
+    "asof_utc": "Signal information cutoff; the 24-hour interval ends immediately before this instant",
+    "cluster_member_count": "Assigned wallets in the frozen cluster, including those with no activity that day",
+    "active_wallet_count": "Assigned wallets with at least one served participant record in this market/interval",
+    "unique_transactions": "Distinct settlement hashes within this market/cluster/interval; not additive across markets or clusters",
+    "gross_shares": "Sum of shares across all participant records",
+    "gross_participant_notional_usd": "Sum of shares times price, excluding fees; not market-wide volume",
+    "aggregate_directional_imbalance": "Signed YES-directed flow / gross shares; missing when gross shares are zero",
+    "equal_weight_directional_imbalance": "Mean of each active wallet's signed YES-directed flow / gross shares",
+    "largest_wallet_notional_fraction": "Largest wallet participant notional / cluster participant notional; undefined at zero notional",
+    "coverage_complete": "All assigned wallets covered by the served source export for this market, not full-chain completeness",
+    "forecast_input_allowed": "Structural retrospective eligibility only; contemporaneous source availability remains unverified"
+  },
+  "tables": {
+    "cohort.csv": [
+      {
+        "name": "snapshot_id",
+        "dtype": "str"
+      },
+      {
+        "name": "wallet_address",
+        "dtype": "str"
+      },
+      {
+        "name": "selection_cutoff_utc",
+        "dtype": "str"
+      },
+      {
+        "name": "sampling_stratum",
+        "dtype": "str"
+      },
+      {
+        "name": "stratum_population",
+        "dtype": "str"
+      },
+      {
+        "name": "stratum_allocation",
+        "dtype": "str"
+      },
+      {
+        "name": "stratum_rank",
+        "dtype": "str"
+      },
+      {
+        "name": "selection_hash",
+        "dtype": "str"
+      },
+      {
+        "name": "sampling_seed",
+        "dtype": "str"
+      },
+      {
+        "name": "selection_reason",
+        "dtype": "str"
+      },
+      {
+        "name": "discovery_unique_transactions",
+        "dtype": "str"
+      },
+      {
+        "name": "discovery_active_days",
+        "dtype": "str"
+      },
+      {
+        "name": "discovery_markets_traded",
+        "dtype": "str"
+      }
+    ],
+    "wallet_features.csv": [
+      {
+        "name": "snapshot_id",
+        "dtype": "str"
+      },
+      {
+        "name": "wallet_address",
+        "dtype": "str"
+      },
+      {
+        "name": "selection_cutoff_utc",
+        "dtype": "str"
+      },
+      {
+        "name": "observation_start_utc",
+        "dtype": "str"
+      },
+      {
+        "name": "observation_end_utc",
+        "dtype": "str"
+      },
+      {
+        "name": "first_feature_trade_utc",
+        "dtype": "str"
+      },
+      {
+        "name": "last_feature_trade_utc",
+        "dtype": "str"
+      },
+      {
+        "name": "queried_events",
+        "dtype": "int64"
+      },
+      {
+        "name": "complete_events",
+        "dtype": "int64"
+      },
+      {
+        "name": "coverage_complete",
+        "dtype": "bool"
+      },
+      {
+        "name": "feature_values_complete",
+        "dtype": "bool"
+      },
+      {
+        "name": "observed_participant_rows",
+        "dtype": "int64"
+      },
+      {
+        "name": "duplicate_candidate_fraction",
+        "dtype": "float64"
+      },
+      {
+        "name": "duplicate_check_available",
+        "dtype": "bool"
+      },
+      {
+        "name": "chain_issue_rows",
+        "dtype": "int64"
+      },
+      {
+        "name": "eligible",
+        "dtype": "bool"
+      },
+      {
+        "name": "eligibility_status",
+        "dtype": "str"
+      },
+      {
+        "name": "active_days",
+        "dtype": "int64"
+      },
+      {
+        "name": "transactions_per_active_day",
+        "dtype": "float64"
+      },
+      {
+        "name": "median_trade_notional_usd",
+        "dtype": "float64"
+      },
+      {
+        "name": "events_traded",
+        "dtype": "int64"
+      },
+      {
+        "name": "median_event_top_market_fraction",
+        "dtype": "float64"
+      },
+      {
+        "name": "two_sided_token_fraction",
+        "dtype": "float64"
+      },
+      {
+        "name": "busiest_day_transaction_fraction",
+        "dtype": "float64"
+      },
+      {
+        "name": "median_transaction_gap_hours",
+        "dtype": "float64"
+      },
+      {
+        "name": "participant_rows",
+        "dtype": "int64"
+      },
+      {
+        "name": "unique_transactions",
+        "dtype": "int64"
+      },
+      {
+        "name": "gross_shares",
+        "dtype": "float64"
+      },
+      {
+        "name": "gross_participant_notional_usd",
+        "dtype": "float64"
+      },
+      {
+        "name": "max_daily_transaction_count",
+        "dtype": "int64"
+      },
+      {
+        "name": "p90_trade_notional_usd",
+        "dtype": "float64"
+      },
+      {
+        "name": "median_trade_shares",
+        "dtype": "float64"
+      },
+      {
+        "name": "markets_traded",
+        "dtype": "int64"
+      },
+      {
+        "name": "event_participation_fraction",
+        "dtype": "float64"
+      },
+      {
+        "name": "top_event_notional_fraction",
+        "dtype": "float64"
+      },
+      {
+        "name": "median_event_outcome_entropy",
+        "dtype": "float64"
+      },
+      {
+        "name": "buy_share_fraction",
+        "dtype": "float64"
+      },
+      {
+        "name": "yes_token_share_fraction",
+        "dtype": "float64"
+      },
+      {
+        "name": "buy_yes_shares",
+        "dtype": "float64"
+      },
+      {
+        "name": "sell_yes_shares",
+        "dtype": "float64"
+      },
+      {
+        "name": "buy_no_shares",
+        "dtype": "float64"
+      },
+      {
+        "name": "sell_no_shares",
+        "dtype": "float64"
+      },
+      {
+        "name": "absolute_market_netting_ratio",
+        "dtype": "float64"
+      },
+      {
+        "name": "p90_transaction_gap_hours",
+        "dtype": "float64"
+      },
+      {
+        "name": "days_since_last_trade",
+        "dtype": "float64"
+      },
+      {
+        "name": "observed_span_days",
+        "dtype": "float64"
+      },
+      {
+        "name": "active_week_fraction",
+        "dtype": "float64"
+      }
+    ],
+    "cluster_membership.csv": [
+      {
+        "name": "snapshot_id",
+        "dtype": "str"
+      },
+      {
+        "name": "wallet_address",
+        "dtype": "str"
+      },
+      {
+        "name": "eligibility_status",
+        "dtype": "str"
+      },
+      {
+        "name": "model_version",
+        "dtype": "str"
+      },
+      {
+        "name": "cluster_id",
+        "dtype": "str"
+      },
+      {
+        "name": "assignment_status",
+        "dtype": "str"
+      },
+      {
+        "name": "centroid_distance",
+        "dtype": "float64"
+      },
+      {
+        "name": "representative_rank",
+        "dtype": "float64"
+      },
+      {
+        "name": "valid_from_utc",
+        "dtype": "str"
+      }
+    ],
+    "cluster_profiles.csv": [
+      {
+        "name": "model_version",
+        "dtype": "str"
+      },
+      {
+        "name": "cluster_id",
+        "dtype": "str"
+      },
+      {
+        "name": "wallet_count",
+        "dtype": "int64"
+      },
+      {
+        "name": "feature",
+        "dtype": "str"
+      },
+      {
+        "name": "median",
+        "dtype": "float64"
+      },
+      {
+        "name": "q25",
+        "dtype": "float64"
+      },
+      {
+        "name": "q75",
+        "dtype": "float64"
+      },
+      {
+        "name": "overall_median",
+        "dtype": "float64"
+      },
+      {
+        "name": "overall_q25",
+        "dtype": "float64"
+      },
+      {
+        "name": "overall_q75",
+        "dtype": "float64"
+      },
+      {
+        "name": "explanation",
+        "dtype": "str"
+      }
+    ],
+    "daily_cluster_signals.csv": [
+      {
+        "name": "snapshot_id",
+        "dtype": "str"
+      },
+      {
+        "name": "asof_utc",
+        "dtype": "str"
+      },
+      {
+        "name": "interval_start_utc",
+        "dtype": "str"
+      },
+      {
+        "name": "event_id",
+        "dtype": "str"
+      },
+      {
+        "name": "market_id",
+        "dtype": "str"
+      },
+      {
+        "name": "rate_outcome",
+        "dtype": "str"
+      },
+      {
+        "name": "condition_id",
+        "dtype": "str"
+      },
+      {
+        "name": "cluster_id",
+        "dtype": "str"
+      },
+      {
+        "name": "model_version",
+        "dtype": "str"
+      },
+      {
+        "name": "model_fit_cutoff_utc",
+        "dtype": "str"
+      },
+      {
+        "name": "decision_cutoff_utc",
+        "dtype": "str"
+      },
+      {
+        "name": "cluster_member_count",
+        "dtype": "int64"
+      },
+      {
+        "name": "active_wallet_count",
+        "dtype": "int64"
+      },
+      {
+        "name": "participant_rows",
+        "dtype": "int64"
+      },
+      {
+        "name": "unique_transactions",
+        "dtype": "int64"
+      },
+      {
+        "name": "gross_shares",
+        "dtype": "float64"
+      },
+      {
+        "name": "gross_participant_notional_usd",
+        "dtype": "float64"
+      },
+      {
+        "name": "buy_yes_shares",
+        "dtype": "float64"
+      },
+      {
+        "name": "sell_yes_shares",
+        "dtype": "float64"
+      },
+      {
+        "name": "buy_no_shares",
+        "dtype": "float64"
+      },
+      {
+        "name": "sell_no_shares",
+        "dtype": "float64"
+      },
+      {
+        "name": "signed_yes_flow_shares",
+        "dtype": "float64"
+      },
+      {
+        "name": "aggregate_directional_imbalance",
+        "dtype": "float64"
+      },
+      {
+        "name": "equal_weight_directional_imbalance",
+        "dtype": "float64"
+      },
+      {
+        "name": "largest_wallet_notional_fraction",
+        "dtype": "float64"
+      },
+      {
+        "name": "no_activity",
+        "dtype": "bool"
+      },
+      {
+        "name": "coverage_complete",
+        "dtype": "bool"
+      },
+      {
+        "name": "complete_wallet_count",
+        "dtype": "int64"
+      },
+      {
+        "name": "forecast_input_allowed",
+        "dtype": "bool"
+      },
+      {
+        "name": "availability_basis",
+        "dtype": "str"
+      }
+    ],
+    "historical_cluster_activity.csv": [
+      {
+        "name": "snapshot_id",
+        "dtype": "str"
+      },
+      {
+        "name": "asof_utc",
+        "dtype": "str"
+      },
+      {
+        "name": "interval_start_utc",
+        "dtype": "str"
+      },
+      {
+        "name": "event_id",
+        "dtype": "str"
+      },
+      {
+        "name": "market_id",
+        "dtype": "str"
+      },
+      {
+        "name": "rate_outcome",
+        "dtype": "str"
+      },
+      {
+        "name": "condition_id",
+        "dtype": "str"
+      },
+      {
+        "name": "cluster_id",
+        "dtype": "str"
+      },
+      {
+        "name": "model_version",
+        "dtype": "str"
+      },
+      {
+        "name": "model_fit_cutoff_utc",
+        "dtype": "str"
+      },
+      {
+        "name": "decision_cutoff_utc",
+        "dtype": "str"
+      },
+      {
+        "name": "cluster_member_count",
+        "dtype": "int64"
+      },
+      {
+        "name": "active_wallet_count",
+        "dtype": "int64"
+      },
+      {
+        "name": "participant_rows",
+        "dtype": "int64"
+      },
+      {
+        "name": "unique_transactions",
+        "dtype": "int64"
+      },
+      {
+        "name": "gross_shares",
+        "dtype": "float64"
+      },
+      {
+        "name": "gross_participant_notional_usd",
+        "dtype": "float64"
+      },
+      {
+        "name": "buy_yes_shares",
+        "dtype": "float64"
+      },
+      {
+        "name": "sell_yes_shares",
+        "dtype": "float64"
+      },
+      {
+        "name": "buy_no_shares",
+        "dtype": "float64"
+      },
+      {
+        "name": "sell_no_shares",
+        "dtype": "float64"
+      },
+      {
+        "name": "signed_yes_flow_shares",
+        "dtype": "float64"
+      },
+      {
+        "name": "aggregate_directional_imbalance",
+        "dtype": "float64"
+      },
+      {
+        "name": "equal_weight_directional_imbalance",
+        "dtype": "float64"
+      },
+      {
+        "name": "largest_wallet_notional_fraction",
+        "dtype": "float64"
+      },
+      {
+        "name": "no_activity",
+        "dtype": "bool"
+      },
+      {
+        "name": "coverage_complete",
+        "dtype": "bool"
+      },
+      {
+        "name": "complete_wallet_count",
+        "dtype": "int64"
+      },
+      {
+        "name": "forecast_input_allowed",
+        "dtype": "bool"
+      },
+      {
+        "name": "availability_basis",
+        "dtype": "str"
+      }
+    ],
+    "history_coverage.csv": [
+      {
+        "name": "wallet_address",
+        "dtype": "str"
+      },
+      {
+        "name": "event_id",
+        "dtype": "str"
+      },
+      {
+        "name": "complete",
+        "dtype": "str"
+      },
+      {
+        "name": "status",
+        "dtype": "str"
+      },
+      {
+        "name": "reason",
+        "dtype": "str"
+      },
+      {
+        "name": "participant_rows",
+        "dtype": "str"
+      },
+      {
+        "name": "query_start_utc",
+        "dtype": "str"
+      },
+      {
+        "name": "query_end_utc",
+        "dtype": "str"
+      },
+      {
+        "name": "pages",
+        "dtype": "str"
+      },
+      {
+        "name": "source_query",
+        "dtype": "str"
+      },
+      {
+        "name": "source_snapshot_id",
+        "dtype": "str"
+      },
+      {
+        "name": "availability_basis",
+        "dtype": "str"
+      }
+    ],
+    "target_coverage.csv": [
+      {
+        "name": "wallet_address",
+        "dtype": "str"
+      },
+      {
+        "name": "event_id",
+        "dtype": "str"
+      },
+      {
+        "name": "market_id",
+        "dtype": "str"
+      },
+      {
+        "name": "complete",
+        "dtype": "bool"
+      },
+      {
+        "name": "status",
+        "dtype": "str"
+      },
+      {
+        "name": "source_file",
+        "dtype": "str"
+      },
+      {
+        "name": "source_participant_rows",
+        "dtype": "int64"
+      },
+      {
+        "name": "selected_participant_rows",
+        "dtype": "int64"
+      },
+      {
+        "name": "availability_basis",
+        "dtype": "str"
+      }
+    ],
+    "market_map.csv": [
+      {
+        "name": "event_id",
+        "dtype": "str"
+      },
+      {
+        "name": "meeting_month",
+        "dtype": "str"
+      },
+      {
+        "name": "market_id",
+        "dtype": "str"
+      },
+      {
+        "name": "rate_outcome",
+        "dtype": "str"
+      },
+      {
+        "name": "condition_id",
+        "dtype": "str"
+      },
+      {
+        "name": "token_id",
+        "dtype": "str"
+      },
+      {
+        "name": "token_outcome",
+        "dtype": "str"
+      },
+      {
+        "name": "market_end_date_utc",
+        "dtype": "str"
+      },
+      {
+        "name": "decision_cutoff_utc",
+        "dtype": "str"
+      },
+      {
+        "name": "metadata_collected_at_utc",
+        "dtype": "str"
+      },
+      {
+        "name": "metadata_source",
+        "dtype": "str"
+      },
+      {
+        "name": "cutoff_method",
+        "dtype": "str"
+      },
+      {
+        "name": "original_resolution_time_verified",
+        "dtype": "str"
+      },
+      {
+        "name": "metadata_status",
+        "dtype": "str"
+      }
+    ],
+    "clustering_diagnostics.csv": [
+      {
+        "name": "k",
+        "dtype": "int64"
+      },
+      {
+        "name": "seed",
+        "dtype": "int64"
+      },
+      {
+        "name": "silhouette",
+        "dtype": "float64"
+      },
+      {
+        "name": "min_cluster_size",
+        "dtype": "int64"
+      },
+      {
+        "name": "size_valid",
+        "dtype": "bool"
+      },
+      {
+        "name": "median_pairwise_ari",
+        "dtype": "float64"
+      }
+    ],
+    "trades.csv.gz": [
+      {
+        "name": "source_page",
+        "dtype": "str"
+      },
+      {
+        "name": "source_row",
+        "dtype": "str"
+      },
+      {
+        "name": "record_fingerprint",
+        "dtype": "str"
+      },
+      {
+        "name": "timestamp_utc",
+        "dtype": "str"
+      },
+      {
+        "name": "event_id",
+        "dtype": "str"
+      },
+      {
+        "name": "market_id",
+        "dtype": "str"
+      },
+      {
+        "name": "meeting_month",
+        "dtype": "str"
+      },
+      {
+        "name": "rate_outcome",
+        "dtype": "str"
+      },
+      {
+        "name": "condition_id",
+        "dtype": "str"
+      },
+      {
+        "name": "token_id",
+        "dtype": "str"
+      },
+      {
+        "name": "token_outcome",
+        "dtype": "str"
+      },
+      {
+        "name": "wallet_address",
+        "dtype": "str"
+      },
+      {
+        "name": "side",
+        "dtype": "str"
+      },
+      {
+        "name": "shares",
+        "dtype": "str"
+      },
+      {
+        "name": "price",
+        "dtype": "str"
+      },
+      {
+        "name": "notional_usd",
+        "dtype": "str"
+      },
+      {
+        "name": "signed_yes_shares",
+        "dtype": "str"
+      },
+      {
+        "name": "transaction_hash",
+        "dtype": "str"
+      },
+      {
+        "name": "chain_verification",
+        "dtype": "str"
+      },
+      {
+        "name": "same_fingerprint_count",
+        "dtype": "str"
+      },
+      {
+        "name": "source_snapshot_id",
+        "dtype": "str"
+      },
+      {
+        "name": "source_query",
+        "dtype": "str"
+      },
+      {
+        "name": "decision_cutoff_utc",
+        "dtype": "str"
+      },
+      {
+        "name": "market_end_date_utc",
+        "dtype": "str"
+      },
+      {
+        "name": "source_file",
+        "dtype": "str"
+      }
+    ]
+  }
+}
