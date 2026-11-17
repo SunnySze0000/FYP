@@ -1,0 +1,220 @@
+{
+  "schema_version": 1,
+  "scope": "One wallet and frozen snapshot; only configured historical events. Each event is filtered to [observation_start_utc, min(selection_cutoff_utc, decision_cutoff_utc)).",
+  "multiplicity": "Participant-record multiplicity is retained. Transaction hashes are counted as sets only for transaction/day/gap features; they are not fill keys.",
+  "missingness": "All 30 behavioural values are missing when any requested historical event has incomplete query coverage. observed_participant_rows separately records retrieved-row lower bounds. A complete empty history has zero count/sum features and missing undefined ratios/gaps.",
+  "numerics": "Source decimal strings are retained in trade exports; derived feature calculations use floating point. Quantiles use pandas default linear interpolation.",
+  "preprocessing": "Only the eight clustering candidates enter the model. Constant or zero-IQR candidates are removed with an explicit report. Listed log1p transforms precede RobustScaler fitted on eligible frozen histories only.",
+  "features": [
+    {
+      "name": "active_days",
+      "definition": "Number of distinct UTC dates containing distinct observed wallet transactions in the allowed historical trade window.",
+      "unit": "days",
+      "clustering_candidate": true,
+      "preprocessing": "log1p"
+    },
+    {
+      "name": "transactions_per_active_day",
+      "definition": "Number of distinct transaction hashes divided by active_days; missing when active_days is zero.",
+      "unit": "transactions/active day",
+      "clustering_candidate": true,
+      "preprocessing": "log1p"
+    },
+    {
+      "name": "median_trade_notional_usd",
+      "definition": "Median shares times price across participant records. This is a per-record size, not a per-transaction trade size or PnL.",
+      "unit": "USD-denominated collateral",
+      "clustering_candidate": true,
+      "preprocessing": "log1p"
+    },
+    {
+      "name": "events_traded",
+      "definition": "Number of queried historical events with at least one allowed participant record.",
+      "unit": "events",
+      "clustering_candidate": true,
+      "preprocessing": "log1p"
+    },
+    {
+      "name": "median_event_top_market_fraction",
+      "definition": "For each participated event with positive total notional, divide the largest market notional by event total notional; take the median across those events. Undefined zero-notional events are omitted; missing if all are undefined.",
+      "unit": "fraction [0,1]",
+      "clustering_candidate": true,
+      "preprocessing": "identity"
+    },
+    {
+      "name": "two_sided_token_fraction",
+      "definition": "Number of observed market/token pairs containing both BUY and SELL participant records divided by the number of observed market/token pairs. This does not establish market making or arbitrage.",
+      "unit": "fraction [0,1]",
+      "clustering_candidate": true,
+      "preprocessing": "identity"
+    },
+    {
+      "name": "busiest_day_transaction_fraction",
+      "definition": "Maximum count of distinct transactions on one UTC day divided by all distinct transactions. A transaction occurring in multiple records is counted once, at its earliest observed timestamp.",
+      "unit": "fraction [0,1]",
+      "clustering_candidate": true,
+      "preprocessing": "identity"
+    },
+    {
+      "name": "median_transaction_gap_hours",
+      "definition": "Median elapsed hours between successive distinct transaction timestamps, using the earliest observed timestamp for each transaction. Includes overnight and inter-event gaps; missing with fewer than two transactions.",
+      "unit": "hours",
+      "clustering_candidate": true,
+      "preprocessing": "log1p"
+    },
+    {
+      "name": "participant_rows",
+      "definition": "Count of accepted API participant records retained in the feature window, preserving multiplicity.",
+      "unit": "records",
+      "clustering_candidate": false,
+      "preprocessing": "not used"
+    },
+    {
+      "name": "unique_transactions",
+      "definition": "Count of distinct transaction hashes across all allowed historical events and markets for this wallet.",
+      "unit": "transactions",
+      "clustering_candidate": false,
+      "preprocessing": "not used"
+    },
+    {
+      "name": "gross_shares",
+      "definition": "Sum of positive shares across all allowed participant records, including both BUY and SELL and YES and NO.",
+      "unit": "outcome-token shares",
+      "clustering_candidate": false,
+      "preprocessing": "not used"
+    },
+    {
+      "name": "gross_participant_notional_usd",
+      "definition": "Sum of shares times price across allowed participant records, excluding fees. Not market-wide volume, invested capital, revenue or PnL.",
+      "unit": "USD-denominated collateral",
+      "clustering_candidate": false,
+      "preprocessing": "not used"
+    },
+    {
+      "name": "max_daily_transaction_count",
+      "definition": "Maximum number of distinct wallet transactions on one UTC date; uses earliest observed timestamp per transaction.",
+      "unit": "transactions/day",
+      "clustering_candidate": false,
+      "preprocessing": "not used"
+    },
+    {
+      "name": "p90_trade_notional_usd",
+      "definition": "90th percentile of participant-record shares times price, using pandas linear quantile interpolation.",
+      "unit": "USD-denominated collateral",
+      "clustering_candidate": false,
+      "preprocessing": "not used"
+    },
+    {
+      "name": "median_trade_shares",
+      "definition": "Median gross participant-record shares across allowed records.",
+      "unit": "outcome-token shares",
+      "clustering_candidate": false,
+      "preprocessing": "not used"
+    },
+    {
+      "name": "markets_traded",
+      "definition": "Number of distinct binary outcome markets with at least one allowed participant record. Several markets in one Fed meeting remain one event.",
+      "unit": "markets",
+      "clustering_candidate": false,
+      "preprocessing": "not used"
+    },
+    {
+      "name": "event_participation_fraction",
+      "definition": "events_traded divided by the number of queried historical event IDs, including complete zero-activity events in the denominator.",
+      "unit": "fraction [0,1]",
+      "clustering_candidate": false,
+      "preprocessing": "not used"
+    },
+    {
+      "name": "top_event_notional_fraction",
+      "definition": "Largest summed event notional divided by total historical wallet notional; missing when total notional is zero.",
+      "unit": "fraction [0,1]",
+      "clustering_candidate": false,
+      "preprocessing": "not used"
+    },
+    {
+      "name": "median_event_outcome_entropy",
+      "definition": "Within each positive-notional participated event, calculate minus sum(p_market * log(p_market)) divided by log(number of mapped outcome markets in that event), where p_market is its share of wallet event notional. Untraded markets contribute zero; take the median over defined events. A one-market universe has entropy zero.",
+      "unit": "normalised entropy [0,1]",
+      "clustering_candidate": false,
+      "preprocessing": "not used"
+    },
+    {
+      "name": "buy_share_fraction",
+      "definition": "Sum of shares on BUY records divided by gross_shares; missing with zero gross shares.",
+      "unit": "fraction [0,1]",
+      "clustering_candidate": false,
+      "preprocessing": "not used"
+    },
+    {
+      "name": "yes_token_share_fraction",
+      "definition": "Sum of shares on YES-token records divided by gross_shares; YES refers to each separate outcome market, not a common policy direction.",
+      "unit": "fraction [0,1]",
+      "clustering_candidate": false,
+      "preprocessing": "not used"
+    },
+    {
+      "name": "buy_yes_shares",
+      "definition": "Sum of shares for BUY YES records across feature markets; descriptive component, not an aggregate policy preference.",
+      "unit": "outcome-token shares",
+      "clustering_candidate": false,
+      "preprocessing": "not used"
+    },
+    {
+      "name": "sell_yes_shares",
+      "definition": "Sum of shares for SELL YES records across feature markets.",
+      "unit": "outcome-token shares",
+      "clustering_candidate": false,
+      "preprocessing": "not used"
+    },
+    {
+      "name": "buy_no_shares",
+      "definition": "Sum of shares for BUY NO records across feature markets.",
+      "unit": "outcome-token shares",
+      "clustering_candidate": false,
+      "preprocessing": "not used"
+    },
+    {
+      "name": "sell_no_shares",
+      "definition": "Sum of shares for SELL NO records across feature markets.",
+      "unit": "outcome-token shares",
+      "clustering_candidate": false,
+      "preprocessing": "not used"
+    },
+    {
+      "name": "absolute_market_netting_ratio",
+      "definition": "For each event/market calculate D = BUY YES - SELL YES + SELL NO - BUY NO in shares; sum abs(D) across markets and divide by total gross_shares. Missing with zero gross shares; not holdings or accuracy.",
+      "unit": "fraction [0,1]",
+      "clustering_candidate": false,
+      "preprocessing": "not used"
+    },
+    {
+      "name": "p90_transaction_gap_hours",
+      "definition": "90th percentile of successive distinct-transaction elapsed hours using pandas linear quantile interpolation; includes inter-event gaps.",
+      "unit": "hours",
+      "clustering_candidate": false,
+      "preprocessing": "not used"
+    },
+    {
+      "name": "days_since_last_trade",
+      "definition": "Snapshot cutoff minus last allowed historical trade timestamp, expressed as elapsed seconds divided by 86400; missing with no observed trades. Refers to queried history only, not platform-wide recency.",
+      "unit": "elapsed days",
+      "clustering_candidate": false,
+      "preprocessing": "not used"
+    },
+    {
+      "name": "observed_span_days",
+      "definition": "Latest minus earliest allowed historical trade timestamp, in seconds divided by 86400; missing with no observed trades.",
+      "unit": "elapsed days",
+      "clustering_candidate": false,
+      "preprocessing": "not used"
+    },
+    {
+      "name": "active_week_fraction",
+      "definition": "Distinct Monday-through-Sunday calendar weeks with an allowed trade divided by distinct such weeks touched by the entire [observation_start, snapshot_cutoff) calendar interval. Partial boundary weeks count once.",
+      "unit": "fraction [0,1]",
+      "clustering_candidate": false,
+      "preprocessing": "not used"
+    }
+  ]
+}

@@ -1,0 +1,330 @@
+{
+  "market_id": "906976",
+  "page_size": 1000,
+  "taker_only": false,
+  "filter_type": "TOKENS",
+  "filter_amount": "0.01",
+  "exported_at_utc": "2026-10-07T14:23:45.056963+00:00",
+  "pages": [
+    {
+      "page": 1,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:20:28.684392+00:00"
+    },
+    {
+      "page": 2,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:20:31.721990+00:00"
+    },
+    {
+      "page": 3,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:20:34.783949+00:00"
+    },
+    {
+      "page": 4,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:20:38.376416+00:00"
+    },
+    {
+      "page": 5,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:20:42.310406+00:00"
+    },
+    {
+      "page": 6,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:20:45.262305+00:00"
+    },
+    {
+      "page": 7,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:20:48.245564+00:00"
+    },
+    {
+      "page": 8,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:20:51.687102+00:00"
+    },
+    {
+      "page": 9,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:20:55.203340+00:00"
+    },
+    {
+      "page": 10,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:20:58.307821+00:00"
+    },
+    {
+      "page": 11,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:21:01.505517+00:00"
+    },
+    {
+      "page": 12,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:21:05.123084+00:00"
+    },
+    {
+      "page": 13,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:21:08.553289+00:00"
+    },
+    {
+      "page": 14,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:21:11.836223+00:00"
+    },
+    {
+      "page": 15,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:21:15.092362+00:00"
+    },
+    {
+      "page": 16,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:21:18.538131+00:00"
+    },
+    {
+      "page": 17,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:21:22.087704+00:00"
+    },
+    {
+      "page": 18,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:21:25.595872+00:00"
+    },
+    {
+      "page": 19,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:21:28.720664+00:00"
+    },
+    {
+      "page": 20,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:21:31.866835+00:00"
+    },
+    {
+      "page": 21,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:21:35.530312+00:00"
+    },
+    {
+      "page": 22,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:21:39.106261+00:00"
+    },
+    {
+      "page": 23,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:21:42.168619+00:00"
+    },
+    {
+      "page": 24,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:21:45.255360+00:00"
+    },
+    {
+      "page": 25,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:21:48.867658+00:00"
+    },
+    {
+      "page": 26,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:21:52.617640+00:00"
+    },
+    {
+      "page": 27,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:21:55.829339+00:00"
+    },
+    {
+      "page": 28,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:21:58.888917+00:00"
+    },
+    {
+      "page": 29,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:22:01.868118+00:00"
+    },
+    {
+      "page": 30,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:22:05.004589+00:00"
+    },
+    {
+      "page": 31,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:22:08.745752+00:00"
+    },
+    {
+      "page": 32,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:22:12.230507+00:00"
+    },
+    {
+      "page": 33,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:22:15.282340+00:00"
+    },
+    {
+      "page": 34,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:22:18.404759+00:00"
+    },
+    {
+      "page": 35,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:22:21.840973+00:00"
+    },
+    {
+      "page": 36,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:22:25.473419+00:00"
+    },
+    {
+      "page": 37,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:22:28.755668+00:00"
+    },
+    {
+      "page": 38,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:22:31.698219+00:00"
+    },
+    {
+      "page": 39,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:22:35.081756+00:00"
+    },
+    {
+      "page": 40,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:22:38.724994+00:00"
+    },
+    {
+      "page": 41,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:22:42.374411+00:00"
+    },
+    {
+      "page": 42,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:22:45.381237+00:00"
+    },
+    {
+      "page": 43,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:22:48.554727+00:00"
+    },
+    {
+      "page": 44,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:22:52.263725+00:00"
+    },
+    {
+      "page": 45,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:22:55.884927+00:00"
+    },
+    {
+      "page": 46,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:22:58.914216+00:00"
+    },
+    {
+      "page": 47,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:23:01.888303+00:00"
+    },
+    {
+      "page": 48,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:23:05.081180+00:00"
+    },
+    {
+      "page": 49,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:23:08.848303+00:00"
+    },
+    {
+      "page": 50,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:23:11.992994+00:00"
+    },
+    {
+      "page": 51,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:23:15.032112+00:00"
+    },
+    {
+      "page": 52,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:23:18.287499+00:00"
+    },
+    {
+      "page": 53,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:23:21.646630+00:00"
+    },
+    {
+      "page": 54,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:23:24.858407+00:00"
+    },
+    {
+      "page": 55,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:23:27.856366+00:00"
+    },
+    {
+      "page": 56,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:23:30.954753+00:00"
+    },
+    {
+      "page": 57,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:23:34.340022+00:00"
+    },
+    {
+      "page": 58,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:23:38.010978+00:00"
+    },
+    {
+      "page": 59,
+      "rows": 1000,
+      "collected_at_utc": "2026-10-07T14:23:41.749072+00:00"
+    },
+    {
+      "page": 60,
+      "rows": 182,
+      "collected_at_utc": "2026-10-07T14:23:43.850244+00:00"
+    }
+  ],
+  "raw_rows": 59182,
+  "clean_rows": 59182,
+  "rejected_rows": 0,
+  "unique_wallets": 6294,
+  "unique_transactions": 28538,
+  "duplicate_fingerprint_rows": 129,
+  "minimum_timestamp_utc": "2025-12-10T22:38:16+00:00",
+  "maximum_timestamp_utc": "2026-06-17T17:58:13+00:00",
+  "side_counts": {
+    "BUY": 42158,
+    "SELL": 17024
+  },
+  "token_outcome_counts": {
+    "YES": 33065,
+    "NO": 26117
+  },
+  "next_cursor": null,
+  "exhausted_api_cursor": true,
+  "coverage_note": "Served API history only: condition queries use a three-year window; minimum-size filter is 0.01 shares. Cursor exhaustion does not establish chain completeness.",
+  "cleaning_note": "Participant records preserved, including repeated fingerprints. Do not sum both participants as market volume. Signed flow is not full holdings."
+}

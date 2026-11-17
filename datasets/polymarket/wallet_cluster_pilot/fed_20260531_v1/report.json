@@ -1,0 +1,190 @@
+{
+  "snapshot_id": "fed_20260531_v1",
+  "configuration": {
+    "snapshot_id": "fed_20260531_v1",
+    "selection_cutoff_utc": "2026-05-31T00:00:00+00:00",
+    "observation_start_utc": "2025-12-01T00:00:00+00:00",
+    "history_event_ids": [
+      "35090",
+      "45883",
+      "67284",
+      "75478"
+    ],
+    "target_event_id": "101772",
+    "seed": 42,
+    "target_wallets": 150,
+    "workers": 4,
+    "max_pages": 1000,
+    "collection_budget_seconds": 3600
+  },
+  "collection": {
+    "snapshot_id": "fed_20260531_v1",
+    "exported_at_utc": "2026-11-17T14:22:21.672707+00:00",
+    "wallets_requested": 150,
+    "wallets_complete": 150,
+    "participant_rows": 27618,
+    "rejected_rows": 0,
+    "coverage_status_counts": {
+      "complete": 600
+    },
+    "history_event_ids": [
+      "35090",
+      "45883",
+      "67284",
+      "75478"
+    ],
+    "size_filter_shares": "0.01",
+    "selection_cutoff_utc": "2026-05-31T00:00:00+00:00",
+    "query_start_utc": "2025-12-01T00:00:00+00:00",
+    "query_end_utc_exclusive": "2026-05-31T00:00:00+00:00",
+    "availability_basis": "retrospective_trade_timestamp_only",
+    "population_scope": "June_event_pre_cutoff_eligible_wallets; not a historical all-wallet universe",
+    "historical_activity_before_selection_is_descriptive_only": true,
+    "api_completion_is_not_chain_completeness": true
+  },
+  "features": {
+    "wallet_rows": 150,
+    "behavioural_feature_count": 30,
+    "pre_decision_participant_rows": 26789,
+    "wallets_with_zero_observed_history": 63,
+    "events_traded_distribution": {
+      "0": 63,
+      "1": 38,
+      "2": 20,
+      "3": 22,
+      "4": 7
+    },
+    "ineligibility_reason_counts_nonexclusive": {
+      "fewer_than_2_historical_meetings": 101,
+      "fewer_than_5_active_days": 96,
+      "fewer_than_10_transactions": 94,
+      "undefined_clustering_feature": 65,
+      "duplicate_candidate_fraction_above_5_percent": 2
+    }
+  },
+  "clustering": {
+    "model_version": "fed_20260531_v1_k2_s42",
+    "status": "provisional",
+    "selected_k": 2,
+    "cohort_wallets": 150,
+    "eligible_wallets": 37,
+    "clustered_wallets": 37,
+    "candidate_features": [
+      "active_days",
+      "transactions_per_active_day",
+      "median_trade_notional_usd",
+      "events_traded",
+      "median_event_top_market_fraction",
+      "two_sided_token_fraction",
+      "busiest_day_transaction_fraction",
+      "median_transaction_gap_hours"
+    ],
+    "retained_features": [
+      "active_days",
+      "transactions_per_active_day",
+      "median_trade_notional_usd",
+      "events_traded",
+      "median_event_top_market_fraction",
+      "two_sided_token_fraction",
+      "busiest_day_transaction_fraction",
+      "median_transaction_gap_hours"
+    ],
+    "removed_features": [],
+    "predictive_value_validated": false,
+    "cluster_explanations": [
+      {
+        "cluster_id": "C0",
+        "wallet_count": 30,
+        "explanation": "lower median event top market fraction; lower busiest day transaction fraction; higher active days relative to the eligible cohort",
+        "representative_wallets": [
+          "0xc124bd6e5d91489b66c987dfa72bcd8de37a25cb",
+          "0x7a95a45abf49e9b2929873f55bc2e1e83531b532",
+          "0xffd44574578241c24b55a5fc94ef525da8f8b2d2"
+        ]
+      },
+      {
+        "cluster_id": "C1",
+        "wallet_count": 7,
+        "explanation": "higher busiest day transaction fraction; lower two sided token fraction; higher median event top market fraction relative to the eligible cohort",
+        "representative_wallets": [
+          "0x1d620ed68c4fd00b189207ed1f8c13222766d76b",
+          "0x3844f28115f2f23c9aece1402a0f2be78d187285",
+          "0xe9c17bd27e3eddb0ddeb2da292ca67f882ebe713"
+        ]
+      }
+    ],
+    "selected_seed": 42,
+    "provisional_reasons": [
+      "fewer_than_50_eligible_wallets"
+    ],
+    "mean_silhouette": 0.32049082620090474,
+    "selected_run_silhouette": 0.32049082620090474,
+    "median_pairwise_ari": 1.0,
+    "minimum_cluster_size_required": 5,
+    "minimum_cluster_size_observed": 7,
+    "log_features": [
+      "active_days",
+      "events_traded",
+      "median_trade_notional_usd",
+      "median_transaction_gap_hours",
+      "transactions_per_active_day"
+    ],
+    "seed_list": [
+      42,
+      43,
+      44,
+      45,
+      46
+    ],
+    "n_init": 20,
+    "max_iter": 300
+  },
+  "daily": {
+    "selected_wallets": 150,
+    "assigned_wallets": 37,
+    "unassigned_wallets_excluded_from_cluster_signals": 113,
+    "target_trade_rows": 23249,
+    "forecast_signal_rows": 170,
+    "historical_descriptive_rows": 2552,
+    "incomplete_target_wallet_market_queries": 0,
+    "forecast_start_utc": "2026-05-31T00:00:00+00:00",
+    "forecast_end_utc": "2026-06-16T00:00:00+00:00",
+    "daily_interval": "[asof_utc - 24h, asof_utc)",
+    "historical_forecast_input_allowed": false,
+    "availability_basis": "trade_timestamp_only_retrospective",
+    "coverage_scope": "served API exports; not full-chain completeness"
+  },
+  "checks": {
+    "one_feature_row_per_selected_wallet": true,
+    "thirty_documented_features": true,
+    "one_membership_row_per_selected_wallet": true,
+    "historical_rows_are_descriptive_only": true,
+    "unique_signal_keys": true,
+    "signal_cutoffs": true,
+    "daily_midnight_utc": true,
+    "raw_to_daily_reconciliation": true,
+    "raw_to_feature_reconciliation": true,
+    "four_direction_reconciliation": true,
+    "bounded_imbalances": true,
+    "missing_coverage_is_not_zero_activity": true
+  },
+  "runtime": {
+    "python": "3.13.11",
+    "dependencies": {
+      "numpy": "2.5.5",
+      "pandas": "3.1.1",
+      "scikit-learn": "1.9.1",
+      "scipy": "1.18.1",
+      "matplotlib": "3.11.2",
+      "joblib": "1.6.0"
+    }
+  },
+  "limitations": [
+    "Retrospective timestamp-filtered pilot; contemporaneous API availability unverified.",
+    "June-discovered cohort; earlier panels are descriptive, not historical out-of-sample forecasts.",
+    "Pre-decision cutoff approximates Gamma endDate minus 24 hours.",
+    "Participant trade flow is not holdings, profit, a private belief or market-wide volume.",
+    "API completion is not full-chain completeness; 0.01-share size floor applies.",
+    "No predictive-value or smart-wallet claim is established."
+  ]
+}

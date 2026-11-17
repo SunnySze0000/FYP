@@ -1,0 +1,17 @@
+{
+  "datasets/forward_probabilities.csv": "f53c33c3977695fe82f06c1d837861ae4d703d5b0859783410f6bc8bd1b0bc08",
+  "datasets/polymarket/event_101772/wallet_discovery/wallet_summary_pre_cutoff.csv": "0b362191cd302a95748585a82fd2f2ed00b8ad080d7f6baed4c7999bfa27ac7c",
+  "datasets/polymarket/event_101772/prior_history/prior_market_tokens.csv": "067f179fef5359fa19e04dd5ea55455384b38ad4e69f720500c2d3c71d142bbd",
+  "datasets/polymarket/event_101772/market_inventory.csv": "285f21b4fd6a755386c49fe2ab39b32896e592d5ae458ef6cdc962f177a9d5d1",
+  "datasets/polymarket/event_101772/market_tokens.csv": "f4fb341549f9bb416039c9e2fc2c4f32e9d1aa26742735fc7e0aa1c7cea00c35",
+  "datasets/polymarket/market_906972/wallet_trades.csv.gz": "6ee2c6b08bddf36b13ffc2d32da6ccb7807af30c61ea6198e83e49b818e70270",
+  "datasets/polymarket/market_906972/manifest.json": "9007cf28eb205879bb3225533583551453ae81970b7b271293397bed574b0fc8",
+  "datasets/polymarket/market_906973/wallet_trades.csv.gz": "b022938edd18cfdedf257cae87d0c91be7012a7071eda8184cd4801a639298bd",
+  "datasets/polymarket/market_906973/manifest.json": "68af9df70cf60c8e1ea551a5b4af1ca4216041c3f83c5012b9198e00fa0a485f",
+  "datasets/polymarket/market_906974/wallet_trades.csv.gz": "6d9147f2ffca6a9f4f732805bdd85bd5b8c5695048878d9e51759d3d0418a82a",
+  "datasets/polymarket/market_906974/manifest.json": "0029508d7e2dae1934ecaeeb696703ddd7fc1fdc9322b0e366893320866ace41",
+  "datasets/polymarket/market_906975/wallet_trades.csv.gz": "31a8fdd845e52824028f1708d1f02a58ddc1292c005d47f0f0b7f4c72cb3441e",
+  "datasets/polymarket/market_906975/manifest.json": "a4a3b4721338d9251b13c8d36a95792bd1f5f0b17d116756fe4d4eba08e74e5a",
+  "datasets/polymarket/market_906976/wallet_trades.csv.gz": "6e1322978484c611abbbcc85790b7b8da3f57b300e354716b572491c5707fd7f",
+  "datasets/polymarket/market_906976/manifest.json": "3fa93dd1e3ab6b73224980dfc431cd2f6d78b06bac0b8d2204022fe4abdc48f7"
+}

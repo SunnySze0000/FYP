@@ -1,4 +1,15 @@
-# Forward rate-probability datasets
+# Datasets
+
+| Dataset | Start here |
+|---|---|
+| Existing Fed probability CSVs | Structure and examples below |
+| Polymarket Fed wallet trades and sampled Polygon fills | [Dataset overview](polymarket/README.md) · [CSV dictionary](polymarket/SCHEMA.md) |
+
+The wallet exports cover all five June 2026 outcome markets. See the
+[meeting inventory](polymarket/event_101772/README.md) for counts and coverage. Join using
+`market_id` plus an explicitly chosen observation date/cutoff for daily analysis.
+
+## Forward rate-probability datasets
 
 Market-implied probabilities of central-bank policy outcomes, by meeting horizon.
 Two files, same underlying observations, two layouts.

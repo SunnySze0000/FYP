@@ -39,6 +39,7 @@ Desktop.ini
 __pycache__/
 *.py[cod]
 .venv/
+.venv-wallet-pilot/
 venv/
 /proposal/.texpadtmp/
 
@@ -48,3 +49,7 @@ venv/
 !.env.example
 .codex-build
 .codex-finalizer
+
+# Python caches from local data collection
+__pycache__/
+*.py[cod]

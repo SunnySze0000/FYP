@@ -1,0 +1,38 @@
+{
+  "exported_at_utc": "2026-10-07T15:30:47.777428+00:00",
+  "selection_cutoff_utc": "2026-05-31T00:00:00+00:00",
+  "candidate_count": 20,
+  "prior_meetings": 7,
+  "prior_markets": 28,
+  "accepted_prior_trade_rows": 120000,
+  "rejected_rows": 0,
+  "pre_decision_trade_rows": 118521,
+  "candidate_meeting_pairs_including_zero_rows": 140,
+  "prior_meeting_count_distribution": {
+    "0": 1,
+    "1": 1,
+    "2": 3,
+    "3": 6,
+    "4": 3,
+    "5": 2,
+    "7": 4
+  },
+  "candidates_with_3plus_prior_meetings": 15,
+  "candidate_source_sha256": "8fa930aec55f3165896eeadadc0b60242b2c7c471b945959bbe20b30782a4aea",
+  "query_settings": {
+    "taker_only": false,
+    "filter_type": "TOKENS",
+    "filter_amount": "0.01",
+    "user_start": 1,
+    "user_end_inclusive": 1780185599,
+    "maximum_conditions_per_query": 20
+  },
+  "limitations": [
+    "Current Gamma resolution status and pre-cutoff closedTime are verified, but original resolution timestamps are not. Closure is not the same as resolution.",
+    "Historical API records and labels were collected retrospectively; contemporaneous availability is not established.",
+    "Decision cutoff is one day before Gamma endDate, not the exact FOMC announcement time. Later trades do not count as pre-decision participation.",
+    "Only seven prior meetings in the team's existing universe are queried; a zero row does not establish a wallet's lifetime inactivity.",
+    "Trade presence establishes data feasibility, not forecasting skill, profit or holdings. No skill score is produced.",
+    "API size floor applies; duplicate candidates remain preserved. These new records are not independently chain-verified."
+  ]
+}

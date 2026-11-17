@@ -1,0 +1,32 @@
+{
+  "method_version": "flow-alignment-v1",
+  "candidate_numbers": [
+    3,
+    6,
+    7,
+    12
+  ],
+  "main_window_days": 7,
+  "sensitivity_window_days": [
+    1,
+    30
+  ],
+  "meeting_count": 7,
+  "selected_wallet_source_rows": 53350,
+  "outcome_flow_rows": 336,
+  "meeting_decision_rows": 84,
+  "wallet_diagnostic_rows": 12,
+  "input_sha256": {
+    "datasets/polymarket/event_101772/prior_history/candidate_history_summary.csv": "5bb712da6b2d9c9f88a3f744237a5b7bdd3d9da853fa88f9298cb2851117854c",
+    "datasets/polymarket/event_101772/prior_history/prior_market_tokens.csv": "067f179fef5359fa19e04dd5ea55455384b38ad4e69f720500c2d3c71d142bbd",
+    "datasets/polymarket/event_101772/prior_history/prior_wallet_trades.csv.gz": "b7ee7539c42219be9abf04c6e4cfce82dc7a43cd45d5a4eda322ef3f35b44bfc",
+    "datasets/forward_probabilities.csv": "9ba8f9ff46109ad309bf62a737b5017a6b88b682497d2cb6e7be902297fbca54"
+  },
+  "score_denominator": "gross token shares; prevents near-cancelled net flow amplification",
+  "quote_maximum_age_hours": 24,
+  "duplicate_fraction_maximum": "0.05",
+  "claim": "Retrospective signed trade-flow association, not proper forecast score, PnL, or validated skill",
+  "selection_bias": "Four wallets selected using later June activity and all-seven prior meeting coverage",
+  "original_resolution_timestamps_verified": false,
+  "prior_polygon_verification": false
+}

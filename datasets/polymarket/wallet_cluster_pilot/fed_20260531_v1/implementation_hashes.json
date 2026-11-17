@@ -1,0 +1,10 @@
+{
+  "scripts/polymarket/collect_history.py": "318ecda18efd6ca96d3dad5692fce08e24c9da3f41b120b69d18fc530b64b69c",
+  "scripts/polymarket/collect_pilot.py": "c8aa825668243a9ab7fa60a3526cf0601df2c934656ab0e2cf64a32c38506b46",
+  "scripts/polymarket/run_wallet_cluster_pilot.py": "bea92d81afcd1974ac796de898f6ab46f566c705abb2468aefcb0b4c52a1d7e2",
+  "scripts/polymarket/wallet_cluster_collect.py": "25d1d2d122bb9a98fba35eb05f3bf64beeba0758584b766f563057ebd18938a2",
+  "scripts/polymarket/wallet_cluster_config.json": "2c215254e452b136e07b50cb25fbd7108d16d5c7c30ed4975185e892acb670b3",
+  "scripts/polymarket/wallet_cluster_daily.py": "65f5c50f41d851df6732257d22755c52b74f8aa668d01f120fa2817a05ccf46a",
+  "scripts/polymarket/wallet_cluster_feature_dictionary.json": "5d01f7fd34fcb28629b25e11be7a0fdcc7b385635004ab19cc738a9ce27511c3",
+  "scripts/polymarket/wallet_cluster_features.py": "c63d398e2488df143b473b7d3d7ae2cd56e19afe399835b951d28bba6f4f5948"
+}
