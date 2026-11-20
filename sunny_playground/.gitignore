@@ -1,0 +1,7 @@
+# Large or re-downloadable inputs stay local
+data/raw/
+
+# Python caches
+__pycache__/
+*.pyc
+.pytest_cache/

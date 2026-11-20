@@ -1,0 +1,7 @@
+check,description,passed,failures
+probability_sums,Meeting probabilities sum to 1 within 0.10,False,159
+unmapped_labels,Every outcome label maps to a rate range,False,141
+resolution_consistency,Exactly one market per meeting resolves YES,True,0
+snapshot_gaps,No snapshot gap longer than 5 days,False,3
+calendar_alignment,Market data end 0-5 days after the announcement,True,0
+missing_meetings,Every FOMC meeting in range has markets,False,3

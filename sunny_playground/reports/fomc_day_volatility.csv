@@ -1,0 +1,2 @@
+ticker,event_days,event_mean_z2,non_event_mean_z2,variance_ratio,placebo_p_value,event_mean_return_pct
+SPY,30,3.345732866271871,1.1622116687925335,2.8787637881384223,0.0021995600879824036,-0.13547976684730104
