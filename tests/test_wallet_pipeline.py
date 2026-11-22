@@ -127,7 +127,7 @@ class MultiMeetingTests(unittest.TestCase):
         import tempfile
         from wallet_pipeline.meetings import registry
         probability = pd.DataFrame({
-            "date": ["2026-05-01T00:00:00+00:00", "2026-06-17T00:00:00+00:00", "2026-06-16T00:00:00+00:00"],
+            "date": ["2026-05-01T00:00:00+00:00", "2026-06-19T00:00:00+00:00", "2026-06-17T00:00:00+00:00"],
             "event_id": [1, 1, 1], "market_id": [10, 10, 11], "meeting_month": "2026-06"})
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)

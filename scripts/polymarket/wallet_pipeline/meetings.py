@@ -4,8 +4,11 @@ Decision cutoff per meeting (the last instant whose trading may be used):
 
 1. Gamma ``endDate`` minus 24 hours, when the collector's saved
    ``raw/market.json`` is available (latest across the meeting's markets);
-2. otherwise the meeting's last ``forward_probabilities.csv`` date minus one
-   day. This rule reproduces all 21 cutoffs recorded in the frozen pilot.
+2. otherwise the EARLIEST of the meeting's per-market last
+   ``forward_probabilities.csv`` dates, minus one day. This reproduces all 21
+   cutoffs recorded in the frozen pilot. (Using the latest market's last date
+   was wrong: in Oct 2025 one market kept quoting two days after the decision,
+   which put the cutoff after the announcement.)
 
 The clustering cutoff is ``decision_cutoff - signal_days``: behaviour is
 measured strictly before it, and cluster signals run from it to the decision
@@ -58,7 +61,8 @@ def registry(root: Path, probability: pd.DataFrame, signal_days: float = 16.0) -
     for event_id, part in data.groupby("event_id"):
         markets = sorted(str(m) for m in part["market_id"].unique())
         gamma = [c for c in (_gamma_cutoff(root, m) for m in markets) if c is not None]
-        decision = max(gamma) if gamma else part["date"].max() - pd.Timedelta(days=1)
+        last_by_market = part.groupby("market_id")["date"].max()
+        decision = max(gamma) if gamma else last_by_market.min() - pd.Timedelta(days=1)
         files = {m: trade_file(root, m) for m in markets}
         complete = [collection_complete(root, m) for m in markets]
         rows.append(dict(
