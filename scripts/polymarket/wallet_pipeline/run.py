@@ -30,6 +30,7 @@ from wallet_pipeline.rules import RuleConfig, apply_rules, rule_counts  # noqa: 
 from wallet_pipeline.trades import load_market_exports  # noqa: E402
 
 DEFAULT_MARKETS = ["906972", "906973", "906974", "906975", "906976"]
+GZIP = {"method": "gzip", "mtime": 0}  # byte-reproducible outputs
 SENSITIVITY = [(3, 2, 0.1), (5, 3, 0.1), (5, 3, 0.2), (5, 3, 0.3), (10, 3, 0.2), (5, 5, 0.2)]
 
 
@@ -89,8 +90,8 @@ def run(args):
     (out / "config.json").write_text(json.dumps(config, indent=2))
     links.round(6).to_csv(out / "owner_links.csv", index=False)
     sensitivity.to_csv(out / "owner_sensitivity.csv", index=False)
-    memberships.to_csv(out / "memberships.csv.gz", index=False, float_format="%.8g")
-    features.drop(columns=["first_trade_utc"]).to_csv(out / "entity_features.csv.gz", index=False, float_format="%.8g")
+    memberships.to_csv(out / "memberships.csv.gz", index=False, float_format="%.8g", compression=GZIP)
+    features.drop(columns=["first_trade_utc"]).to_csv(out / "entity_features.csv.gz", index=False, float_format="%.8g", compression=GZIP)
     cluster_profiles.to_csv(out / "cluster_profiles.csv", index=False, float_format="%.6g")
     diagnostics.to_csv(out / "selection_diagnostics.csv", index=False, float_format="%.6g")
     joblib.dump(pipeline, out / "pipeline.joblib")
