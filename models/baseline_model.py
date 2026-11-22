@@ -24,7 +24,7 @@ OUTCOME_MOVE = {
     "50 bps decrease": -50.0,
     "75+ bps decrease": -75.0,
     "25 bps increase": 25.0,
-    "25+ bps increase": 50.0,
+    "25+ bps increase": 25.0,  # lower bound of an open-ended bucket
     "50 bps increase": 50.0,
     "50+ bps increase": 50.0,
     "75 bps increase": 75.0,
@@ -57,7 +57,7 @@ def load_event_features():
         newline="", encoding="utf-8-sig"
     ) as file:
         for row in csv.DictReader(file):
-            move = OUTCOME_MOVE.get(row["outcome"])
+            move = OUTCOME_MOVE.get(" ".join(row["outcome"].strip().lower().split()))
             if move is None:
                 continue
             by_date[(parse_date(row["date"]), int(row["horizon_month"]))].append(

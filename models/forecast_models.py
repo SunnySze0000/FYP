@@ -20,6 +20,11 @@ from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 
+import sys
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from outcomes import normalize_outcomes, outcome_move  # noqa: E402
+
 
 # ============================================================================
 # 1. GET DATA
@@ -33,18 +38,8 @@ CORRELATIONS_PATH = ROOT / "models" / "feature_return_correlations.csv"
 HORIZONS = (1, 5, 20)
 SEED = 42
 
-OUTCOME_MOVE = {
-    "25 bps decrease": -25.0,
-    "50+ bps decrease": -50.0,
-    "50 bps decrease": -50.0,
-    "75+ bps decrease": -75.0,
-    "25 bps increase": 25.0,
-    "25+ bps increase": 50.0,
-    "50 bps increase": 50.0,
-    "50+ bps increase": 50.0,
-    "75 bps increase": 75.0,
-    "no change": 0.0,
-}
+# Stale prediction-market snapshots are not carried forward beyond this gap.
+EVENT_MERGE_TOLERANCE = pd.Timedelta(days=7)
 
 
 def load_data():
@@ -58,7 +53,8 @@ def load_data():
 
     probability = pd.read_csv(PROBABILITY_PATH, parse_dates=["date"])
     probability["date"] = probability["date"].dt.tz_localize(None).dt.normalize()
-    probability["move"] = probability["outcome"].map(OUTCOME_MOVE)
+    probability["outcome"] = normalize_outcomes(probability["outcome"])
+    probability["move"] = outcome_move(probability["outcome"])
     probability = probability.dropna(subset=["move"]).copy()
     return market, probability
 
@@ -165,15 +161,24 @@ def add_market_features(market):
     return frame
 
 
-def build_model_data(market, probability):
-    event = extract_event_features(probability)
-    frame = add_market_features(market)
+def merge_event_features(frame, event, tolerance=EVENT_MERGE_TOLERANCE):
+    """Attach the latest event snapshot at or before each trading date.
+
+    The tolerance stops an old snapshot being reused across a data gap.
+    """
     return pd.merge_asof(
         frame.sort_values("date"),
         event.sort_values("date"),
         on="date",
         direction="backward",
-    ).dropna(subset=["expected_move"])
+        tolerance=tolerance,
+    )
+
+
+def build_model_data(market, probability):
+    event = extract_event_features(probability)
+    frame = add_market_features(market)
+    return merge_event_features(frame, event).dropna(subset=["expected_move"])
 
 
 # ============================================================================
@@ -315,12 +320,12 @@ def main():
     print("- QLIKE is for variance forecasts; lower is better.")
     print("- Negative predictions are acceptable for returns, but not variance.")
     print("- Compare only the same target and horizon; 20-day results have few rows.")
-    print("\nImplication:")
-    print("- History-only was best for 1-day and 5-day return RMSE.")
-    print("- Event-only was slightly best for 20-day return RMSE, but had only 15 test rows.")
-    print("- History-plus-event did not beat history-only for variance.")
-    print("- These results do not yet prove event features add forecasting value.")
-    print("- More independent events, walk-forward tests, and smart-wallet features are needed.")
+    print("\nImplication (computed from this run; lowest RMSE per target/horizon):")
+    best = results.loc[results.groupby(["target", "horizon"])["rmse"].idxmin()]
+    for row in best.itertuples():
+        print(f"- {row.target}, {row.horizon}d: {row.model} "
+              f"(RMSE {row.rmse:.6f}, {row.rows} test rows)")
+    print("- Few test rows (especially 20d) make these rankings fragile.")
     print(f"\nSaved: {RESULTS_PATH}")
     print(f"Saved: {CORRELATIONS_PATH}")
 

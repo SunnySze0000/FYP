@@ -31,6 +31,7 @@ from forecast_models import (  # noqa: E402
     add_market_features,
     extract_event_features,
     load_data,
+    merge_event_features,
 )
 
 
@@ -46,12 +47,7 @@ def build_data():
     market, probability = load_data()
     event = extract_event_features(probability)
     frame = add_market_features(market)
-    data = pd.merge_asof(
-        frame.sort_values("date"),
-        event.sort_values("date"),
-        on="date",
-        direction="backward",
-    ).dropna(subset=["expected_move"])
+    data = merge_event_features(frame, event).dropna(subset=["expected_move"])
     return data, probability
 
 
