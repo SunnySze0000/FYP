@@ -11,7 +11,7 @@ targets. These are exploratory results, not final evidence.
 - Unique selected event IDs: 27
 - Feature count in the full feature set: 17
 - Largest absolute feature correlation: 0.9667
-- Feature matrix condition number: 5743001782833231.00
+- Feature matrix condition number: 5582093864599466.00
 
 A high pairwise correlation or condition number indicates collinearity.
 The event rows are daily snapshots, so unique events are a better measure
