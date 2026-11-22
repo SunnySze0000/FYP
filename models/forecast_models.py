@@ -23,6 +23,7 @@ from sklearn.preprocessing import StandardScaler
 import sys
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+from distribution_features import summarize  # noqa: E402
 from outcomes import normalize_outcomes, outcome_move  # noqa: E402
 
 
@@ -68,6 +69,8 @@ def extract_event_features(probability):
 
     Each date keeps the smallest available horizon. `final_outcome` is not
     used: it is only known after the meeting and would leak future information.
+    Distribution summaries come from `distribution_features.summarize`, the
+    same code used for wallet-cluster distributions.
     """
     chosen = (
         probability.sort_values(["date", "horizon_month"])
@@ -79,55 +82,14 @@ def extract_event_features(probability):
         on=["date", "horizon_month"],
         how="inner",
     )
-    selected["market_probability"] = pd.to_numeric(
+    selected["probability"] = pd.to_numeric(
         selected["market_probability"], errors="coerce"
     )
-    selected = selected.dropna(subset=["market_probability"])
-    selected["outcome_group"] = np.select(
-        [
-            selected["move"] < 0,
-            selected["move"] > 0,
-            selected["move"].eq(0),
-        ],
-        ["decrease", "increase", "no_change"],
-        default="other",
+    meta = selected.groupby("date", as_index=False).agg(
+        event_id=("event_id", "first"), horizon_month=("horizon_month", "first")
     )
-    selected["total_probability"] = selected.groupby("date")[
-        "market_probability"
-    ].transform("sum")
-    selected["p"] = selected["market_probability"] / selected["total_probability"]
-
-    # Probability features: each has a different interpretation.
-    selected["weighted_move"] = selected["p"] * selected["move"]
-    selected["weighted_abs_move"] = selected["p"] * selected["move"].abs()
-    selected["weighted_square_move"] = selected["p"] * selected["move"].pow(2)
-    selected["entropy_part"] = -selected["p"] * np.log(
-        selected["p"].clip(lower=1e-12)
-    )
-
-    event = selected.groupby("date", as_index=False).agg(
-        event_id=("event_id", "first"),
-        horizon_month=("horizon_month", "first"),
-        expected_move=("weighted_move", "sum"),
-        expected_abs_move=("weighted_abs_move", "sum"),
-        expected_square_move=("weighted_square_move", "sum"),
-        entropy=("entropy_part", "sum"),
-        max_probability=("p", "max"),
-        outcome_count=("p", "size"),
-        probability_increase=("p", lambda values: values[
-            selected.loc[values.index, "outcome_group"].eq("increase")
-        ].sum()),
-        probability_decrease=("p", lambda values: values[
-            selected.loc[values.index, "outcome_group"].eq("decrease")
-        ].sum()),
-        probability_no_change=("p", lambda values: values[
-            selected.loc[values.index, "outcome_group"].eq("no_change")
-        ].sum()),
-    )
-    event["move_variance"] = (
-        event["expected_square_move"] - event["expected_move"].pow(2)
-    ).clip(lower=0)
-    event = event.sort_values("date")
+    event = meta.merge(summarize(selected, ["date"]), on="date")
+    event = event.sort_values("date").reset_index(drop=True)
     event["expected_move_change"] = event["expected_move"].diff()
     event["max_probability_change"] = event["max_probability"].diff()
     return event
