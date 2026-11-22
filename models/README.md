@@ -87,13 +87,26 @@ The comparison uses only the later chronological holdout:
 - **Rows:** the number of held-out cases. The 20-day test has only 15 rows, so
   its result is especially uncertain.
 
-Current implication: history-only is best for 1-day and 5-day return RMSE.
-Event-only is slightly best for 20-day return RMSE, but that conclusion rests
-on only 15 test cases. History-plus-event does not beat history-only for
-variance. These results do not prove that event features are useless; they show
-that this first feature set and small, event-clustered sample have not yet
-demonstrated reliable incremental value. More independent events, walk-forward
-testing, and smart-wallet features are needed.
+Current implication (rerun after the outcome-label and stale-snapshot fixes
+described below): history-only is best for 1-day and 5-day return RMSE and for
+all variance horizons. History-plus-event is slightly best for 20-day return
+RMSE, but on only 14 test cases. These results do not prove that event
+features are useless; they show that this first feature set and small,
+event-clustered sample have not yet demonstrated reliable incremental value.
+More independent events, walk-forward testing, and wallet-cluster features
+are needed (see [`cluster_regression.py`](./cluster_regression.py)).
+
+### Data-handling fixes (feature/cluster-implied-probabilities)
+
+- **`25+ bps increase` now maps to +25 bp**, the lower bound of the bucket,
+  instead of +50 bp. All labels pass through [`outcomes.py`](./outcomes.py),
+  which also normalises capitalization (`No change` vs `no change`).
+- **Event snapshots are no longer carried forward indefinitely.** Features are
+  joined with a 7-day tolerance (`EVENT_MERGE_TOLERANCE`). Previously, for
+  example, the 2025-01-29 meeting-day snapshot was reused for 29 trading days
+  up to 2025-03-19; 46 such stale rows are now dropped.
+- Result CSVs and `event_walk_forward_report.md` were regenerated. The two
+  notebooks still show outputs from before the fix until they are rerun.
 
 ## Script baseline
 

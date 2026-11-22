@@ -7,7 +7,7 @@ the same event block.
 
 - Minimum training events before a test: 10
 - Test event blocks evaluated: 17
-- Total scored fold/model rows: 720
+- Total scored fold/model rows: 711
 
 ## Aggregate results
 
@@ -15,76 +15,76 @@ the same event block.
 
 | target   |   horizon | feature_set        | model             |   folds |   test_rows |   mean_rmse |   pooled_rmse |   mean_mae |   mean_r2 |   mean_qlike |
 |:---------|----------:|:-------------------|:------------------|--------:|------------:|------------:|--------------:|-----------:|----------:|-------------:|
-| return   |         1 | event_only         | elastic_net       |      17 |         629 |    0.008539 |      0.008913 |   0.006293 | -0.011302 |          nan |
-| return   |         1 | history_plus_event | elastic_net       |      17 |         629 |    0.008542 |      0.008919 |   0.006299 | -0.011265 |          nan |
-| return   |         1 | history_only       | elastic_net       |      17 |         629 |    0.008595 |      0.008981 |   0.006322 | -0.02062  |          nan |
-| return   |         1 | history_only       | gradient_boosting |      17 |         629 |    0.008694 |      0.009085 |   0.006402 | -0.044568 |          nan |
-| return   |         1 | history_plus_event | gradient_boosting |      17 |         629 |    0.008703 |      0.009106 |   0.006429 | -0.046415 |          nan |
-| return   |         1 | history_only       | ridge             |      17 |         629 |    0.008687 |      0.009151 |   0.006434 | -0.032532 |          nan |
-| return   |         1 | event_only         | gradient_boosting |      17 |         629 |    0.008766 |      0.009152 |   0.006503 | -0.07037  |          nan |
-| return   |         1 | history_plus_event | ridge             |      17 |         629 |    0.009293 |      0.009991 |   0.006868 | -0.182583 |          nan |
-| return   |         1 | event_only         | ridge             |      17 |         629 |    0.009301 |      0.010071 |   0.006814 | -0.208277 |          nan |
+| return   |         1 | event_only         | elastic_net       |      17 |         591 |    0.008495 |      0.008868 |   0.006252 | -0.017595 |          nan |
+| return   |         1 | history_plus_event | elastic_net       |      17 |         591 |    0.0085   |      0.008879 |   0.006261 | -0.017384 |          nan |
+| return   |         1 | history_only       | elastic_net       |      17 |         591 |    0.008514 |      0.008898 |   0.006266 | -0.019634 |          nan |
+| return   |         1 | history_only       | gradient_boosting |      17 |         591 |    0.008565 |      0.008955 |   0.00633  | -0.031515 |          nan |
+| return   |         1 | history_plus_event | gradient_boosting |      17 |         591 |    0.008602 |      0.008998 |   0.00635  | -0.040231 |          nan |
+| return   |         1 | event_only         | ridge             |      17 |         591 |    0.008673 |      0.009059 |   0.00644  | -0.059155 |          nan |
+| return   |         1 | event_only         | gradient_boosting |      17 |         591 |    0.008683 |      0.009063 |   0.006437 | -0.065899 |          nan |
+| return   |         1 | history_only       | ridge             |      17 |         591 |    0.008604 |      0.009082 |   0.006375 | -0.029611 |          nan |
+| return   |         1 | history_plus_event | ridge             |      17 |         591 |    0.008796 |      0.009288 |   0.006563 | -0.077752 |          nan |
 
 ### return, 5 trading day(s)
 
 | target   |   horizon | feature_set        | model             |   folds |   test_rows |   mean_rmse |   pooled_rmse |   mean_mae |   mean_r2 |   mean_qlike |
 |:---------|----------:|:-------------------|:------------------|--------:|------------:|------------:|--------------:|-----------:|----------:|-------------:|
-| return   |         5 | history_only       | elastic_net       |      17 |         125 |    0.018794 |      0.020316 |   0.015399 | -0.241788 |          nan |
-| return   |         5 | history_plus_event | elastic_net       |      17 |         125 |    0.018814 |      0.020335 |   0.015299 | -0.235996 |          nan |
-| return   |         5 | event_only         | elastic_net       |      17 |         125 |    0.01875  |      0.020403 |   0.01519  | -0.223417 |          nan |
-| return   |         5 | history_only       | gradient_boosting |      17 |         125 |    0.019129 |      0.020465 |   0.015736 | -0.361279 |          nan |
-| return   |         5 | history_plus_event | gradient_boosting |      17 |         125 |    0.018974 |      0.020584 |   0.015438 | -0.290919 |          nan |
-| return   |         5 | event_only         | gradient_boosting |      17 |         125 |    0.019105 |      0.020689 |   0.015306 | -0.3018   |          nan |
-| return   |         5 | history_only       | ridge             |      17 |         125 |    0.019055 |      0.020704 |   0.015707 | -0.273969 |          nan |
-| return   |         5 | history_plus_event | ridge             |      17 |         125 |    0.019664 |      0.021287 |   0.015978 | -0.360667 |          nan |
-| return   |         5 | event_only         | ridge             |      17 |         125 |    0.019936 |      0.021829 |   0.01604  | -0.391271 |          nan |
+| return   |         5 | event_only         | elastic_net       |      17 |         118 |    0.018046 |      0.019501 |   0.014942 | -0.318493 |          nan |
+| return   |         5 | history_only       | gradient_boosting |      17 |         118 |    0.018489 |      0.019712 |   0.014903 | -0.554763 |          nan |
+| return   |         5 | history_plus_event | gradient_boosting |      17 |         118 |    0.018655 |      0.020028 |   0.015158 | -0.637689 |          nan |
+| return   |         5 | event_only         | gradient_boosting |      17 |         118 |    0.018498 |      0.020052 |   0.015322 | -0.465313 |          nan |
+| return   |         5 | history_only       | elastic_net       |      17 |         118 |    0.018659 |      0.020688 |   0.014721 | -0.41777  |          nan |
+| return   |         5 | event_only         | ridge             |      17 |         118 |    0.019067 |      0.020774 |   0.015817 | -0.573066 |          nan |
+| return   |         5 | history_plus_event | elastic_net       |      17 |         118 |    0.01915  |      0.020819 |   0.01513  | -0.565883 |          nan |
+| return   |         5 | history_only       | ridge             |      17 |         118 |    0.019166 |      0.02132  |   0.01499  | -0.50638  |          nan |
+| return   |         5 | history_plus_event | ridge             |      17 |         118 |    0.02112  |      0.023349 |   0.016507 | -0.854626 |          nan |
 
 ### return, 20 trading day(s)
 
 | target   |   horizon | feature_set        | model             |   folds |   test_rows |   mean_rmse |   pooled_rmse |   mean_mae |   mean_r2 |   mean_qlike |
 |:---------|----------:|:-------------------|:------------------|--------:|------------:|------------:|--------------:|-----------:|----------:|-------------:|
-| return   |        20 | event_only         | gradient_boosting |      14 |          26 |    0.028546 |      0.038107 |   0.026198 |  -7.63955 |          nan |
-| return   |        20 | history_plus_event | gradient_boosting |      14 |          26 |    0.030893 |      0.039257 |   0.028144 |  -7.18358 |          nan |
-| return   |        20 | history_only       | gradient_boosting |      14 |          26 |    0.034399 |      0.041471 |   0.031117 |  -5.8381  |          nan |
-| return   |        20 | history_plus_event | elastic_net       |      14 |          26 |    0.047957 |      0.062343 |   0.043426 | -15.7139  |          nan |
-| return   |        20 | history_plus_event | ridge             |      14 |          26 |    0.048645 |      0.066939 |   0.045746 | -18.1075  |          nan |
-| return   |        20 | event_only         | elastic_net       |      14 |          26 |    0.046274 |      0.082175 |   0.043878 |  -6.73362 |          nan |
-| return   |        20 | event_only         | ridge             |      14 |          26 |    0.05101  |      0.09718  |   0.048588 |  -7.8212  |          nan |
-| return   |        20 | history_only       | ridge             |      14 |          26 |    0.055231 |      0.103534 |   0.041895 | -18.7351  |          nan |
-| return   |        20 | history_only       | elastic_net       |      14 |          26 |    0.056505 |      0.108375 |   0.04264  | -21.1938  |          nan |
+| return   |        20 | history_only       | elastic_net       |      14 |          25 |    0.025331 |      0.02731  |   0.024334 |  -26.6812 |          nan |
+| return   |        20 | history_only       | ridge             |      14 |          25 |    0.025527 |      0.027597 |   0.024582 |  -26.7281 |          nan |
+| return   |        20 | history_plus_event | gradient_boosting |      13 |          23 |    0.025592 |      0.027896 |   0.023295 |  -48.8092 |          nan |
+| return   |        20 | history_only       | gradient_boosting |      14 |          25 |    0.025362 |      0.028035 |   0.022288 |  -60.084  |          nan |
+| return   |        20 | event_only         | gradient_boosting |      13 |          23 |    0.028787 |      0.033179 |   0.026863 |  -15.3949 |          nan |
+| return   |        20 | event_only         | elastic_net       |      13 |          23 |    0.029574 |      0.034506 |   0.028356 |  -19.1127 |          nan |
+| return   |        20 | event_only         | ridge             |      13 |          23 |    0.030091 |      0.035052 |   0.028497 |  -21.0132 |          nan |
+| return   |        20 | history_plus_event | elastic_net       |      13 |          23 |    0.03488  |      0.044008 |   0.032538 |  -64.9325 |          nan |
+| return   |        20 | history_plus_event | ridge             |      13 |          23 |    0.035881 |      0.045525 |   0.033302 |  -70.3142 |          nan |
 
 ### variance, 1 trading day(s)
 
 | target   |   horizon | feature_set        | model             |   folds |   test_rows |   mean_rmse |   pooled_rmse |   mean_mae |   mean_r2 |   mean_qlike |
 |:---------|----------:|:-------------------|:------------------|--------:|------------:|------------:|--------------:|-----------:|----------:|-------------:|
-| variance |         1 | history_only       | ridge             |      17 |         629 |    0.000191 |      0.000323 |   0.0001   | -0.467612 |    460.352   |
-| variance |         1 | history_only       | gradient_boosting |      17 |         629 |    0.000179 |      0.000323 |   8.6e-05  | -0.055257 |      3.32615 |
-| variance |         1 | history_plus_event | gradient_boosting |      17 |         629 |    0.000183 |      0.000326 |   8.9e-05  | -0.184082 |      1.58104 |
-| variance |         1 | history_only       | elastic_net       |      17 |         629 |    0.000182 |      0.000327 |   9.4e-05  | -0.178804 |      1.74488 |
-| variance |         1 | history_plus_event | elastic_net       |      17 |         629 |    0.000182 |      0.000327 |   9.4e-05  | -0.178969 |      1.74496 |
-| variance |         1 | history_plus_event | ridge             |      17 |         629 |    0.000227 |      0.000368 |   0.000129 | -1.45503  |    452.429   |
+| variance |         1 | history_only       | gradient_boosting |      17 |         591 |    0.000174 |      0.000322 |   8.3e-05  | -0.028203 |      5.92282 |
+| variance |         1 | history_plus_event | gradient_boosting |      17 |         591 |    0.000177 |      0.000323 |   8.6e-05  | -0.128975 |      5.70291 |
+| variance |         1 | history_only       | ridge             |      17 |         591 |    0.000191 |      0.000324 |   0.000102 | -0.527863 |    460.624   |
+| variance |         1 | history_only       | elastic_net       |      17 |         591 |    0.000179 |      0.000326 |   9.2e-05  | -0.160997 |      1.73954 |
+| variance |         1 | history_plus_event | elastic_net       |      17 |         591 |    0.000179 |      0.000326 |   9.2e-05  | -0.161153 |      1.73963 |
+| variance |         1 | history_plus_event | ridge             |      17 |         591 |    0.000201 |      0.000331 |   0.000115 | -0.865816 |    455.714   |
 
 ### variance, 5 trading day(s)
 
 | target   |   horizon | feature_set        | model             |   folds |   test_rows |   mean_rmse |   pooled_rmse |   mean_mae |   mean_r2 |   mean_qlike |
 |:---------|----------:|:-------------------|:------------------|--------:|------------:|------------:|--------------:|-----------:|----------:|-------------:|
-| variance |         5 | history_only       | gradient_boosting |      17 |         125 |    0.000437 |      0.000845 |   0.000266 |  -2.08336 |     0.38757  |
-| variance |         5 | history_plus_event | gradient_boosting |      17 |         125 |    0.000448 |      0.000858 |   0.000276 |  -2.1087  |     0.434435 |
-| variance |         5 | history_plus_event | elastic_net       |      17 |         125 |    0.000466 |      0.000874 |   0.000303 |  -4.14758 |     0.536729 |
-| variance |         5 | history_only       | elastic_net       |      17 |         125 |    0.000466 |      0.000874 |   0.000303 |  -4.26938 |     0.537004 |
-| variance |         5 | history_only       | ridge             |      17 |         125 |    0.000533 |      0.00088  |   0.000358 |  -4.79802 |  1412.49     |
-| variance |         5 | history_plus_event | ridge             |      17 |         125 |    0.000647 |      0.000958 |   0.000469 |  -8.10768 |  2739.44     |
+| variance |         5 | history_only       | gradient_boosting |      17 |         118 |    0.000472 |      0.00087  |   0.000283 |  -1.13407 |     0.447758 |
+| variance |         5 | history_plus_event | gradient_boosting |      17 |         118 |    0.000466 |      0.000872 |   0.000282 |  -1.12414 |     0.417954 |
+| variance |         5 | history_only       | ridge             |      17 |         118 |    0.000576 |      0.000874 |   0.000389 |  -4.74504 |  2333.27     |
+| variance |         5 | history_only       | elastic_net       |      17 |         118 |    0.00048  |      0.000885 |   0.000308 |  -1.65122 |     0.549209 |
+| variance |         5 | history_plus_event | elastic_net       |      17 |         118 |    0.000484 |      0.000887 |   0.00031  |  -1.74264 |     0.552248 |
+| variance |         5 | history_plus_event | ridge             |      17 |         118 |    0.000689 |      0.000989 |   0.000458 | -14.7482  |  2688.37     |
 
 ### variance, 20 trading day(s)
 
-| target   |   horizon | feature_set        | model             |   folds |   test_rows |   mean_rmse |   pooled_rmse |   mean_mae |    mean_r2 |   mean_qlike |
-|:---------|----------:|:-------------------|:------------------|--------:|------------:|------------:|--------------:|-----------:|-----------:|-------------:|
-| variance |        20 | history_plus_event | gradient_boosting |      14 |          26 |    0.001572 |      0.003106 |   0.001245 |   -43.8515 |     0.419861 |
-| variance |        20 | history_only       | gradient_boosting |      14 |          26 |    0.001634 |      0.003153 |   0.00129  |   -97.3399 |     0.395607 |
-| variance |        20 | history_only       | ridge             |      14 |          26 |    0.00367  |      0.007592 |   0.00246  |  -332.668  | 13180.7      |
-| variance |        20 | history_only       | elastic_net       |      14 |          26 |    0.00368  |      0.008281 |   0.002346 |  -154.009  |  7282.41     |
-| variance |        20 | history_plus_event | elastic_net       |      14 |          26 |    0.006369 |      0.017803 |   0.003742 |  -406.096  |  9355.56     |
-| variance |        20 | history_plus_event | ridge             |      14 |          26 |    0.010492 |      0.027734 |   0.006637 | -1194.86   | 16516        |
+| target   |   horizon | feature_set        | model             |   folds |   test_rows |   mean_rmse |   pooled_rmse |   mean_mae |   mean_r2 |   mean_qlike |
+|:---------|----------:|:-------------------|:------------------|--------:|------------:|------------:|--------------:|-----------:|----------:|-------------:|
+| variance |        20 | history_only       | ridge             |      14 |          25 |    0.000889 |      0.001536 |   0.000726 |  -27.5024 |     0.203741 |
+| variance |        20 | history_plus_event | ridge             |      13 |          23 |    0.001077 |      0.001839 |   0.000852 |  -39.4561 |     0.417311 |
+| variance |        20 | history_only       | elastic_net       |      14 |          25 |    0.001068 |      0.002125 |   0.000802 |  -16.8422 |     0.280487 |
+| variance |        20 | history_only       | gradient_boosting |      14 |          25 |    0.001238 |      0.002155 |   0.000965 |  -43.985  |     0.341796 |
+| variance |        20 | history_plus_event | elastic_net       |      13 |          23 |    0.001054 |      0.002192 |   0.000781 |  -24.1255 |     0.30017  |
+| variance |        20 | history_plus_event | gradient_boosting |      13 |          23 |    0.001239 |      0.002304 |   0.00094  |  -10.2444 |     0.30642  |
 
 ## Interpretation
 

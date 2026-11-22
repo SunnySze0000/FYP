@@ -7,11 +7,11 @@ targets. These are exploratory results, not final evidence.
 
 ## Data and diagnostics
 
-- Market rows after cleaning: 954
+- Market rows after cleaning: 908
 - Unique selected event IDs: 27
 - Feature count in the full feature set: 17
-- Largest absolute feature correlation: 0.9584
-- Feature matrix condition number: 5410177931518126.00
+- Largest absolute feature correlation: 0.9667
+- Feature matrix condition number: 5743001782833231.00
 
 A high pairwise correlation or condition number indicates collinearity.
 The event rows are daily snapshots, so unique events are a better measure
@@ -19,21 +19,21 @@ of independent information than the raw row count.
 
 ## Best models by target and horizon
 
-- **return, 1d:** `elastic_net` + `event_only` + log=False (RMSE 0.0077299817, R2 0.0337, test rows 286)
-- **return, 5d:** `random_forest` + `event_only` + log=False (RMSE 0.016764485, R2 0.0080, test rows 57)
-- **return, 20d:** `gradient_boosting` + `event_only` + log=False (RMSE 0.040077183, R2 0.0434, test rows 15)
-- **variance, 1d:** `extra_trees` + `history_only` + log=False (RMSE 0.00010917183, R2 0.0035, test rows 286)
-- **variance, 5d:** `extra_trees` + `history_only` + log=True (RMSE 0.0002034126, R2 0.2472, test rows 57)
-- **variance, 20d:** `ridge_alpha_100` + `history_plus_event` + log=True (RMSE 0.00053649032, R2 0.1966, test rows 15)
+- **return, 1d:** `elastic_net` + `event_only` + log=False (RMSE 0.0078824048, R2 0.0127, test rows 273)
+- **return, 5d:** `random_forest` + `history_plus_event` + log=False (RMSE 0.016409472, R2 0.0438, test rows 55)
+- **return, 20d:** `gradient_boosting` + `history_plus_event` + log=False (RMSE 0.024840166, R2 0.3273, test rows 14)
+- **variance, 1d:** `gradient_boosting` + `history_only` + log=False (RMSE 0.00010775356, R2 0.0588, test rows 273)
+- **variance, 5d:** `extra_trees` + `history_only` + log=True (RMSE 0.0002384361, R2 0.1324, test rows 55)
+- **variance, 20d:** `ridge_alpha_0.01` + `history_only` + log=True (RMSE 0.00049113691, R2 0.3277, test rows 14)
 
 ## History-plus-event versus history-only
 
-- **return, 1d:** best history-only `elastic_net` RMSE 0.0078603728; best combined `elastic_net` RMSE 0.0077299817; combined improved by 1.66%.
-- **return, 5d:** best history-only `ridge_alpha_0.01` RMSE 0.016867413; best combined `random_forest` RMSE 0.017083408; combined worsened by 1.28%.
-- **return, 20d:** best history-only `hist_gradient_boosting` RMSE 0.041037711; best combined `hist_gradient_boosting` RMSE 0.041030376; combined improved by 0.02%.
-- **variance, 1d:** best history-only `extra_trees` RMSE 0.00010917183; best combined `svr_rbf` RMSE 0.00011258263; combined worsened by 3.12%.
-- **variance, 5d:** best history-only `extra_trees` RMSE 0.0002034126; best combined `random_forest` RMSE 0.00020756502; combined worsened by 2.04%.
-- **variance, 20d:** best history-only `ridge_alpha_100` RMSE 0.00055683378; best combined `ridge_alpha_100` RMSE 0.00053649032; combined improved by 3.65%.
+- **return, 1d:** best history-only `elastic_net` RMSE 0.0079334452; best combined `elastic_net` RMSE 0.0078882359; combined improved by 0.57%.
+- **return, 5d:** best history-only `extra_trees` RMSE 0.016492592; best combined `random_forest` RMSE 0.016409472; combined improved by 0.50%.
+- **return, 20d:** best history-only `random_forest` RMSE 0.026245322; best combined `gradient_boosting` RMSE 0.024840166; combined improved by 5.35%.
+- **variance, 1d:** best history-only `gradient_boosting` RMSE 0.00010775356; best combined `gradient_boosting` RMSE 0.00011207129; combined worsened by 4.01%.
+- **variance, 5d:** best history-only `extra_trees` RMSE 0.0002384361; best combined `extra_trees` RMSE 0.00024237037; combined worsened by 1.65%.
+- **variance, 20d:** best history-only `ridge_alpha_0.01` RMSE 0.00049113691; best combined `hist_gradient_boosting` RMSE 0.00059927787; combined worsened by 22.02%.
 
 ## Interpretation rules
 

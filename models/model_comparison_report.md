@@ -1,5 +1,14 @@
 # EventLens model comparison report
 
+> **Note (feature/cluster-implied-probabilities):** the figures below were
+> produced before two data fixes: `25+ bps increase` mapped to +50 bp instead
+> of +25 bp, and event snapshots were carried forward across gaps of up to
+> 49 days. The regenerated numbers are in
+> [`playground_experiment_report.md`](./playground_experiment_report.md) and
+> [`event_walk_forward_report.md`](./event_walk_forward_report.md); in
+> particular the 20-day holdout now has 14 test cases, not 15. Update this
+> narrative before citing it.
+
 ## 1. Purpose
 
 This report compares the exploratory SPY forecasting models tested in the

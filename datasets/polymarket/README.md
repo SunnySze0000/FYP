@@ -184,6 +184,6 @@ validated smart-wallet scores.
 - [Pinned historical settlement/fee logic](https://github.com/Polymarket/ctf-exchange/blob/ed5c7708b7be3aa98bf5f0c6602b57cc498e2ef4/src/exchange/mixins/Trading.sol)
 - [Pinned V2 fill ABI](https://github.com/Polymarket/ctf-exchange-v2/blob/ccc0596074f4dfd62c944fbca4de252893b82b4b/src/exchange/mixins/Events.sol)
 
-The collected exports cover five of the 43 team markets. Wallet scores, full holdings,
+The collected exports cover five of the 108 team markets. Wallet scores, full holdings,
 position lifecycle decoding, and adjusted probabilities are future work. Eligibility
 and scores must use only information available before each forecast cutoff.

@@ -17,8 +17,8 @@ Two files, same underlying observations, two layouts.
 - `forward_probabilities.csv` — **long / tidy**
 - `forward_probabilities_wide.csv` — **wide** (pivot of the long file)
 
-Coverage: **546 dates**, `2025-03-20` → `2026-09-16`; **6 outcomes**; horizons **0–6** months;
-**10 events**, **43 markets**; 5,834 long rows / 2,533 wide rows.
+Coverage: **1,287 dates**, `2022-12-16` → `2026-09-16`; **11 outcome labels**; horizons **0–6** months;
+**27 events**, **108 markets**; 9,671 long rows / 5,447 wide rows.
 
 ---
 
@@ -34,10 +34,10 @@ Only real observations exist as rows. If no market trades for a horizon, **there
 | Column | Type | Description |
 |---|---|---|
 | `date` | timestamp (UTC) | Observation date, e.g. `2026-06-01 00:00:00+00:00`. |
-| `outcome` | string | One of: `25 bps decrease`, `No change`, `25 bps increase`, `25+ bps increase`, `50+ bps decrease`, `50+ bps increase`. |
+| `outcome` | string | Lower-case label, e.g. `no change`, `25 bps decrease`, `25+ bps increase`, `50+ bps decrease`, `75+ bps decrease`, `other`. The wallet pilot capitalizes `No change`; normalize labels with `models/outcomes.py` before joining. |
 | `horizon_month` | int | Calendar months from `date` to the meeting: `meeting_month − date`, in months. `0` = same calendar month. |
 | `meeting_month` | string `YYYY-MM` | The meeting this row prices, e.g. `2026-06`. |
-| `event_id` | int | Meeting/event grouping. Each `market_id` belongs to exactly one `event_id`; every event has 4–5 markets. |
+| `event_id` | int | Meeting/event grouping. Each `market_id` belongs to exactly one `event_id`; every event has 2–6 markets. |
 | `market_id` | int | Traded market. `market_probability`, `final_outcome`, `lifetime_volume` are properties of the market. |
 | `market_probability` | float `[0,1]` | Implied probability on `date`. |
 | `final_outcome` | `0`/`1` | Realized outcome of that market (1 = happened). Constant per `market_id`. |
@@ -59,7 +59,7 @@ Columns: `date`, `outcome`, then, for each horizon `k` in `0 … 6`:
 |---|---|
 | `prob_m{k}` | Probability at horizon `k`; empty (NaN) if no such market. |
 | `meeting_m{k}` | Meeting month (`YYYY-MM`) for horizon `k`; empty if absent. |
-| `final_outcome_m0` | Realized outcome (`0`/`1`) of the horizon-0 meeting's market; empty when no horizon-0 market exists (892 rows populated). |
+| `final_outcome_m0` | Realized outcome (`0`/`1`) of the horizon-0 meeting's market; empty when no horizon-0 market exists (1,914 rows populated). |
 
 Missing meetings/horizons show as **empty fields → `NaN`** when read into a dataframe (a given
 `(date, outcome)` has between 1 and 4 populated horizons).
