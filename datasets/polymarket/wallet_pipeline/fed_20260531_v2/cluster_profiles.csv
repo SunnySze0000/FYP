@@ -1,0 +1,73 @@
+model_version,cluster_id,entity_count,feature,median,q25,q75,overall_median,standardized_median_shift,explanation
+fed_20260531_v2_k6_s44,C0,234,active_days,7,4,11,9,-0.181818,lower mean token price; higher taker fraction; lower sell fraction
+fed_20260531_v2_k6_s44,C0,234,trades_per_active_day,5.36667,2.83929,10.3731,2.6,0.553333,lower mean token price; higher taker fraction; lower sell fraction
+fed_20260531_v2_k6_s44,C0,234,median_trade_notional,5,1.57276,10.9514,9.2108,-0.0983781,lower mean token price; higher taker fraction; lower sell fraction
+fed_20260531_v2_k6_s44,C0,234,markets_traded,2,1,3,2,0,lower mean token price; higher taker fraction; lower sell fraction
+fed_20260531_v2_k6_s44,C0,234,top_market_notional_fraction,0.831699,0.60613,1,0.956793,-0.312706,lower mean token price; higher taker fraction; lower sell fraction
+fed_20260531_v2_k6_s44,C0,234,busiest_day_trade_fraction,0.397674,0.25,0.578341,0.230769,0.687257,lower mean token price; higher taker fraction; lower sell fraction
+fed_20260531_v2_k6_s44,C0,234,median_gap_hours,0.0836111,0.0140972,0.836528,2.28167,-0.272505,lower mean token price; higher taker fraction; lower sell fraction
+fed_20260531_v2_k6_s44,C0,234,taker_fraction,0.351648,0,1,0,4.83516,lower mean token price; higher taker fraction; lower sell fraction
+fed_20260531_v2_k6_s44,C0,234,net_direction_consistency,0.0144592,8.77381e-07,0.698443,5.07795e-05,0.249054,lower mean token price; higher taker fraction; lower sell fraction
+fed_20260531_v2_k6_s44,C0,234,mean_token_price,0.0457605,0.0189347,0.28053,0.97208,-8.9723,lower mean token price; higher taker fraction; lower sell fraction
+fed_20260531_v2_k6_s44,C0,234,late_activity_fraction,0,0,0.0769231,0.333333,-0.45679,lower mean token price; higher taker fraction; lower sell fraction
+fed_20260531_v2_k6_s44,C0,234,sell_fraction,0.17656,0.0344438,0.420728,0.484848,-1.8871,lower mean token price; higher taker fraction; lower sell fraction
+fed_20260531_v2_k6_s44,C1,318,active_days,7,6,9,9,-0.181818,higher median trade notional; higher median gap hours; lower top market notional fraction
+fed_20260531_v2_k6_s44,C1,318,trades_per_active_day,2,1.69423,2.4,2.6,-0.12,higher median trade notional; higher median gap hours; lower top market notional fraction
+fed_20260531_v2_k6_s44,C1,318,median_trade_notional,47.5849,14.7941,53.528,9.2108,0.896545,higher median trade notional; higher median gap hours; lower top market notional fraction
+fed_20260531_v2_k6_s44,C1,318,markets_traded,2,2,3,2,0,higher median trade notional; higher median gap hours; lower top market notional fraction
+fed_20260531_v2_k6_s44,C1,318,top_market_notional_fraction,0.757898,0.579977,0.864096,0.956793,-0.49719,higher median trade notional; higher median gap hours; lower top market notional fraction
+fed_20260531_v2_k6_s44,C1,318,busiest_day_trade_fraction,0.25,0.2,0.307692,0.230769,0.0791855,higher median trade notional; higher median gap hours; lower top market notional fraction
+fed_20260531_v2_k6_s44,C1,318,median_gap_hours,7.08611,3.76167,8.07632,2.28167,0.595633,higher median trade notional; higher median gap hours; lower top market notional fraction
+fed_20260531_v2_k6_s44,C1,318,taker_fraction,0,0,0,0,0,higher median trade notional; higher median gap hours; lower top market notional fraction
+fed_20260531_v2_k6_s44,C1,318,net_direction_consistency,0,0,2.59921e-05,5.07795e-05,-0.00087774,higher median trade notional; higher median gap hours; lower top market notional fraction
+fed_20260531_v2_k6_s44,C1,318,mean_token_price,0.969675,0.962871,0.973736,0.97208,-0.0232987,higher median trade notional; higher median gap hours; lower top market notional fraction
+fed_20260531_v2_k6_s44,C1,318,late_activity_fraction,0.166667,0,0.375,0.333333,-0.228395,higher median trade notional; higher median gap hours; lower top market notional fraction
+fed_20260531_v2_k6_s44,C1,318,sell_fraction,0.5,0.5,0.5,0.484848,0.0927456,higher median trade notional; higher median gap hours; lower top market notional fraction
+fed_20260531_v2_k6_s44,C2,82,active_days,17.5,7,32.25,9,0.772727,higher net direction consistency; higher taker fraction; lower sell fraction
+fed_20260531_v2_k6_s44,C2,82,trades_per_active_day,13.6333,7.90625,27.5716,2.6,2.20667,higher net direction consistency; higher taker fraction; lower sell fraction
+fed_20260531_v2_k6_s44,C2,82,median_trade_notional,20.2601,7.88641,40.1702,9.2108,0.258148,higher net direction consistency; higher taker fraction; lower sell fraction
+fed_20260531_v2_k6_s44,C2,82,markets_traded,5,5,5,2,1.5,higher net direction consistency; higher taker fraction; lower sell fraction
+fed_20260531_v2_k6_s44,C2,82,top_market_notional_fraction,0.26047,0.248907,0.414565,0.956793,-1.74064,higher net direction consistency; higher taker fraction; lower sell fraction
+fed_20260531_v2_k6_s44,C2,82,busiest_day_trade_fraction,0.255358,0.138982,0.387219,0.230769,0.101248,higher net direction consistency; higher taker fraction; lower sell fraction
+fed_20260531_v2_k6_s44,C2,82,median_gap_hours,0,0,0.00305556,2.28167,-0.282871,higher net direction consistency; higher taker fraction; lower sell fraction
+fed_20260531_v2_k6_s44,C2,82,taker_fraction,0.272624,0.113946,0.619865,0,3.74859,higher net direction consistency; higher taker fraction; lower sell fraction
+fed_20260531_v2_k6_s44,C2,82,net_direction_consistency,0.999999,0.966508,1,5.07795e-05,17.2844,higher net direction consistency; higher taker fraction; lower sell fraction
+fed_20260531_v2_k6_s44,C2,82,mean_token_price,0.927772,0.900701,0.963505,0.97208,-0.429163,higher net direction consistency; higher taker fraction; lower sell fraction
+fed_20260531_v2_k6_s44,C2,82,late_activity_fraction,0,0,0.219087,0.333333,-0.45679,higher net direction consistency; higher taker fraction; lower sell fraction
+fed_20260531_v2_k6_s44,C2,82,sell_fraction,0.0151809,0,0.103175,0.484848,-2.87493,higher net direction consistency; higher taker fraction; lower sell fraction
+fed_20260531_v2_k6_s44,C3,186,active_days,25.5,13.25,37,9,1.5,higher trades per active day; higher active days; lower top market notional fraction
+fed_20260531_v2_k6_s44,C3,186,trades_per_active_day,13.0448,6.9644,26.679,2.6,2.08897,higher trades per active day; higher active days; lower top market notional fraction
+fed_20260531_v2_k6_s44,C3,186,median_trade_notional,5.005,1.31575,20.2442,9.2108,-0.0982613,higher trades per active day; higher active days; lower top market notional fraction
+fed_20260531_v2_k6_s44,C3,186,markets_traded,4,4,5,2,1,higher trades per active day; higher active days; lower top market notional fraction
+fed_20260531_v2_k6_s44,C3,186,top_market_notional_fraction,0.476613,0.395627,0.562243,0.956793,-1.20034,higher trades per active day; higher active days; lower top market notional fraction
+fed_20260531_v2_k6_s44,C3,186,busiest_day_trade_fraction,0.175028,0.122499,0.252221,0.230769,-0.229524,higher trades per active day; higher active days; lower top market notional fraction
+fed_20260531_v2_k6_s44,C3,186,median_gap_hours,0.0995833,0.0102778,0.325208,2.28167,-0.270525,higher trades per active day; higher active days; lower top market notional fraction
+fed_20260531_v2_k6_s44,C3,186,taker_fraction,0.0120499,0,0.176773,0,0.165687,higher trades per active day; higher active days; lower top market notional fraction
+fed_20260531_v2_k6_s44,C3,186,net_direction_consistency,0.000119192,1.78865e-06,0.0319813,5.07795e-05,0.00118253,higher trades per active day; higher active days; lower top market notional fraction
+fed_20260531_v2_k6_s44,C3,186,mean_token_price,0.91439,0.450873,0.985705,0.97208,-0.558784,higher trades per active day; higher active days; lower top market notional fraction
+fed_20260531_v2_k6_s44,C3,186,late_activity_fraction,0.148204,0,0.570779,0.333333,-0.253695,higher trades per active day; higher active days; lower top market notional fraction
+fed_20260531_v2_k6_s44,C3,186,sell_fraction,0.482138,0.417629,0.563312,0.484848,-0.0165892,higher trades per active day; higher active days; lower top market notional fraction
+fed_20260531_v2_k6_s44,C4,477,active_days,16,11,17,9,0.636364,higher median gap hours; higher active days; higher late activity fraction
+fed_20260531_v2_k6_s44,C4,477,trades_per_active_day,2,1.75,2.1875,2.6,-0.12,higher median gap hours; higher active days; higher late activity fraction
+fed_20260531_v2_k6_s44,C4,477,median_trade_notional,7.2468,6.75819,7.67118,9.2108,-0.0458855,higher median gap hours; higher active days; higher late activity fraction
+fed_20260531_v2_k6_s44,C4,477,markets_traded,1,1,1,2,-0.5,higher median gap hours; higher active days; higher late activity fraction
+fed_20260531_v2_k6_s44,C4,477,top_market_notional_fraction,1,1,1,0.956793,0.108007,higher median gap hours; higher active days; higher late activity fraction
+fed_20260531_v2_k6_s44,C4,477,busiest_day_trade_fraction,0.142857,0.119048,0.175,0.230769,-0.361991,higher median gap hours; higher active days; higher late activity fraction
+fed_20260531_v2_k6_s44,C4,477,median_gap_hours,9.69833,8.02278,11.2775,2.28167,0.919485,higher median gap hours; higher active days; higher late activity fraction
+fed_20260531_v2_k6_s44,C4,477,taker_fraction,0,0,0,0,0,higher median gap hours; higher active days; higher late activity fraction
+fed_20260531_v2_k6_s44,C4,477,net_direction_consistency,4.86427e-05,0,0.0307052,5.07795e-05,-3.69353e-05,higher median gap hours; higher active days; higher late activity fraction
+fed_20260531_v2_k6_s44,C4,477,mean_token_price,0.976152,0.975633,0.976539,0.97208,0.0394395,higher median gap hours; higher active days; higher late activity fraction
+fed_20260531_v2_k6_s44,C4,477,late_activity_fraction,0.74359,0.692308,0.789474,0.333333,0.562203,higher median gap hours; higher active days; higher late activity fraction
+fed_20260531_v2_k6_s44,C4,477,sell_fraction,0.5,0.47619,0.5,0.484848,0.0927456,higher median gap hours; higher active days; higher late activity fraction
+fed_20260531_v2_k6_s44,C5,288,active_days,4,3,6,9,-0.454545,higher median trade notional; higher busiest day trade fraction; higher net direction consistency
+fed_20260531_v2_k6_s44,C5,288,trades_per_active_day,5.33333,3.65,8.66667,2.6,0.546667,higher median trade notional; higher busiest day trade fraction; higher net direction consistency
+fed_20260531_v2_k6_s44,C5,288,median_trade_notional,63.1078,26.5316,138.251,9.2108,1.25921,higher median trade notional; higher busiest day trade fraction; higher net direction consistency
+fed_20260531_v2_k6_s44,C5,288,markets_traded,1,1,2,2,-0.5,higher median trade notional; higher busiest day trade fraction; higher net direction consistency
+fed_20260531_v2_k6_s44,C5,288,top_market_notional_fraction,1,0.855991,1,0.956793,0.108007,higher median trade notional; higher busiest day trade fraction; higher net direction consistency
+fed_20260531_v2_k6_s44,C5,288,busiest_day_trade_fraction,0.470234,0.361803,0.629182,0.230769,0.986031,higher median trade notional; higher busiest day trade fraction; higher net direction consistency
+fed_20260531_v2_k6_s44,C5,288,median_gap_hours,0.043125,0.0108333,0.121771,2.28167,-0.277524,higher median trade notional; higher busiest day trade fraction; higher net direction consistency
+fed_20260531_v2_k6_s44,C5,288,taker_fraction,0,0,0.0959596,0,0,higher median trade notional; higher busiest day trade fraction; higher net direction consistency
+fed_20260531_v2_k6_s44,C5,288,net_direction_consistency,0.0420115,8.25462e-07,0.199166,5.07795e-05,0.725305,higher median trade notional; higher busiest day trade fraction; higher net direction consistency
+fed_20260531_v2_k6_s44,C5,288,mean_token_price,0.973294,0.954533,0.991129,0.97208,0.0117551,higher median trade notional; higher busiest day trade fraction; higher net direction consistency
+fed_20260531_v2_k6_s44,C5,288,late_activity_fraction,0.181818,0,0.546706,0.333333,-0.207632,higher median trade notional; higher busiest day trade fraction; higher net direction consistency
+fed_20260531_v2_k6_s44,C5,288,sell_fraction,0.454545,0.130084,0.5,0.484848,-0.185491,higher median trade notional; higher busiest day trade fraction; higher net direction consistency

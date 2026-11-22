@@ -194,14 +194,21 @@ is applied by simply dropping rows before this step.
 - `levels` (M = 4): expected move, move std, normalized entropy, max probability.
 - `per_outcome`: one probability gap per outcome.
 
+Memberships from the wallet pipeline
+(`scripts/polymarket/wallet_pipeline/run.py`) plug in directly; their
+`entity_id` column nets same-owner wallets:
+
 ```text
-python models/cluster_regression.py                     # summary, no skill
+python models/cluster_regression.py --memberships datasets/polymarket/wallet_pipeline/fed_20260531_v2/memberships.csv.gz --output models/cluster_regression_v2
+python models/cluster_regression.py                     # pilot clusters, summary, no skill
 python models/cluster_regression.py --skill weight      # or --skill filter
 python models/cluster_regression.py --feature-mode per_outcome --beta 1
 ```
 
-Outputs go to [`cluster_regression/`](./cluster_regression/README.md). With the
-current pilot (one meeting, 12 SPY trading days, N x M = 8) the walk-forward is
+Outputs go to [`cluster_regression/`](./cluster_regression/README.md) (pilot,
+N = 2) and [`cluster_regression_v2/`](./cluster_regression_v2/README.md)
+(wallet pipeline, N = 6, so N x M = 24: prefer a smaller M or fewer clusters
+once a multi-meeting panel exists). With the current pilot (one meeting, 12 SPY trading days, N x M = 8) the walk-forward is
 deliberately **not** run: it needs at least three meetings with cluster
 features. The next data step is a rolling-cutoff panel: refit clusters at each
 past meeting's cutoff using only earlier meetings, then rerun this script.

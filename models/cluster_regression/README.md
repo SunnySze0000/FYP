@@ -1,6 +1,6 @@
 # Cluster-implied probability regression
 
-- Snapshot: `fed_20260531_v1`; feature mode `summary`; skill `off`
+- Snapshot: `fed_20260531_v1`; memberships `pilot cluster_membership.csv`; feature mode `summary`; skill `off`
 - Implied-probability config: window 7.0 d, k = 3.0, beta = 2.0
 - Clusters N = 2 (C0, C1); features per cluster M = 4; model inputs N x M = 8
 - Cluster panel: 17 as-of days x 5 markets

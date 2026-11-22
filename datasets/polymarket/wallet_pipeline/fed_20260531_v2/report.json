@@ -1,0 +1,67 @@
+{
+  "snapshot_id": "fed_20260531_v2",
+  "model_version": "fed_20260531_v2_k6_s44",
+  "trades": 441581,
+  "wallets": 23672,
+  "owner": {
+    "candidate_pairs": 203243,
+    "links": 26,
+    "statuses": {
+      "single": 23633,
+      "merged": 39
+    },
+    "merged_entities": 15,
+    "largest_entity": 7
+  },
+  "rules": {
+    "entities": 23648,
+    "eligible": 1585,
+    "fewer_than_min_trades": 21398,
+    "fewer_than_min_active_days": 19510,
+    "below_min_total_notional": 13577,
+    "duplicate_fraction_above_max": 45,
+    "above_max_trades_per_active_day": 6
+  },
+  "clustering": {
+    "selected_k": 6,
+    "selected_seed": 44,
+    "mean_silhouette": 0.29859526966038785,
+    "seed_stability_ari": 1.0,
+    "size_valid": true,
+    "minimum_cluster_size": 80,
+    "status": "fitted",
+    "retained_features": [
+      "active_days",
+      "trades_per_active_day",
+      "median_trade_notional",
+      "markets_traded",
+      "top_market_notional_fraction",
+      "busiest_day_trade_fraction",
+      "median_gap_hours",
+      "taker_fraction",
+      "net_direction_consistency",
+      "mean_token_price",
+      "late_activity_fraction",
+      "sell_fraction"
+    ],
+    "removed_features": [
+      "two_sided_token_fraction"
+    ],
+    "imputed_taker_fraction": 467,
+    "cluster_sizes": {
+      "C0": 234,
+      "C1": 318,
+      "C2": 82,
+      "C3": 186,
+      "C4": 477,
+      "C5": 288
+    }
+  },
+  "source_hashes": {
+    "906972": "6ee2c6b08bddf36b13ffc2d32da6ccb7807af30c61ea6198e83e49b818e70270",
+    "906973": "b022938edd18cfdedf257cae87d0c91be7012a7071eda8184cd4801a639298bd",
+    "906974": "6d9147f2ffca6a9f4f732805bdd85bd5b8c5695048878d9e51759d3d0418a82a",
+    "906975": "31a8fdd845e52824028f1708d1f02a58ddc1292c005d47f0f0b7f4c72cb3441e",
+    "906976": "6e1322978484c611abbbcc85790b7b8da3f57b300e354716b572491c5707fd7f"
+  }
+}

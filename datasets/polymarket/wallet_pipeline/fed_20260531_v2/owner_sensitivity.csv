@@ -1,0 +1,7 @@
+min_co_moments,min_co_days,min_jaccard,links,merged_wallets,entities,largest_entity
+3,2,0.1,3787,578,39,487
+5,3,0.1,3003,417,15,384
+5,3,0.2,26,39,15,7
+5,3,0.3,6,12,6,2
+10,3,0.2,11,21,10,3
+5,5,0.2,10,19,9,3

@@ -4,6 +4,11 @@ The [frozen multi-meeting wallet clustering pilot](wallet_cluster_pilot/fed_2026
 contains 150 sampled wallets, 30 behavioural features, 37 eligible wallets in two provisional
 clusters, and daily June cluster signals. Its earlier activity panel is descriptive only.
 
+The [three-stage wallet pipeline snapshot](wallet_pipeline/fed_20260531_v2/README.md)
+groups same-owner (sniper) wallets, applies hard rules and clusters the remaining
+entities' pre-cutoff behaviour across all June participants (1,585 entities, K = 6).
+Its `memberships.csv.gz` feeds `models/cluster_regression.py --memberships`.
+
 Start with [the June meeting inventory](event_101772/README.md) and
 [the shared CSV dictionary](SCHEMA.md). The exports cover **all five June 2026 Fed outcome
 markets** in the team's probability CSV: 50+ bp decrease, 25 bp decrease, no change,
@@ -175,6 +180,7 @@ the seven earlier meetings with 1-, 7- and 30-day windows. It includes explicit
 abstentions, sensitivity results and a proposed Brier evaluation protocol for
 future model forecasts. These flow diagnostics are not wallet beliefs, PnL or
 validated smart-wallet scores.
+| `wallet_pipeline/run.py` | Same-owner grouping -> hard rules -> behaviour clustering; one module per stage |
 | `collect_pilot.py` | Shared validation/CSV helpers and the original bounded-pilot commands; use the history workflow above for this dataset |
 
 - [Gamma market metadata](https://gamma-api.polymarket.com/markets/906973)

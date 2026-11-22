@@ -26,6 +26,8 @@ Run from the repository root:
 
     python models/cluster_regression.py
     python models/cluster_regression.py --skill weight --beta 1.0
+    python models/cluster_regression.py \
+        --memberships datasets/polymarket/wallet_pipeline/fed_20260531_v2/memberships.csv.gz
 """
 from __future__ import annotations
 
@@ -61,18 +63,29 @@ MIN_EVENTS_FOR_WALK_FORWARD = 3
 # 1-2. Inputs and optional skill
 # ---------------------------------------------------------------------------
 
-def load_inputs(pilot: Path) -> dict:
+def load_inputs(pilot: Path, memberships_path: Path | None = None) -> dict:
+    """Pilot snapshot supplies config, market map and history trades.
+
+    Signal-period trades come from the full market exports, so memberships
+    from any clustering (not only the pilot's 150 wallets) are covered.
+    ``memberships_path`` overrides the pilot's cluster_membership.csv.
+    """
     config = json.loads((pilot / "config.json").read_text())
     market_map = pd.read_csv(pilot / "market_map.csv", dtype=str).drop_duplicates("market_id")
-    memberships = pd.read_csv(pilot / "cluster_membership.csv", dtype=str)
+    memberships = pd.read_csv(memberships_path or pilot / "cluster_membership.csv", dtype=str)
     trades = pd.read_csv(pilot / "trades.csv.gz", dtype=str)
+    target = str(config["target_event_id"])
+    target_markets = market_map.loc[market_map["event_id"].eq(target), "market_id"]
+    target_trades = pd.concat([
+        pd.read_csv(ROOT / "datasets" / "polymarket" / f"market_{mid}" / "wallet_trades.csv.gz", dtype=str)
+        for mid in sorted(target_markets)], ignore_index=True)
     probability = pd.read_csv(ROOT / "datasets" / "forward_probabilities.csv")
     probability["market_id"] = probability["market_id"].astype(str)
     probability["event_id"] = probability["event_id"].astype(str)
     probability["outcome"] = normalize_outcomes(probability["outcome"])
     probability["asof_utc"] = pd.to_datetime(probability["date"], utc=True)
     return dict(config=config, market_map=market_map, memberships=memberships,
-                trades=trades, probability=probability)
+                trades=trades, target_trades=target_trades, probability=probability)
 
 
 def outcome_table(market_map: pd.DataFrame, probability: pd.DataFrame) -> pd.DataFrame:
@@ -119,7 +132,7 @@ def cluster_probabilities(inputs: dict, members: pd.DataFrame,
     markets = inputs["market_map"].loc[inputs["market_map"]["event_id"].eq(target)]
     probs = inputs["probability"].loc[inputs["probability"]["market_id"].isin(markets["market_id"])
                                       & inputs["probability"]["asof_utc"].ge(fit_cutoff)]
-    trades = inputs["trades"].loc[inputs["trades"]["event_id"].eq(target)]
+    trades = inputs["target_trades"]
     cutoffs = markets.set_index("market_id")["decision_cutoff_utc"].to_dict()
     panel = implied_probabilities(
         trades, members,
@@ -205,7 +218,9 @@ def write_report(path: Path, args, panel, features, data, status, results, corr)
     activity = panel.groupby("cluster_id")["active_entities"].apply(lambda s: (s > 0).mean())
     lines = [
         "# Cluster-implied probability regression", "",
-        f"- Snapshot: `{args.pilot.name}`; feature mode `{args.feature_mode}`; skill `{args.skill}`",
+        f"- Snapshot: `{args.pilot.name}`; memberships "
+        f"`{args.memberships.as_posix() if args.memberships else 'pilot cluster_membership.csv'}`; "
+        f"feature mode `{args.feature_mode}`; skill `{args.skill}`",
         f"- Implied-probability config: window {args.window_days} d, k = {args.shrinkage_k}, beta = {args.beta}",
         f"- Clusters N = {len(clusters)} ({', '.join(clusters)}); features per cluster M = "
         f"{len(model_columns) // max(len(clusters), 1)}; model inputs N x M = {len(model_columns)}",
@@ -238,6 +253,8 @@ def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--pilot", type=Path, default=DEFAULT_PILOT)
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
+    parser.add_argument("--memberships", type=Path,
+                        help="membership CSV (wallet_address, cluster_id[, entity_id, weight]); default: pilot")
     parser.add_argument("--feature-mode", choices=("summary", "levels", "per_outcome"), default="summary")
     parser.add_argument("--skill", choices=("off", "filter", "weight"), default="off")
     parser.add_argument("--window-days", type=float, default=7.0)
@@ -245,7 +262,7 @@ def main(argv=None):
     parser.add_argument("--beta", type=float, default=2.0)
     args = parser.parse_args(argv)
 
-    inputs = load_inputs(args.pilot)
+    inputs = load_inputs(args.pilot, args.memberships)
     members = apply_skill(inputs, args.skill)
     config = ImpliedProbabilityConfig(window=pd.Timedelta(days=args.window_days),
                                       shrinkage_k=args.shrinkage_k, beta=args.beta)

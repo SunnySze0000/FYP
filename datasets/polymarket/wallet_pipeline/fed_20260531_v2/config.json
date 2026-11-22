@@ -1,0 +1,70 @@
+{
+  "snapshot_id": "fed_20260531_v2",
+  "cutoff_utc": "2026-05-31T00:00:00+00:00",
+  "markets": [
+    "906972",
+    "906973",
+    "906974",
+    "906975",
+    "906976"
+  ],
+  "owner": {
+    "max_lag_seconds": 1,
+    "max_crowd_tx": 10,
+    "min_co_moments": 5,
+    "min_co_days": 3,
+    "min_jaccard": 0.2,
+    "max_component_size": 25
+  },
+  "rules": {
+    "min_trades": 10,
+    "min_active_days": 3,
+    "min_total_notional_usd": 100.0,
+    "max_duplicate_fraction": 0.05,
+    "max_trades_per_active_day": 500.0,
+    "min_markets_traded": 1
+  },
+  "clustering": {
+    "k_values": [
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "seeds": [
+      42,
+      43,
+      44,
+      45,
+      46
+    ],
+    "n_init": 20,
+    "min_cluster_fraction": 0.05,
+    "min_cluster_size": 5,
+    "silhouette_tolerance": 0.02,
+    "silhouette_sample": 5000,
+    "quantile_range": [
+      5.0,
+      95.0
+    ],
+    "clip": 3.0
+  },
+  "features": [
+    "active_days",
+    "trades_per_active_day",
+    "median_trade_notional",
+    "markets_traded",
+    "top_market_notional_fraction",
+    "two_sided_token_fraction",
+    "busiest_day_trade_fraction",
+    "median_gap_hours",
+    "taker_fraction",
+    "net_direction_consistency",
+    "mean_token_price",
+    "late_activity_fraction",
+    "sell_fraction"
+  ]
+}
