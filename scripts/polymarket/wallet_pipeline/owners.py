@@ -96,7 +96,10 @@ def assign_entities(wallets, links: pd.DataFrame, config: OwnerConfig = OwnerCon
             ra, rb = find(a), find(b)
             if ra != rb:
                 parent[max(ra, rb)] = min(ra, rb)
-    table = pd.DataFrame({"wallet_address": list(parent)})
+    table = pd.DataFrame({"wallet_address": pd.Series(list(parent), dtype=str)})
+    if table.empty:
+        return table.assign(entity_size=pd.Series(dtype=int), entity_id=pd.Series(dtype=str),
+                            owner_status=pd.Series(dtype=str))
     table["root"] = table["wallet_address"].map(find)
     table["entity_size"] = table.groupby("root")["wallet_address"].transform("size")
     oversized = table["entity_size"] > config.max_component_size

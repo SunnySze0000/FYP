@@ -106,10 +106,15 @@ class ClusterConfig:
 def prepare_matrix(eligible: pd.DataFrame, features=FEATURES) -> tuple[pd.DataFrame, list, list]:
     """Impute only taker_fraction (role unknown is common); drop constant features."""
     frame = eligible.copy()
-    if "taker_fraction" in features:
-        frame["taker_fraction"] = frame["taker_fraction"].fillna(frame["taker_fraction"].median())
     retained, removed = [], []
+    if "taker_fraction" in features:
+        median = frame["taker_fraction"].median()
+        # With no identifiable taker at all (e.g. partial wallet coverage), drop it.
+        frame["taker_fraction"] = frame["taker_fraction"].fillna(median if np.isfinite(median) else 0.0)
     for name in features:
+        if name == "taker_fraction" and not eligible[name].notna().any():
+            removed.append(name)
+            continue
         column = frame[name]
         iqr = column.quantile(.75) - column.quantile(.25)
         if not np.isfinite(column).all():
@@ -182,3 +187,40 @@ def profiles(frame: pd.DataFrame, labels, retained: list) -> pd.DataFrame:
         for row in rows[-len(retained):]:
             row["explanation"] = text
     return pd.DataFrame(rows)
+
+
+@dataclass
+class FrozenClustering:
+    """A clustering fitted once and applied unchanged to later meetings.
+
+    Cluster IDs must mean the same thing in every meeting for an N x M
+    regression, so meetings after the fit set are *assigned* to the frozen
+    centroids rather than re-clustered. Imputation uses the fit set's median.
+    """
+    pipeline: Pipeline
+    retained: list
+    taker_median: float
+    model_version: str
+    summary: dict
+
+    @classmethod
+    def fit(cls, eligible: pd.DataFrame, model_version: str, config: ClusterConfig = ClusterConfig()):
+        frame, retained, removed = prepare_matrix(eligible)
+        pipeline, labels, distances, diagnostics, summary = fit(frame, retained, config)
+        summary = summary | dict(removed_features=removed, fit_entities=len(frame),
+                                 cluster_sizes={f"C{k}": int(v) for k, v in pd.Series(labels).value_counts().sort_index().items()})
+        median = eligible["taker_fraction"].median()
+        frozen = cls(pipeline, retained, float(median) if np.isfinite(median) else 0.0, model_version, summary)
+        return frozen, frame, labels, diagnostics
+
+    def assign(self, eligible: pd.DataFrame) -> pd.DataFrame:
+        frame = eligible.copy()
+        frame["taker_fraction"] = frame["taker_fraction"].fillna(self.taker_median)
+        if not np.isfinite(frame[self.retained].to_numpy(dtype=float)).all():
+            raise ValueError("Non-finite clustering input")
+        x = self.pipeline[:-1].transform(frame)
+        model = self.pipeline[-1]
+        labels = model.predict(x)
+        distance = model.transform(x)[np.arange(len(x)), labels]
+        return pd.DataFrame({"entity_id": frame["entity_id"].to_numpy(),
+                             "cluster_id": [f"C{x}" for x in labels], "centroid_distance": distance})

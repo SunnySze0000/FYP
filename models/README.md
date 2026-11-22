@@ -213,3 +213,30 @@ deliberately **not** run: it needs at least three meetings with cluster
 features. The next data step is a rolling-cutoff panel: refit clusters at each
 past meeting's cutoff using only earlier meetings, then rerun this script.
 Choose `window`, `k`, `beta` and the feature mode on training meetings only.
+
+## Multi-meeting run (rolling, past-only)
+
+[`multi_meeting_regression.py`](./multi_meeting_regression.py) repeats the
+wallet pipeline for every meeting whose trades are collected, in time order:
+
+1. Same-owner grouping and hard rules use only trades before each meeting's
+   clustering cutoff (decision cutoff minus 16 days, as in June).
+2. Behaviour clusters are fitted **once** on the earliest `--fit-meetings`
+   (default 2) and frozen; later meetings are *assigned* to those centroids,
+   so `C0` means the same group in every meeting.
+3. Cluster-implied probabilities are built for the 16 signal days of each
+   meeting and joined to SPY targets.
+4. Event-level walk-forward: earlier meetings train, each later meeting is a
+   held-out block. Default M = 2 (`expected_move_gap`, `kl_from_market`).
+
+Decision cutoffs come from the collector's Gamma metadata (endDate minus 24 h)
+or, failing that, the meeting's last probability date minus one day; that rule
+reproduces all 21 cutoffs recorded in the pilot. Trades are read from
+`datasets/polymarket/market_<id>/` or the collector's
+`tmp/polymarket/history_market_<id>/`; meetings with missing markets or fewer
+than `--min-eligible` entities are skipped and listed in the report.
+
+```text
+python models/multi_meeting_regression.py
+python models/multi_meeting_regression.py --fit-meetings 3 --cluster-features expected_move_gap move_std_gap kl_from_market
+```

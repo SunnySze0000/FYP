@@ -119,3 +119,52 @@ class RuleAndClusterTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class MultiMeetingTests(unittest.TestCase):
+    def test_registry_cutoff_rule_and_gamma_override(self):
+        import json
+        import tempfile
+        from wallet_pipeline.meetings import registry
+        probability = pd.DataFrame({
+            "date": ["2026-05-01T00:00:00+00:00", "2026-06-17T00:00:00+00:00", "2026-06-16T00:00:00+00:00"],
+            "event_id": [1, 1, 1], "market_id": [10, 10, 11], "meeting_month": "2026-06"})
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            meeting = registry(root, probability).iloc[0]
+            self.assertEqual(meeting.decision_cutoff_utc, pd.Timestamp("2026-06-16", tz="UTC"))
+            self.assertEqual(meeting.cluster_cutoff_utc, pd.Timestamp("2026-05-31", tz="UTC"))
+            self.assertFalse(meeting.trades_available)
+            for market in ("10", "11"):
+                folder = root / f"tmp/polymarket/history_market_{market}"
+                (folder / "raw").mkdir(parents=True)
+                (folder / "wallet_trades.csv").write_text("x\n")
+            (root / "tmp/polymarket/history_market_10/raw/market.json").write_text(
+                json.dumps({"endDate": "2026-06-17T18:00:00Z"}))
+            meeting = registry(root, probability).iloc[0]
+            self.assertTrue(meeting.trades_available)
+            self.assertEqual(meeting.cutoff_source, "gamma_end_date")
+            self.assertEqual(meeting.decision_cutoff_utc, pd.Timestamp("2026-06-16T18:00:00Z"))
+
+    def test_frozen_assignment_matches_fit_and_handles_missing_taker(self):
+        from wallet_pipeline.behaviour import FEATURES, FrozenClustering
+        rng = np.random.default_rng(2)
+        n = 40
+        base = {name: rng.uniform(0.1, 1, 2 * n) for name in FEATURES}
+        base["active_days"] = np.r_[rng.uniform(1, 3, n), rng.uniform(30, 40, n)]
+        base["trades_per_active_day"] = np.r_[rng.uniform(1, 2, n), rng.uniform(50, 60, n)]
+        eligible = pd.DataFrame(base).assign(entity_id=[f"e{i}" for i in range(2 * n)])
+        eligible.loc[:5, "taker_fraction"] = np.nan
+        frozen, _, labels, _ = FrozenClustering.fit(eligible, "test", ClusterConfig(k_values=(2, 3)))
+        again = frozen.assign(eligible)
+        self.assertEqual(again["cluster_id"].tolist(), [f"C{x}" for x in labels])
+        none = frozen.assign(eligible.assign(taker_fraction=np.nan).iloc[:3])
+        self.assertEqual(len(none), 3)
+
+    def test_empty_inputs(self):
+        empty = assign_entities([], pd.DataFrame(columns=["wallet_a", "wallet_b"]))
+        self.assertTrue(empty.empty)
+        self.assertIn("entity_id", empty.columns)
+        features = pd.DataFrame(columns=["trades", "active_days", "total_notional_usd", "duplicate_fraction",
+                                         "markets_traded", "trades_per_active_day"], dtype=float)
+        self.assertTrue(apply_rules(features).empty)

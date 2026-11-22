@@ -142,12 +142,13 @@ def cluster_probabilities(inputs: dict, members: pd.DataFrame,
     return panel
 
 
-def cluster_features(panel: pd.DataFrame, mode: str = "summary") -> pd.DataFrame:
+def cluster_features(panel: pd.DataFrame, mode: str = "summary",
+                     summary_features: list[str] = SUMMARY_FEATURES) -> pd.DataFrame:
     """Wide frame: one row per (asof_utc, event_id); columns ``<cluster>__<feature>``."""
     keys = ["asof_utc", "event_id", "cluster_id"]
     if mode == "summary":
         long = compare(panel, keys, reference="market_probability",
-                       probability="cluster_probability")[keys + SUMMARY_FEATURES]
+                       probability="cluster_probability")[keys + list(summary_features)]
     elif mode == "levels":
         long = summarize(panel, keys, probability="cluster_probability")[keys + LEVEL_SUBSET]
     elif mode == "per_outcome":

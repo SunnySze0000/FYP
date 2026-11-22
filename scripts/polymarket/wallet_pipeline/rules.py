@@ -32,7 +32,9 @@ def apply_rules(features: pd.DataFrame, config: RuleConfig = RuleConfig()) -> pd
         checks["above_max_trades_per_active_day"] = features["trades_per_active_day"] > config.max_trades_per_active_day
     failed = pd.DataFrame(checks)
     out = features.copy()
-    out["rule_failures"] = failed.apply(lambda row: ";".join(row.index[row]), axis=1)
+    names = list(failed.columns)
+    out["rule_failures"] = [";".join(n for n, bad in zip(names, row) if bad)
+                            for row in failed.to_numpy(dtype=bool)]
     out["eligible"] = ~failed.any(axis=1)
     return out
 

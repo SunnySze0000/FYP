@@ -20,6 +20,12 @@ def load_market_exports(root: Path, market_ids, cutoff=None) -> pd.DataFrame:
     return normalize(pd.concat(frames, ignore_index=True), cutoff)
 
 
+def load_trade_files(paths, cutoff=None) -> pd.DataFrame:
+    """Load collector or export files (``.csv`` or ``.csv.gz``) with the same schema."""
+    frames = [pd.read_csv(path, dtype=str, usecols=lambda c: c in COLUMNS) for path in paths]
+    return normalize(pd.concat(frames, ignore_index=True), cutoff)
+
+
 def normalize(trades: pd.DataFrame, cutoff=None) -> pd.DataFrame:
     data = trades.copy()
     data["timestamp_utc"] = pd.to_datetime(data["timestamp_utc"], utc=True)
