@@ -159,3 +159,50 @@ Every attempted configuration is recorded in
 `playground_experiment_results.csv`; diagnostics are in
 `playground_diagnostics.csv`; and the written interpretation is in
 `playground_experiment_report.md`.
+
+## Wallet-cluster probability features (N x M)
+
+[`cluster_regression.py`](./cluster_regression.py) adds wallet-cluster inputs to
+the SPY return/variance models. It is split into replaceable stages:
+
+| Stage | Module | Responsibility |
+|---|---|---|
+| Cluster probability | [`scripts/polymarket/cluster_implied_probability.py`](../scripts/polymarket/cluster_implied_probability.py) | Turn member trading flow into each cluster's probability per outcome and day |
+| M features | [`distribution_features.py`](./distribution_features.py) | Summarize a distribution, or compare it with the market; shared with `extract_event_features` |
+| Skill (optional) | [`scripts/polymarket/wallet_skill.py`](../scripts/polymarket/wallet_skill.py) | Past-only flow-alignment scores, used as a member filter or weight |
+| Regression | `cluster_regression.py` | Pivot to N x M, join SPY targets, event walk-forward |
+
+**Why a centroid needs a definition.** A KMeans centroid is a point in
+behaviour space and does not trade. A cluster's probability is built from its
+members' trades in a trailing window (default 7 days, strictly before the as-of
+time and the decision cutoff): per-owner YES imbalance, averaged across owners,
+applied as a log-odds shift to the market probability and shrunk toward the
+market when few owners are active. A silent cluster equals the market rather
+than NaN.
+
+**Membership input is method-agnostic.** Any table with `wallet_address` and
+`cluster_id` works. Add `entity_id` for same-owner (sniper) groups, so one owner
+counts once, and `weight` for skill or centroid closeness. Hard-rule filtering
+is applied by simply dropping rows before this step.
+
+**M features per cluster** (`--feature-mode`):
+
+- `summary` (default, M = 4): `expected_move_gap`, `move_std_gap`,
+  `tail_probability_gap`, `kl_from_market`. These measure the cluster's
+  *disagreement* with the market. Raw levels would mostly duplicate the market
+  event features already in the model.
+- `levels` (M = 4): expected move, move std, normalized entropy, max probability.
+- `per_outcome`: one probability gap per outcome.
+
+```text
+python models/cluster_regression.py                     # summary, no skill
+python models/cluster_regression.py --skill weight      # or --skill filter
+python models/cluster_regression.py --feature-mode per_outcome --beta 1
+```
+
+Outputs go to [`cluster_regression/`](./cluster_regression/README.md). With the
+current pilot (one meeting, 12 SPY trading days, N x M = 8) the walk-forward is
+deliberately **not** run: it needs at least three meetings with cluster
+features. The next data step is a rolling-cutoff panel: refit clusters at each
+past meeting's cutoff using only earlier meetings, then rerun this script.
+Choose `window`, `k`, `beta` and the feature mode on training meetings only.

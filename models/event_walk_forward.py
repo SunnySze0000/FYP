@@ -85,13 +85,29 @@ def score(actual, prediction, is_variance):
     return result
 
 
-def run(data):
+def default_feature_sets(target_name):
+    sets = {
+        "history_only": HISTORY_FEATURES,
+        "history_plus_event": ALL_FEATURES,
+    }
+    if target_name == "return":
+        sets["event_only"] = EVENT_FEATURES
+    return sets
+
+
+def run(data, feature_sets=default_feature_sets,
+        min_train_events=MIN_TRAIN_EVENTS, min_train_rows=20):
+    """Hold out each event in time order.
+
+    ``feature_sets`` maps a target name ("return"/"variance") to a dict of
+    feature-set name -> column list, so other modules can add feature sets.
+    """
     event_order = (
         data.groupby("event_id")["date"].min().sort_values().index.tolist()
     )
     rows = []
     for event_position, event_id in enumerate(event_order):
-        if event_position < MIN_TRAIN_EVENTS:
+        if event_position < min_train_events:
             continue
         for horizon in HORIZONS:
             usable = data.dropna(
@@ -111,16 +127,10 @@ def run(data):
                 ("variance", True),
             ):
                 target = f"target_{target_name}_{horizon}d"
-                feature_sets = {
-                    "history_only": HISTORY_FEATURES,
-                    "history_plus_event": ALL_FEATURES,
-                }
-                if target_name == "return":
-                    feature_sets["event_only"] = EVENT_FEATURES
-                for feature_set, features in feature_sets.items():
+                for feature_set, features in feature_sets(target_name).items():
                     train_ready = train.dropna(subset=features + [target])
                     test_ready = test.dropna(subset=features + [target])
-                    if len(train_ready) < 20 or test_ready.empty:
+                    if len(train_ready) < min_train_rows or test_ready.empty:
                         continue
                     for model_name, factory in model_catalog().items():
                         model = factory()

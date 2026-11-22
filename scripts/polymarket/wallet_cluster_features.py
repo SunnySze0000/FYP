@@ -276,7 +276,8 @@ def _plots(out, transformed, labels, feature_names, model, diagnostics):
     fig, ax = plt.subplots(figsize=(7, 4))
     grouped = diagnostics.groupby("k").silhouette.agg(["mean", "min", "max"])
     ax.errorbar(grouped.index, grouped["mean"],
-                yerr=[grouped["mean"] - grouped["min"], grouped["max"] - grouped["mean"]], fmt="o-")
+                yerr=[(grouped["mean"] - grouped["min"]).clip(lower=0),  # float noise when seeds agree
+                      (grouped["max"] - grouped["mean"]).clip(lower=0)], fmt="o-")
     ax.set(xlabel="Number of clusters", ylabel="Silhouette score",
            title="Cluster separation across five initialisation seeds")
     ax.set_xticks(grouped.index)
