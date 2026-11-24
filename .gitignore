@@ -50,6 +50,11 @@ venv/
 .codex-build
 .codex-finalizer
 
-# Python caches from local data collection
-__pycache__/
-*.py[cod]
+
+# Test, notebook and plotting caches
+.pytest_cache/
+.ipynb_checkpoints/
+.mplconfig/
+
+# Git bundles used to move branches between machines
+*.bundle
