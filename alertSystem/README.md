@@ -3,7 +3,7 @@
 A fresh start on the FYP brief: **Polymarket + wallets → a trading / financial helper**, done
 research-first. No app is built until a pre-registered test passes.
 
-Start with **[docs/00_PLAN.md](docs/00_PLAN.md)** (the plan, gates and decision log).
+Start with **[docs/00_PLAN.md](docs/00_PLAN.md)** (the plan, gates and decision log). AI agents and new teammates: read **[AGENTS.md](AGENTS.md)** first (structure and rules).
 
 ## Run it (Windows PowerShell)
 

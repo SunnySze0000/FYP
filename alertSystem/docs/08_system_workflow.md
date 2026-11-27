@@ -175,10 +175,55 @@ For every analysed bet, the scanner also computes:
 | **Calm** | otherwise |
 
 Shown with each holding:
-- the 24-hour strip of linked jumps,
+- the 24-hour strip of linked jumps (click the holding for the live price and move charts, section 6c),
 - "moves ×N normal in jump hours" (layer-3 average over reliable topics),
 - the topic chips with their status,
 - any active wallet note.
+
+---
+
+## 6b. Watch the open (D4, v1.2)
+
+The headline feature. Research: an overnight linked jump comes with a bigger first trading hour (+12% vs other
+holdings that hour, doc 13; +16% on direct links, doc 14), and 72% of jumps happen while the market is closed.
+During trading hours the stock usually moves first (S1), so intraday alerts are worded as explanations.
+
+```mermaid
+stateDiagram-v2
+    [*] --> Closed: after 16:00 New York, nights, weekends
+    Closed --> Opening: 09:30 New York (Mon-Fri)
+    Opening --> Open: 2 hours after the open
+    Open --> Closed: 16:00 New York
+    Closed: list reliable linked jumps since the last close (max 24 h), direct links first
+    Opening: keep showing what was flagged for this morning's open
+    Open: no overnight list; intraday jumps go to Jumping now, worded "risk is live now"
+```
+
+| Step | Rule |
+|---|---|
+| Window | last US close → now (closed), or last close → today's open (opening); capped at 24 h (the scan keeps 24 h) |
+| Jumps counted | reliable links only; crypto bets and round-the-clock assets (BTC-USD) left out, as in the research |
+| Direct link | the bet names the holding, or the group is a clean link for it (V4, doc 14): rates→TLT/IEF/SHY, China→FXI/KWEB, oil/Mideast→USO/XLE, Ukraine→ITA/EZU, AI→NVDA/SMH |
+| Number shown | +16% if any direct link, else +12%; note "+9% vs +6%" when 2+ jumps |
+| Wording | "Expect a livelier open, not a direction: about 3 in 4 alerts still end calm." |
+| Limits | exchange holidays not modelled; New York time computed from US daylight-saving rules |
+
+Headline order on Today: jumping now during trading ("Risk is live now…") → jumping while closed → watch the
+open (closed, with flagged holdings) → elevated → quiet.
+
+---
+
+## 6c. Holding drawer: live charts (v1.2)
+
+| Panel | What it shows |
+|---|---|
+| Price | hourly closes, about the last week (8 days); opens on the latest 72 h, drag or scroll sideways to go back; closed stretches squeezed into grey blocks; y axis stays fixed |
+| Move ÷ normal | each hour's \|return\| ÷ the holding's normal hour (2-year history from its profile); dashed lines at 1× and at the top-20% size; open bars outlined |
+| Across both | linked bet jumps (up / down colour; thick = direct link, dotted = weak link), wallet-pattern markers |
+
+Source: `holding_live()` in `engine.py`, from the latest scan (asset bars: Yahoo 1 month, last 400 kept; each
+linked bet's hourly price grid: last 8 days, 10–90% watch band). It updates every scan and keeps the scroll
+position; nothing is stored.
 
 ---
 
@@ -240,3 +285,7 @@ Every row carries `version`. Rows without it are from v1.0. Because each scan ba
 | 2026-11-27 | 1.0 | First live version: 26 fixed assets, keyword links, jump alerts, large-wallet pressure, clusters shown descriptively, early warning in shadow mode (D7 fail). |
 | 2026-11-27 | 1.1 | `restart.bat` + local-only `POST /api/shutdown` to restart with new code; Track record page tolerates an older server. |
 | 2026-11-27 | 1.1 | Portfolio import with layers 1–3 (D1); per-holding wallet notes C0, C2, cross-market (D2, D3); 24 h backfill; version stamps. |
+| 2026-11-27 | 1.2 | **Watch the open (D4)**: `watch_open` in the state API, block at the top of Today, direct-link labels from V4; intraday headline reworded to "risk is live now" (explanation, not forecast). |
+| 2026-11-27 | 1.2 | **Holding drawer live charts**: price and hourly move ÷ normal over the last 72 trading hours (closed stretches squeezed), linked jumps drawn across both (thick = direct, dotted = weak), open bars outlined, top-20% bars highlighted, wallet-pattern markers; `live` block added to `/api/holding/<sym>`; redraws on every scan. |
+| 2026-11-27 | 1.2.1 | Fix: profiles whose wallet check failed are rebuilt on the next start (the check failed after the move to `FYP/alertSystem` because `data/processed/events` was missing; now copied). Drawer says "waiting for the next scan" for a holding not scanned yet. Fix: clicking a bet opened the last holding instead of the bet (1.2 drawer-refresh bug). |
+| 2026-11-27 | 1.2.2 | Holding chart: drag / scroll back about a week (bets' hourly grid 72 h → 8 days, Yahoo bars 5 d → 1 mo); fixed y axis; fix: the first bar in the window (often an open) was missing. Market drawer still shows 72 h. |

@@ -15,6 +15,7 @@ const CLUSTER_COLOURS = { C0: "#16212b", C1: "#0e8a84", C2: "#c98200", unknown: 
 
 let state = null;
 let view = "today";
+let drawerHolding = null;   // symbol shown in the drawer, redrawn on each refresh
 
 async function api(path, options) {
   const response = await fetch(path, options);
@@ -28,6 +29,7 @@ async function refresh() {
   try {
     state = await api("/api/state");
     render();
+    if (drawerHolding && !$("#drawer").hidden) openHolding(drawerHolding, true);   // only while a holding is shown
   } catch (error) {
     $("#status").textContent = `Cannot reach the EventLens server: ${error.message}`;
   }
@@ -119,8 +121,14 @@ function headline() {
   const high = d.filter((x) => x.level === "high"), elev = d.filter((x) => x.level === "elevated");
   if (!scan().ok) return ["Checking the event markets linked to your holdings…", ""];
   const names = (xs) => xs.map((x) => x.symbol).join(", ").replace(/, ([^,]*)$/, " and $1");
-  if (high.length) return [`A linked event is jumping right now for ${names(high)}.`,
-    `In past jumps like this, the linked asset made an unusually large move 25% of the time, against 18% for unrelated assets. It is a risk flag, not a prediction of direction.`];
+  const wo = state.watch_open;
+  const trading = wo && wo.state !== "closed";
+  if (high.length && trading) return [`Risk is live now for ${names(high)}: a linked event is jumping.`,
+    `During trading hours the stock usually moves first, so this mostly explains a move already under way. A risk flag, not a direction.`];
+  if (high.length) return [`A linked event is jumping while the market is closed, for ${names(high)}.`,
+    `Moves like this showed up at the next open in our tests (see Watch the open below). A risk flag, not a direction.`];
+  if (wo && wo.state === "closed" && wo.holdings.length) return [`Watch the open for ${names(wo.holdings)}.`,
+    `${wo.holdings.length === 1 ? "Its" : "Their"} linked bets moved while the US market was closed. The first trading hour tends to be livelier; direction unknown.`];
   if (elev.length) return [`Event risk is up today for ${names(elev)}.`,
     `${elev.length === 1 ? "It has" : "They have"} a linked event that jumped in the last 24 hours. Nothing is jumping this hour.`];
   return [`Quiet day: no linked event has jumped in the last 24 hours.`, `EventLens rescans every 5 minutes and logs every jump it sees.`];
@@ -132,7 +140,37 @@ function marketChips(m) {
   return `<div class="chips">${groups}${assets}</div>`;
 }
 
+const dayClock = (ts) => new Date(ts * 1000).toLocaleString([], { weekday: "short", hour: "2-digit", minute: "2-digit" });
+
+function renderWatchOpen() {
+  const wo = state.watch_open;
+  const box = $("#watch-open");
+  if (!wo) { box.innerHTML = `<p class="empty">Waiting for the first scan…</p>`; return; }
+  const ev = wo.evidence;
+  $("#open-hint").textContent = wo.state === "closed" ? `Since the last close · market opens ${dayClock(wo.open)} your time (9:30 New York)`
+    : wo.state === "opening" ? `Flagged for this morning's open (${dayClock(wo.open)})` : `Market open · next check after today's close`;
+  if (wo.state === "open") {
+    box.innerHTML = `<p class="empty">The market is open. Overnight jumps matter for the first trading hour, which has passed; intraday jumps appear under Jumping now.${wo.holdings.length ? ` This morning ${wo.holdings.map((r) => r.symbol).join(", ")} ${wo.holdings.length === 1 ? "was" : "were"} flagged.` : ""}</p>`;
+    return;
+  }
+  if (!wo.holdings.length) {
+    box.innerHTML = `<p class="empty">No bet linked to your holdings jumped 10+ points since the last close. Nothing extra to watch at the open.</p>`;
+    return;
+  }
+  box.innerHTML = wo.holdings.map((r) => {
+    const size = r.direct ? ev.overnight_direct : ev.overnight_all;
+    const lines = r.jumps.map((j) => `<li><span class="jump-sm ${j.dp >= 0 ? "up" : "down"}">${pts(j.dp)}</span> ${esc(j.question)}
+        <span class="when">${clock(j.ts)}</span>${j.direct ? `<span class="chip mine">direct link</span>` : ""}</li>`).join("");
+    return `<div class="row" data-holding="${esc(r.symbol)}" role="button" tabindex="0">
+      <div class="q">${esc(r.symbol)} · ${r.n} linked jump${r.n === 1 ? "" : "s"} in ${r.markets} bet${r.markets === 1 ? "" : "s"} since the close</div>
+      <div class="figure">+${Math.round(size * 100)}%<small>bigger first hour than other holdings (tests, ${r.direct ? "direct links" : "all links"})</small></div>
+      <ul class="open-jumps">${lines}</ul>
+      <div class="meta">Expect a livelier open, not a direction: about 3 in 4 alerts still end calm.${r.n >= 2 ? ` Two or more jumps came with a larger effect in tests (+${Math.round(ev.two_plus * 100)}% vs +${Math.round(ev.one_jump * 100)}%).` : ""}</div></div>`;
+  }).join("") + `<p class="note">Exchange holidays are not modelled. After a weekend only the last 24 hours of jumps are shown.</p>`;
+}
+
 function renderToday() {
+  renderWatchOpen();
   const [h, sub] = headline();
   $("#headline").textContent = h;
   $("#subhead").textContent = sub;
@@ -225,6 +263,7 @@ function walletChart(hours) {
 
 /* ------------------------------------------------------------------ drawer */
 async function openMarket(id) {
+  drawerHolding = null;                       // the drawer now shows a market: stop redrawing the last holding
   const drawer = $("#drawer");
   drawer.hidden = false;
   $("#drawer-body").innerHTML = `<p class="empty">Loading…</p>`;
@@ -253,7 +292,7 @@ async function openMarket(id) {
         <div class="stat"><div class="v ${m.pressure_usd > 0 ? "up" : m.pressure_usd < 0 ? "down" : ""}">${m.pressure_usd ? usd(m.pressure_usd) : "–"}</div><div class="k">${m.pressure_usd ? `large wallets net ${m.pressure_usd > 0 ? "YES" : "NO"}, last hour` : "no large-wallet pressure"}</div></div>
       </div>
       <h3>Chance of YES, last 3 days</h3>
-      <div class="chart">${lineChart(m.prices, { min: 0, max: 1, ticks: [0, 0.5, 1], fmt: (v) => pct(v), marks, colour: "var(--yes)", label: "Probability of YES" })}</div>
+      <div class="chart">${lineChart(m.prices.filter((p) => p[0] > scan().updated_at - 72 * 3600), { min: 0, max: 1, ticks: [0, 0.5, 1], fmt: (v) => pct(v), marks, colour: "var(--yes)", label: "Probability of YES" })}</div>
       <p class="note">Dots mark 10-point jumps in the last 24 hours.</p>
       <h3>Wallets trading each hour ($250+ trades)</h3>
       <div class="chart">${walletChart(m.wallet_hours)}</div>
@@ -268,11 +307,117 @@ async function openMarket(id) {
     $("#drawer-body").innerHTML = `<p class="empty">${esc(error.message)}. The market may have dropped out of the latest scan.</p>`;
   }
 }
-async function openHolding(symbol) {
+
+/* holding drawer: price + moves-vs-normal on one time axis, with the linked signals drawn across both */
+function holdingCharts(live) {
+  if (!live || live.in_scan === false) return `<p class="empty">Waiting for the next scan to include this holding (every 5 minutes; a new holding is checked first, about a minute).</p>`;
+  if (!live.series || live.series.length < 3) return `<p class="empty">No recent hourly price bars from Yahoo for this holding. They should appear on a later scan; if not, the ticker may not have hourly data.</p>`;
+  const L = 74, R = 14, VIEW = 576, PH = 170, CH = 150, GAP = 34, B = 24, GW = 2.5;
+  const H = PH + GAP + CH + B;
+  const now = live.updated_at || live.series[live.series.length - 1][0];
+  const s = live.series.filter((p) => p[0] > now - 8 * 86400);          // about a week of trading; linked jumps are kept for 8 days
+  if (s.length < 3) return `<p class="empty">Too few price bars in the last week.</p>`;
+  const mv = (live.moves || []).filter((m) => m.ts >= s[0][0]);         // includes the first bar: its move is from the previous close
+  // compressed time axis: each trading hour one slot, each closed stretch a narrow shaded slot
+  const slots = []; let u = 0;
+  s.forEach((p, i) => {
+    if (i && p[0] - s[i - 1][0] > 3600) { slots.push({ a: s[i - 1][0], b: p[0] - 3600, u, w: GW, closed: true }); u += GW; }
+    slots.push({ a: p[0] - 3600, b: p[0], u, w: 1 }); u += 1;
+  });
+  const last = s[s.length - 1][0];
+  if (now - last > 3600) { slots.push({ a: last, b: now, u, w: GW, closed: true, live: true }); u += GW; }
+  // about 72 hours fill the visible width; the rest is reached by dragging
+  const recent = slots.filter((z) => z.b > now - 72 * 3600).reduce((acc, z) => acc + z.w, 0);
+  const pxu = VIEW / Math.max(12, Math.min(u, recent));
+  const PW = Math.max(VIEW, Math.round(u * pxu) + R);
+  const sx = (t) => {
+    const k = slots.find((z) => t >= z.a && t <= z.b) || (t < slots[0].a ? slots[0] : slots[slots.length - 1]);
+    const f = Math.min(1, Math.max(0, (t - k.a) / ((k.b - k.a) || 1)));
+    return (k.u + f * k.w) * pxu;
+  };
+  const ps = s.map((p) => p[1]), pmin = Math.min(...ps), pmax = Math.max(...ps), pad = (pmax - pmin) * 0.08 || pmax * 0.01;
+  const top = 30, py = (v) => top + (1 - (v - (pmin - pad)) / (pmax - pmin + 2 * pad)) * (PH - top - 6);
+  const cTop = PH + GAP, xs = mv.map((m) => m.x).filter((v) => v != null);
+  const cmax = Math.max(2.5, live.big_x ? live.big_x * 1.4 : 0, ...xs.map((v) => Math.min(v, 8)));
+  const cy = (v) => cTop + (1 - Math.min(v, cmax) / cmax) * CH;
+  const pTicks = [pmin, (pmin + pmax) / 2, pmax];
+  const mTicks = [[0, "0"], [1, "1× normal"]]; if (live.big_x) mTicks.push([live.big_x, `${live.big_x.toFixed(1)}× big`]);
+  // fixed y axis
+  let ax = "";
+  for (const v of pTicks) ax += `<text x="${L - 6}" y="${(py(v) + 4).toFixed(1)}" text-anchor="end">${v >= 100 ? v.toFixed(1) : v.toFixed(2)}</text>`;
+  for (const [v, lab] of mTicks) ax += `<text x="${L - 6}" y="${(cy(v) + 4).toFixed(1)}" text-anchor="end" ${v && v !== 1 ? 'fill="var(--warn)"' : ""}>${lab}</text>`;
+  // scrolling plot
+  let g = "";
+  for (const z of slots.filter((z) => z.closed)) {
+    const x = z.u * pxu, w = z.w * pxu;
+    g += `<rect x="${x.toFixed(1)}" y="${top - 8}" width="${w.toFixed(1)}" height="${PH - top + 2}" fill="var(--rule-soft)"/>
+      <rect x="${x.toFixed(1)}" y="${cTop}" width="${w.toFixed(1)}" height="${CH}" fill="var(--rule-soft)"><title>Market closed ${dayClock(z.a)} – ${dayClock(z.b)}</title></rect>
+      <text x="${(x + w / 2).toFixed(1)}" y="${cTop + CH - 4}" text-anchor="middle" class="closed-label">${z.live ? "now" : "closed"}</text>`;
+  }
+  for (const v of pTicks) g += `<line x1="0" x2="${PW}" y1="${py(v).toFixed(1)}" y2="${py(v).toFixed(1)}" stroke="var(--rule-soft)"/>`;
+  for (const [v] of mTicks) g += `<line x1="0" x2="${PW}" y1="${cy(v).toFixed(1)}" y2="${cy(v).toFixed(1)}" stroke="${v === 0 ? "var(--rule)" : v === 1 ? "var(--ink-3)" : "var(--warn)"}" ${v ? 'stroke-dasharray="4 3"' : ""}/>`;
+  let path = "";
+  s.forEach((p, i) => { path += `${i ? "L" : "M"}${sx(p[0]).toFixed(1)},${py(p[1]).toFixed(1)}`; });
+  g += `<path d="${path}" fill="none" stroke="var(--ink)" stroke-width="1.8" stroke-linejoin="round"/>`;
+  const bw = Math.max(3, pxu * 0.62);
+  for (const m of mv) {
+    if (m.x == null) continue;
+    const big = live.big_x && m.x >= live.big_x, x = sx(m.ts - 1800);
+    g += `<rect x="${(x - bw / 2).toFixed(1)}" y="${cy(m.x).toFixed(1)}" width="${bw.toFixed(1)}" height="${Math.max(1, cy(0) - cy(m.x)).toFixed(1)}" rx="2"
+      fill="${big ? "var(--warn)" : "#9fb0bd"}" ${m.open ? 'stroke="var(--ink)" stroke-width="1.5"' : ""}><title>${dayClock(m.ts)}: ${m.x.toFixed(1)}× a normal hour (${(m.r * 100).toFixed(2)}%)${m.open ? " · first hour after the open" : ""}</title></rect>`;
+  }
+  for (const j of live.jumps || []) {
+    if (j.ts <= s[0][0] - 3600) continue;
+    const x = sx(j.ts - 1800).toFixed(1), col = j.dp >= 0 ? "var(--yes)" : "var(--no)";
+    g += `<line x1="${x}" x2="${x}" y1="22" y2="${cTop + CH}" stroke="${col}" stroke-width="${j.direct ? 2 : 1.2}" ${j.reliable ? 'opacity=".85"' : 'stroke-dasharray="2 3" opacity=".55"'}/>
+      <circle cx="${x}" cy="22" r="${j.direct ? 5 : 4}" fill="${col}" stroke="#fff" stroke-width="1.5"><title>${dayClock(j.ts)} · ${pts(j.dp)} points · ${esc(j.question)}${j.direct ? " · direct link" : ""}${j.reliable ? "" : " · weak link"}</title></circle>`;
+  }
+  for (const n of live.notes || []) {
+    if (n.ts < s[0][0] - 3600) continue;
+    const x = sx(n.ts + 1800);
+    g += `<path d="M${x.toFixed(1)},${cTop + CH - 22} l5,5 l-5,5 l-5,-5 z" fill="var(--warn)" stroke="#fff"><title>${dayClock(n.ts)} · ${esc(n.name)}</title></path>`;
+  }
+  s.forEach((p, i) => { if (!i || p[0] - s[i - 1][0] > 3600) g += `<text x="${(sx(p[0] - 3600) + 2).toFixed(1)}" y="${H - 6}" text-anchor="start">${dayClock(p[0] - 3600)}</text>`; });
+  const nj = (live.jumps || []).filter((j) => j.reliable && j.ts > s[0][0] - 3600).length;
+  const opens = mv.filter((m) => m.open && m.x != null);
+  return `<div class="hchart">
+      <svg class="holding-chart haxis" width="${L}" height="${H}" viewBox="0 0 ${L} ${H}" aria-hidden="true">${ax}</svg>
+      <div class="hscroll" tabindex="0" aria-label="Drag or scroll sideways to see the past week">
+        <svg class="holding-chart" width="${PW}" height="${H}" viewBox="0 0 ${PW} ${H}" role="img" aria-label="Price and hourly moves of ${esc(live.symbol)} with linked bet jumps, past week">${g}</svg>
+      </div>
+      <span class="hlabel" style="left:${L}px;top:0">Price</span>
+      <span class="hlabel" style="left:${L}px;top:${cTop - 22}px">Hourly move ÷ this holding's normal hour</span>
+    </div>
+    <div class="legend"><span><i class="sw line-yes"></i>linked bet jumped up</span><span><i class="sw line-no"></i>jumped down</span>
+      <span>thick = direct link · dotted = weak link</span><span><i class="sw bar-open"></i>first hour after the open</span>
+      <span><i class="sw bar-big"></i>top-20% move</span><span><i class="sw diamond"></i>wallet pattern fired (last 24 h)</span><span><i class="sw shade"></i>market closed (squeezed)</span></div>
+    <p class="note">Drag sideways (or scroll) to see the past week; it opens on the latest 72 hours. One slot per trading hour; closed stretches are squeezed into the grey blocks, so overnight jumps sit just before the next open. Updates with every scan (5 min).
+      ${nj} reliable linked jump${nj === 1 ? "" : "s"} this week; ${opens.length ? `the latest open moved ${opens[opens.length - 1].x.toFixed(1)}× a normal hour.` : "no open in view."}
+      A jump raises the chance of a big move; it does not say which way.</p>`;
+}
+
+/* drag-to-scroll for the holding chart; keeps the user's position across the 5-minute redraws */
+let chartScroll = null;   // null = follow the latest hours (right end)
+function initHoldingScroll() {
+  const box = document.querySelector("#drawer .hscroll");
+  if (!box) return;
+  box.scrollLeft = chartScroll == null ? box.scrollWidth : Math.min(chartScroll, box.scrollWidth);
+  let start = null;
+  box.addEventListener("pointerdown", (e) => { start = { x: e.clientX, left: box.scrollLeft }; box.classList.add("drag"); box.setPointerCapture(e.pointerId); });
+  box.addEventListener("pointermove", (e) => { if (start) box.scrollLeft = start.left - (e.clientX - start.x); });
+  const end = () => { start = null; box.classList.remove("drag"); };
+  box.addEventListener("pointerup", end); box.addEventListener("pointercancel", end);
+  box.addEventListener("scroll", () => {
+    chartScroll = box.scrollLeft >= box.scrollWidth - box.clientWidth - 4 ? null : box.scrollLeft;
+  });
+}
+
+async function openHolding(symbol, quiet = false) {
+  if (!quiet || symbol !== drawerHolding) chartScroll = null;
+  drawerHolding = symbol;
   const drawer = $("#drawer");
   drawer.hidden = false;
-  $("#drawer-body").innerHTML = `<p class="empty">Loading…</p>`;
-  $(".drawer-panel").focus();
+  if (!quiet) { $("#drawer-body").innerHTML = `<p class="empty">Loading…</p>`; $(".drawer-panel").focus(); }
   try {
     const p = await api(`/api/holding/${encodeURIComponent(symbol)}`);
     const info = p.info || {};
@@ -293,6 +438,8 @@ async function openHolding(symbol) {
       <h2 id="drawer-title">${esc(p.symbol)}${info.name && info.name !== p.symbol ? ` · ${esc(info.name)}` : ""}</h2>
       <p class="note">${esc(info.type || "")}${info.sector ? ` · ${esc(info.sector)}` : ""}${info.industry ? ` · ${esc(info.industry)}` : ""}</p>
       ${p.supported === false ? `<p>${esc(p.reason)}</p>` : `
+      <h3>Live: price and moves</h3>
+      ${holdingCharts(p.live)}
       <h3>How its bets are found</h3>
       <p class="note"><b>Direct mention:</b> ${(p.terms || []).length ? (p.terms || []).map((t) => `“${esc(t)}”`).join(", ") : "none (funds are linked by topic only)"}.
       <b>By topic:</b> from ${esc(p.candidate_reason || "")}, then each topic is tested on ${esc(p.symbol)}'s own hourly moves in past jump hours of that topic (${p.history_bars || 0} hours of history).</p>
@@ -301,11 +448,12 @@ async function openHolding(symbol) {
       <p class="note">Each pattern is shown only if it came before bigger ${esc(p.symbol)} moves in its own history (≥ 20 cases). The number shown is pulled toward the research average so a few lucky hours can't make a big claim.</p>
       <div class="table-wrap"><table><thead><tr><th>Pattern</th><th class="num">Past cases</th><th>Next-hour move vs normal</th><th>In the app</th></tr></thead><tbody>${walletRows || `<tr><td colspan="4" class="empty">${esc((p.wallet_checks || {}).note || "Not checked yet.")}</td></tr>`}</tbody></table></div>`}
       <p class="note">Checked ${esc((p.checked_at || "").slice(0, 16).replace("T", " "))} UTC · app version ${esc(p.version || "")}</p>`;
+    initHoldingScroll();
   } catch (error) {
     $("#drawer-body").innerHTML = `<p class="empty">${esc(error.message)}</p>`;
   }
 }
-function closeDrawer() { $("#drawer").hidden = true; }
+function closeDrawer() { $("#drawer").hidden = true; drawerHolding = null; }
 
 /* ------------------------------------------------------------------ track + evidence */
 async function renderTrack() {

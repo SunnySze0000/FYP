@@ -1,0 +1,3 @@
+days,n,open_bigger_than_normal,move_over_1.5x_near_intraday_jump,both (looks like the diagram),count_both
+overnight + intraday linked jump,257,0.5252918287937743,0.46303501945525294,0.2801556420233463,72
+no linked jump at all (comparison),7086,0.4500423370025402,0.42026531188258537,0.21634208298052499,1533

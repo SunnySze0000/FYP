@@ -11,7 +11,7 @@ import pandas as pd
 
 from walletlens import io, logs
 from walletlens.monitor import APP_VERSION
-from walletlens.monitor.engine import Model, Monitor, digest
+from walletlens.monitor.engine import Model, Monitor, digest, holding_live, watch_open
 from walletlens.monitor.holding_wallets import ResearchStore, check as wallet_check
 from walletlens.monitor.holdings import build_profile, hourly_history
 from walletlens.monitor.journal import Journal, NotesLog
@@ -70,7 +70,8 @@ class Service:
         """Build the profile of every holding that has none (or an older version): layers 1-3, then D2/D3 checks."""
         for symbol in self.holdings():
             existing = self.profile(symbol)
-            if existing and existing.get("version") == APP_VERSION and not force:
+            failed = str(((existing or {}).get("wallet_checks") or {}).get("note", "")).startswith("check failed")
+            if existing and existing.get("version") == APP_VERSION and not force and not failed:
                 continue
             if symbol in self.checking:
                 continue
@@ -173,6 +174,7 @@ class Service:
         names = {h: ((profiles.get(h) or {}).get("info") or {}).get("name") or h for h in holdings}
         return {"holdings": holdings, "names": names, "checking": sorted(self.checking), "version": APP_VERSION,
                 "scan": {**scan, "markets": light}, "digest": board, "refresh_seconds": self.refresh,
+                "watch_open": watch_open(scan, holdings) if scan.get("ok") else None,
                 "early_warning_live": self.early_warning_live, "model": {
                     "shock_points": self.model.raw["shock_points"], "pressure": self.model.raw["pressure"],
                     "clusters": self.model.raw["clusters"],
@@ -182,7 +184,10 @@ class Service:
         p = self.profile(symbol.upper())
         if not p:
             raise LookupError("No profile yet: the history check may still be running")
-        return p
+        with self._lock:
+            scan = self.scan
+        live = holding_live(scan, p["symbol"], p, self.model.raw["shock_points"]) if scan.get("ok") else None
+        return {**p, "live": live}
 
     def market(self, market_id: str) -> dict:
         with self._lock:

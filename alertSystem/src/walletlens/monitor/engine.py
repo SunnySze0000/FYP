@@ -7,6 +7,7 @@ Every number here maps to a research result (docs/05_daily_applicability.md):
 * **early warning**  W3 model on price + wallet activity, top 5% of scores        (W3, D1, D2)
 * **pressure**       net YES dollars from $5k+ trades in the last hour            (W5, D1, D2)
 * **who's trading**  the team's behaviour clusters, descriptive only              (W5 secondary)
+* **watch the open** linked jumps while the US market was closed, shown before the open (S2, doc 13, V4 doc 14)
 """
 
 from __future__ import annotations
@@ -137,7 +138,7 @@ def asset_moves(bars: dict, model: Model) -> dict:
         normal = info.get("normal_abs_r")
         out[symbol] = {"symbol": symbol, "last": c1, "last_ts": t1, "r_last_hour": r if t1 - t0 <= HOUR else None,
                        "times_normal": abs(r) / normal if normal and t1 - t0 <= HOUR else None,
-                       "series": [[t, c] for t, c in rows[-72:]], "info": info}
+                       "series": [[t, c] for t, c in rows[-400:]], "info": info}
     return out
 
 
@@ -166,11 +167,11 @@ class Monitor:
     def _analyse(self, market: dict, now: float) -> dict | None:
         cfg = self.model.raw
         ew_model = cfg["early_warning"]
-        history = self.source.price_history(market, now - 8 * 86_400)
+        history = self.source.price_history(market, now - 9 * 86_400)
         if len(history) < 3:
             return None
         first_ts = history[0][0]
-        grid = hourly_grid(history, now, 72)
+        grid = hourly_grid(history, now, 192)          # 8 days: the holding drawer scrolls back a week
         trades = self.source.trades(market, now - 74 * HOUR, ew_model["min_trade_usd"])
         for t in trades:
             t["market"] = market["id"]
@@ -306,3 +307,131 @@ def digest(scan: dict, holdings: list[str], model: Model, profiles: dict | None 
                     "profile": {k: profile.get(k) for k in ("supported", "reason", "links", "candidate_reason", "status", "info")},
                     "move": scan.get("assets", {}).get(symbol)})
     return out
+
+
+# ---------------------------------------------------------------------------- D4: watch the open
+# Direct channels, fixed before V4 ran (docs/14_clean_links.md). Clean links carried the same-hour effect
+# (+10.6%, overnight +15.9%); loose links showed none on their own.
+CLEAN_LINKS = {"rates": {"TLT", "IEF", "SHY"}, "trade_china": {"FXI", "KWEB"}, "energy_mideast": {"USO", "XLE"},
+               "war_europe": {"ITA", "EZU"}, "ai_tech": {"NVDA", "SMH"}}
+OPEN_WINDOW_HOURS = 2          # after the open, keep showing what was flagged for this long (the effect is in the first hour)
+
+
+def _nth_sunday(year: int, month: int, n: int) -> int:
+    """Day of the month of the n-th Sunday."""
+    import datetime as dt
+    first = dt.date(year, month, 1)
+    return 1 + (6 - first.weekday()) % 7 + 7 * (n - 1)
+
+
+def us_offset(ts: float) -> int:
+    """UTC offset of New York in seconds (US daylight saving: 2nd Sunday of March to 1st Sunday of November)."""
+    import datetime as dt
+    d = dt.datetime.fromtimestamp(ts, dt.timezone.utc)
+    y = d.year
+    start = dt.datetime(y, 3, _nth_sunday(y, 3, 2), 7, tzinfo=dt.timezone.utc)    # 02:00 EST
+    end = dt.datetime(y, 11, _nth_sunday(y, 11, 1), 6, tzinfo=dt.timezone.utc)    # 02:00 EDT
+    return -4 * HOUR if start <= d < end else -5 * HOUR
+
+
+def us_session(now: float) -> dict:
+    """Regular US session (09:30-16:00 New York, Mon-Fri; exchange holidays are not modelled).
+
+    Returns the state ("closed", "opening" in the first hours after the open, "open"), the last close,
+    and the next (or today's) open, all as Unix seconds."""
+    import datetime as dt
+
+    def at(day: dt.date, h: int, m: int) -> float:
+        guess = dt.datetime(day.year, day.month, day.day, h, m, tzinfo=dt.timezone.utc).timestamp()
+        return guess - us_offset(guess - 5 * HOUR)
+
+    local = dt.datetime.fromtimestamp(now + us_offset(now), dt.timezone.utc).date()
+    days = [local + dt.timedelta(days=k) for k in range(-6, 8) if (local + dt.timedelta(days=k)).weekday() < 5]
+    sessions = [(at(d, 9, 30), at(d, 16, 0)) for d in days]
+    last_close = max(c for o, c in sessions if c <= now) if any(c <= now for _, c in sessions) else now - 24 * HOUR
+    current = next(((o, c) for o, c in sessions if o <= now < c), None)
+    if current:
+        o, c = current
+        prev_close = max(cc for _, cc in sessions if cc <= o)
+        state = "opening" if now < o + OPEN_WINDOW_HOURS * HOUR else "open"
+        return {"state": state, "open": o, "close": c, "since": prev_close, "until": o}
+    nxt = min(o for o, _ in sessions if o > now)
+    return {"state": "closed", "open": nxt, "since": last_close, "until": now}
+
+
+def link_is_direct(symbol: str, how: dict) -> bool:
+    """A direct channel: the bet names the holding, or the group is a clean link for it (V4)."""
+    return bool(how.get("direct")) or any(symbol in CLEAN_LINKS.get(g, ()) for g in how.get("groups", []))
+
+
+def watch_open(scan: dict, holdings: list[str], now: float | None = None) -> dict:
+    """D4: per holding, the reliable linked jumps since the last US close (up to today's open when trading).
+
+    Only the last 24 h of jumps are kept by the scan, so after a weekend the window is the last 24 h.
+    As in the research (doc 13, doc 14), crypto bets and round-the-clock assets (e.g. BTC-USD) are left out:
+    they have no open to watch."""
+    now = now if now is not None else scan.get("updated_at") or time.time()
+    s = us_session(now)
+    lo, hi = max(s["since"], now - 24 * HOUR), s["until"]
+    rows = []
+    for symbol in holdings:
+        if symbol.endswith("-USD"):
+            continue
+        jumps = []
+        for m in scan.get("markets", []):
+            how = (m.get("links") or {}).get(symbol)
+            if not how or not how.get("reliable") or "crypto" in m.get("groups", []):
+                continue
+            for j in m.get("shocks_24h", []):
+                if lo < j["ts"] <= hi:
+                    jumps.append({"market": m["id"], "question": m["question"], "ts": j["ts"], "dp": j["dp"],
+                                  "direct": link_is_direct(symbol, how)})
+        if jumps:
+            jumps.sort(key=lambda j: (not j["direct"], -j["ts"]))
+            rows.append({"symbol": symbol, "jumps": jumps[:6], "n": len(jumps), "markets": len({j["market"] for j in jumps}),
+                         "direct": any(j["direct"] for j in jumps)})
+    rows.sort(key=lambda r: (not r["direct"], -r["n"]))
+    return {**s, "window_from": lo, "window_to": hi, "holdings": rows,
+            "evidence": {"overnight_all": 0.12, "overnight_direct": 0.16, "one_jump": 0.06, "two_plus": 0.09}}
+
+
+# ---------------------------------------------------------------------------- holding drawer: live charts
+def holding_live(scan: dict, symbol: str, profile: dict | None, shock_points: float = 0.10) -> dict:
+    """Price series, hourly moves vs this holding's normal, and the linked signals over the same window.
+
+    Moves are |log return| per bar divided by the holding's normal hourly |return| (its own 2-year history,
+    from the profile), so 1.0 = a normal hour and ``big`` marks the top-20% size. A bar that follows a gap
+    (the open after a closed market) is flagged: that is the hour D4 watches. Jumps come from each linked
+    bet's hourly price grid (last 72 h), with the same 10-90% watch band as the alerts."""
+    in_scan = symbol in (scan.get("assets") or {})
+    a = (scan.get("assets") or {}).get(symbol) or {}
+    series = a.get("series") or []
+    profile = profile or {}
+    info = a.get("info") or {}
+    normal = profile.get("normal_abs_r") or info.get("normal_abs_r")
+    big = profile.get("big_threshold") or info.get("big_threshold")
+    moves = []
+    for (t0, c0), (t1, c1) in zip(series[:-1], series[1:]):
+        if c0 and c1:
+            r = math.log(c1 / c0)
+            moves.append({"ts": t1, "r": r, "x": abs(r) / normal if normal else None, "open": t1 - t0 > HOUR})
+    lo = series[0][0] if series else 0
+    jumps, seen = [], set()
+    for m in scan.get("markets", []):
+        how = (m.get("links") or {}).get(symbol)
+        if not how:
+            continue
+        pts_ = [p for p in m.get("prices", []) if p[1] is not None]
+        for (t0, p0), (t1, p1) in zip(pts_[:-1], pts_[1:]):
+            if t1 - t0 > HOUR + 60 or t1 <= lo or not (0.10 <= p0 <= 0.90) or abs(p1 - p0) < shock_points:
+                continue
+            key = (m["id"], int(t1 // HOUR))
+            if key in seen:
+                continue
+            seen.add(key)
+            jumps.append({"ts": t1, "dp": p1 - p0, "market": m["id"], "question": m["question"],
+                          "reliable": bool(how.get("reliable")), "direct": link_is_direct(symbol, how)})
+    notes = [{"ts": h, "name": n["name"]} for n in (scan.get("notes") or {}).get(symbol, []) for h in n.get("hours", []) if h >= lo]
+    return {"symbol": symbol, "in_scan": in_scan, "updated_at": scan.get("updated_at"), "series": series, "moves": moves,
+            "normal_abs_r": normal, "big_x": (big / normal) if big and normal else None,
+            "jumps": sorted(jumps, key=lambda j: j["ts"]), "notes": notes}

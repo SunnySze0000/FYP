@@ -83,7 +83,7 @@ class LiveSource:
     def asset_bars(self, symbols: list[str]) -> dict[str, list[tuple[int, float]]]:
         def one(symbol):
             try:
-                return symbol, [(end, close) for _, end, close in yahoo.bars(yahoo.chart(symbol, "60m", "5d", self.fetch), 3600)]
+                return symbol, [(end, close) for _, end, close in yahoo.bars(yahoo.chart(symbol, "60m", "1mo", self.fetch), 3600)]
             except Exception:                         # noqa: BLE001 - one missing asset must not stop the scan
                 return symbol, []
         with ThreadPoolExecutor(6) as pool:
@@ -158,6 +158,6 @@ class ReplaySource:
             if g is None:
                 out[s] = []
                 continue
-            g = g[(g["end_ts"] <= self.at) & (g["end_ts"] > self.at - 7 * 86_400)]
+            g = g[(g["end_ts"] <= self.at) & (g["end_ts"] > self.at - 10 * 86_400)]
             out[s] = list(zip(g["end_ts"].astype(int), g["close"].astype(float)))
         return out

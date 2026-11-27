@@ -29,6 +29,111 @@ now", not as forecasts.
 - The daily digest centres on what happened to the holdings' events while the US market was closed.
 - Intraday alerts are framed as explanations.
 
+## What an alert means, and what it doesn't (read this before presenting EventLens)
+
+**An alert does NOT mean the price will go up or down, and it does NOT guarantee a bigger move.** It means the
+*chance* of an unusually big move is higher than usual, like a storm warning.
+
+- **On average, yes:** linked holdings move about 1.4× their normal hourly size in jump hours, and the overnight
+  effect at the open is clear (CI +0.20 to +0.38). These averages are solid over hundreds of events.
+- **On a single alert, often not:** a big move (the holding's top 20% of hours) followed only **25%** of alerts,
+  against **18%** for unrelated assets. So **about three in four alerts are NOT followed by an unusually big move.**
+- **Real days:** of 257 days with a linked jump both overnight and during the session, **72 (28%)** look like the
+  illustrative diagram (bigger open *and* a > 1.5× move near the intraday jump), against **21.6%** of 7,086
+  comparable days with no linked jump. 53% opened bigger than normal (45% on no-jump days). The pattern is
+  more common, not certain. See `docs/11_illustrative_day.md`.
+- **Direction is a coin flip (≈ 50%).** Never present an alert as a reason to buy or sell.
+- **During US trading hours the stock often moves before the bet does,** so part of the move may already have happened.
+
+### How strong is the effect? (all measures side by side)
+
+| Measure | With a linked jump | Without | Difference |
+|---|---|---|---|
+| Chance a day looks like the diagram (bigger open **and** a > 1.5× move near the intraday jump) | 28% | 21.6% | +6 points (1.3× as likely) |
+| Chance of a **top-20% move** in the alert hour | 25% | 18% (unrelated assets, same hour) | +7 points (1.4× as likely) |
+| **Average size** of the holding's move in jump hours | 1.4–1.6× normal | 1.0× | **+40–60%** |
+| First hour at the open after an overnight jump | 1.16× | 0.96× | +20% |
+| Day with 10+ linked jumps (daily volatility) | 1.46× | 0.99× (10+ unrelated jumps) | +47% |
+| Linked-jump hour after controlling for the VIX level and recent volatility (doc 12) | +17% bigger move (CI +10 to +24) | unrelated-jump hours: +13% | linked − unrelated +4% (CI −3 to +11): **not significant** |
+| Linked holdings vs the other holdings **in the same hour** (doc 13; cancels the VIX and market-wide news) | +7% (CI +2 to +12); overnight → open **+12% (CI +4 to +20)**; intraday +2% (n.s.); 2+ linked jumps +9% | other holdings, same hour | **PASS**: specific but small, mostly at the open |
+
+**VIX check (doc 12, FAIL on specificity):** jumps carry information beyond the VIX, but at the hourly level most of
+it is "event news is moving markets", which unrelated jumps share. The extra for the holding's own topics is
+small and uncertain.
+
+**What is a "top-20% move"?** For each holding, take every past trading hour and rank the hours by how much the
+price moved, up or down, ignoring the sign. The top-20% hours are the fifth with the biggest moves. For a
+typical large ETF, that is roughly any hour that moves more than about 1.3–1.5× its average hour. By
+definition, 20% of all hours are top-20% hours. So "25% of alert hours are top-20% moves" means alert hours
+land in the biggest-move group a bit more often than chance (18–20%).
+
+**Reading:** the *chance* that a single alert turns into a big move rises only modestly, so most alerts end
+calm. The *average size* of moves rises clearly, because the cases that do react tend to react a lot. As a
+trading signal this is weak; as a risk monitor it is a consistent, tested tilt. **Open question:** we have not
+yet checked whether options and the VIX already price this in (see the proposed VIX-control test).
+
+## Evidence map: what EventLens can and cannot do, and which test shows it
+
+*Plain-language summary, kept up to date. Test IDs link to the docs: T/F/E = 01–02, V = 02, W = 04/06,
+D = 05, M = 06, S = 09, charts = 10–11, VIX = 12, same-hour = 13.*
+
+### A. What EventLens can do
+
+| # | What it does (value / function) | Supported by | Result in one line | What it means for the product |
+|---|---|---|---|---|
+| A1 | **Names which event matters to your holdings, with live odds.** Each holding is linked to Polymarket bets by name and by topic; every link is checked on the holding's own price history. | V1, D1, D6, D-fix-1, history check in doc 07 | Linked assets move 1.4–1.8× normal in hours when their bets jump; the effect holds in 6 of 7 topics and without hindsight. | Core feature. Show the bet, its odds and why it is linked. US-politics links are labelled "weak". |
+| A2 | **Warns before the US open when a linked bet moved overnight** (headline). | S2, same-hour test (doc 13), real days (doc 11), V2 chart 4 | Next-open first hour is bigger after an overnight linked jump (1.16× vs 0.96×); vs other holdings that same hour **+12%** (CI +4 to +20). 72% of jumps happen while the market is closed. | "Watch the open" (D4) is the headline feature. Strongest and most holding-specific evidence we have. |
+| A3 | **Flags hours when event news is moving markets, beyond the VIX.** | VIX control (doc 12) | Hours with a bet jump move about 13–17% more than the VIX and recent volatility predicted. | Useful as a general "news is happening" radar, even beyond your own links. **V3 (doc 15):** against each sector's own fear gauge, only the overnight part survives (+13%); intraday, a jump says what the gauge already says. |
+| A4 | **Explains why a holding is moving during trading hours.** | S1, V1 | Linked holdings are already moving around the jump hour (peak the hour before). | Intraday alerts are worded as an explanation ("this event is moving now"), not a warning. |
+| A5 | **Says how long the extra risk lasts.** | S1 (hour-by-hour profile) | Extra movement fades over about 2–3 hours after a jump. | Show "risk stays raised for ~2–3 h". |
+| A6 | **More linked jumps → more risk.** | Same-hour test (doc 13), V2 chart C | One linked jump +6%, two or more +9% (same hour); daily 0.98× (none) → 1.46× (10+). | Show the number of linked jumps; use it in M2. |
+| A7 | **Shows who is moving the odds (wallet layer).** | W5, W7, W9b | Large-wallet buying leads the bet's price (+0.82 vs +0.09 points). Market-maker / burst-trader surges and wallets trading several linked bets come before 6–21% bigger next-hour moves in the holding. | Large-wallet pressure and per-holding wallet notes (D2, D3), shown as context. |
+| A8 | **Works for your own portfolio (import any US large stock or ETF).** | History check (doc 07), D1 | 13 of 26 research links confirmed by history; wrong links are dropped. | Portfolio import with checked links. |
+| A9 | **Works daily and live, and keeps testing itself.** | D2, D3, D4, D5, live track record (V1) | Holds quarter by quarter; about 1 alert a day for a 6-holding portfolio; live refresh 21 s; every alert is logged and scored. | Daily digest; Track record page. |
+
+### B. What EventLens cannot do
+
+| # | What it cannot do | Shown by | Result in one line | What it means for the product |
+|---|---|---|---|---|
+| B1 | **Tell you which way the price will move.** | V2, V4, W4, M3, S3 | Every direction test is about 50% (a coin flip). | No buy/sell advice, no up/down arrows. |
+| B2 | **Guarantee a big move after an alert.** | D3, real days (doc 11), effect table | A top-20% move follows 25% of alerts vs 18% otherwise; about 3 in 4 alerts end calm. Only 28% of linked-jump days look like the textbook picture (vs 21.6%). | Alerts say "higher chance", never "will". |
+| B3 | **Warn you early during US trading hours.** | S1, same-hour test (doc 13) | Intraday the stock usually moves before or with the bet; no holding-specific effect intraday (+2%, n.s.). | Intraday = explanation only. |
+| B4 | **Predict exactly how big a move will be.** | M2 | The model was no better than a fixed "× normal" per holding. | Show the historical average; retry M2 with jump count and event kind. |
+| B5 | **Act as a trading signal on crypto or inside Polymarket.** | T1 (C1–C3), F (E2–E4) | Polymarket follows bitcoin by about a minute; copying "smart" wallets lost money. | Not offered. |
+| B6 | **Give an early warning from unusual wallet activity (yet).** | W3, D7 | Worked in research, but over-fires on live markets (16–18% of hours flagged). | Hidden (shadow mode) until W8 passes on live data. |
+| B7 | **Pick skilled wallets or link bets with a home-made text model.** | W1, W10, M1 | No wallet group beat others on direction; the text model linked worse than keywords. | Keyword links + history check; clusters shown as context only. |
+| B8 | **Fully separate "your holding's news" from "big news in general" at all times.** | VIX control (doc 12) | Beyond the VIX, linked and unrelated jumps both raise movement; the holding-specific extra is only clear at the open. | Wording: "event news is moving markets, and this one is linked to your holding". |
+
+### C. Test register (one line per test)
+
+| Test | Question | Result | Verdict | Implication |
+|---|---|---|---|---|
+| T1 crypto (C0–C3) | Do Polymarket crypto bets lead BTC/ETH? | They lag spot by about 1 min; trading lost 6 bps | Fail | Dropped the crypto topic |
+| F (E2–E4) | Can wallets' skill be copied inside Polymarket? | Skill does not persist; copying lost 3.8% | Fail | Dropped the Polymarket-trading topic |
+| V1 | Do event jumps move linked assets more? | +25% (CI +15 to +34) vs placebo assets | Pass | Core of the product |
+| V2, V4 | Do jumps predict direction? | 53%, unstable | Fail | No direction |
+| V5 | Is V1 look-ahead free? | Placebo 50.5%, no look-ahead | Pass | Trust V1 |
+| W0–W2 | Wallet data; hedge ratio; jump persistence | Data OK; W1 fail; W2 not robust | Mixed | Not in product |
+| W3 | Wallet early warning (research) | AUC 0.887 → 0.917 | Pass | Became the early warning… |
+| D7 | …does it work on live markets? | Flags 16–18% of hours (2–12% expected) | Fail | Shadow mode; W8 fix |
+| W4 | Large wallets improve direction? | 52% vs 54% | Fail | No direction |
+| W5 | Large-wallet buying leads the bet? | +0.82 vs +0.09 points | Pass | Pressure feature |
+| W6 | Robust to a 15-min data delay? | W3, W5 hold; W2 not | Partial | Only W3/W5 kept |
+| W7 | Cluster surge → bigger holding move? | C0 +9% (86% of holdings), C2 +6% (68%) | Pass | Wallet notes (D2) |
+| W9b | Wallets trading several linked bets? | +21% (83% of holdings) | Pass | Wallet note (D3) |
+| W9a/c/d/e, W10 | Other wallet ideas; supervised wallet model | No effect beyond chance | Fail | Not in product |
+| D1–D6 | Daily-use checks (no hindsight, stable, alert value, live, daily, all topics) | All pass, before and after the keyword fix | Pass | Build approved |
+| M1 | Text model for links | Worse than keywords | Fail (open) | Keywords + history check; retry with more data |
+| M2 | Predict move size | No better than fixed ratio | Fail (open) | Retry with jump count, event kind |
+| M3 / S3 | Direction model / direction after jump | ≈ 50% | Fail | No direction |
+| S1 | Does the stock move after the jump (intraday)? | Stock moves most the hour before | Fail | Intraday = explanation |
+| S2 | Overnight jump → bigger next open? | +0.28 to +0.31 (CI > 0) | Pass | Headline feature |
+| Charts (doc 10–11) | Visible across history / real days? | Pooled dose-response clear; per holding weak; 72 of 257 days match (28% vs 21.6%) | Supportive | Honest "higher chance" wording |
+| VIX (doc 12) | Beyond the VIX, is the effect specific? | Beyond VIX yes (+17%); specific part n.s. (+4%) | Fail (specificity) | Wording change |
+| Same hour (doc 13) | Linked vs other holdings, same hour? | +7% overall; **+12% at the open**; intraday none; 2+ jumps +9% | Pass | Supports D4 and jump-count feature |
+| V4 clean links (doc 14) | Is the effect stronger on direct links? | Direct **+10.6%** (CI +4 to +18), overnight **+16%**; loose links +2% (n.s.); gap +8.7 pts, CI just touches 0 | Pass (rule 1), narrow fail (rule 2) | Direct links shown first and labelled in D4; M1 targets direct links |
+| V3 sector gauges (doc 15) | Still there after oil/gold/China/Nasdaq volatility gauges? (bond gauge too short, dropped) | All hours +5.4% (CI −2 to +13): about half absorbed. **Overnight +13% (CI +1.5 to +26) survives**; intraday 0 | Fail (all hours), **Pass (overnight)** | D4 stands; no "beyond sector fear" claim for intraday alerts |
+
 ## The brief
 
 - **Must use:** Polymarket, and wallet-level data.
@@ -77,13 +182,48 @@ Each gate has a pass rule fixed in advance. Failing a gate sends us to the next 
 | V3 skilled wallets lead | Next-hour probability move in the direction of skilled-wallet flow > 0, CI above 0 |
 | V4 stable exposures | Exposure sign agrees between first and second half of a market's life > 50%, CI above 50% |
 
-## Work breakdown
+## Work breakdown (current, same IDs as the task list)
 
-1. **Shared foundation (done):** project layout, config, logging, structured results, Polymarket API clients, resumable collector, wallet-skill and calibration maths, tests with planted-skill and null worlds. Reused by every topic.
-2. **T1 / G0:** collector for crypto up/down and above-X markets (trades with wallets, hourly or finer prices), plus 1-minute BTC/ETH klines from Binance's public data dump; coverage report.
-3. **T1 / G1–G3:** experiments e10–e13 under the same `results/` structure.
-4. **Decision:** record it in the log below and in `docs/01_topic.md`.
-5. **Only then:** the app (UI plan in `docs/03_app_plan.md`, drafted but not built).
+| ID | Task | Status | Depends on / blocked by |
+|---|---|---|---|
+| **D – Dashboard** | | | |
+| D1 | Portfolio import with checked links | Done (v1.1) | – |
+| D2 | Wallet note: cluster surge (W7) per holding | Done (v1.1) | – |
+| D3 | Wallet note: wallets on several linked bets (W9b) | Done (v1.1) | – |
+| D4 | "Watch the open" after overnight linked jumps; intraday alerts reworded | Done (v1.2); V3 confirms the overnight effect | – |
+| **W – Wallet research** | | | |
+| W8 | Fix and retest the wallet early warning | Waiting | Blocked by V1 (≈ 2 weeks of live logs) |
+| **M – Models** | | | |
+| M1 | Learned bet-to-holding links (own text model) | Open | Blocked by V5 (more markets). V4 done: train on direct links first |
+| M2 | Move-size model with jump count, event kind, overnight flag | Open (optional) | Soft-blocked by V5 |
+| M4 | **Volatility model on the whole jump stream** (keep open: big payoff if it works). Takes every jump, not one at a time; first target "will the next hour / the open be a top-20% move?" (yes/no), then size, then direction. Design below. | Open, **priority model** | Blocked by V5 (training data) and V1 (live out-of-sample test); V6 helps (5-min targets) |
+| **V – Validation** | | | |
+| V1 | Run EventLens live ≈ 2 weeks (track record) | Running. From 2026-11-27 it runs from `FYP/alertSystem` (`restart.bat`, v1.2); live logs copied over from fyptest1, which is no longer used | – |
+| V3 | Controls with oil/gold/bond/China/Nasdaq volatility gauges (doc 15) | Done: overnight effect survives (+13%), all-hours effect half absorbed | Bonds not tested (MOVE gauge too short) |
+| V4 | Same-hour test on the cleanest links only (doc 14) | Done: direct +10.6%, loose none | – |
+| V5 | Collect the full Polymarket universe: up to 4,000 event markets, max 700 per topic (was 1,200 / 200), `fyptest1/config/v5.json`; the old dataset is backed up to `events_before_v5` | Ready: run `tonight_v5v6.bat` | Long laptop run (hours); blocks M1, M2, M4 |
+| V6 | 5-minute stock data around jumps (`scripts/v6_download_5m.py`, merges into `data/raw/prices_5m/`; Yahoo keeps 60 days, so rerun every few weeks to build history) | Ready: run `tonight_v5v6.bat` | – |
+| **H – Housekeeping** | | | |
+| H1 | Clean up `_stage` folders in fyptest1 | Done (≈ 119 MB removed) | – |
+| H2 | Delete the temporary `tonight_v5v6.bat` and `fyptest1/config/v5.json` (keep `scripts/v6_download_5m.py`) | Open | After V5 and V6 have run |
+| H3 | Fold `docs/TONIGHT_2026-11-27.md` results into numbered docs (M1 → doc 16, M4 → doc 17), then delete it | Open | After tonight's run |
+| Rule | Update `docs/08_system_workflow.md` with every product change | Standing | – |
+
+### M4 design (to be pre-registered before training)
+
+M4 differs from M2: M2 sized the move after a single jump; M4 reads the **stream** of jumps (and other signals)
+up to now and forecasts the holding's next hour or next open. It is tested as a grid of input × output
+combinations, each against the same baseline, with walk-forward splits (train on the past, test on the next
+block, never shuffle) and a final check on V1 live data.
+
+| | Options to compare |
+|---|---|
+| **Inputs** | (a) baseline only: the holding's own recent volatility (autoregressive, HAR-style 1 h / 1 day / 1 week averages) + VIX; (b) + linked jumps: count in the last 1 / 6 / 24 h, size, direct vs loose (V4), event group, overnight flag, time since last jump; (c) + wallet signals: C0 / C2 surges, wallets on several linked bets, $5k+ net flow; (d) + sector gauge (V3) |
+| **Outputs** | (1) yes/no: next hour (or the open) is a top-20% move; (2) size: \|return\| ÷ normal; (3) direction: up/down (expected to fail, as S3, M3) |
+| **Models** | logistic / linear regression first; then a small gradient-boosted tree; an autoregressive sequence model only if the simple ones show signal |
+| **Pass rule** | inputs (b)–(d) beat input (a) out of sample: for (1) higher AUC and Brier skill, CI above 0; for (2) lower error, CI above 0; for (3) accuracy CI above 50% |
+| **Product use** | if (1) passes, the Watch-the-open and holding views show "chance of a big move" from M4 instead of the fixed +12% / +16% |
+
 
 ## Status
 
@@ -102,8 +242,18 @@ Each gate has a pass rule fixed in advance. Failing a gate sends us to the next 
 - [x] Daily-use applicability check D1–D6 (docs/05): all pass; keyword-matching bug found and fixed (D-fix-1), all still pass
 - [x] Prototype v1 built: **EventLens** event-risk monitor (`python -m walletlens app`, or double-click `eventlens.bat`)
 - [x] D7 live calibration of the early warning: FAIL twice (16–18% of hours flagged vs 2–12%); price-resolution bug fixed (D-fix-3), still fails → early warning in shadow mode
-- [ ] Run EventLens live for 2+ weeks: forward track record of alerts, and shadow-mode test of the early warning (docs/05 end)
-- [ ] v2 candidates: weak direction hint, push notifications, more assets per group
+- [x] v1.1: portfolio import, wallet notes, 24 h backfill, version stamps (docs/07); system workflow doc (docs/08)
+- [x] Research round 3 (docs/06): W9b passes; W10, M1, M2, M3 fail
+- [x] Sequence tests (docs/09): S2 passes (overnight → open), S1 and S3 fail
+- [x] Charts and real days (docs/10–11): pooled dose-response; 72 of 257 days match the textbook picture
+- [x] VIX control (docs/12): beyond the VIX yes, holding-specific part not significant
+- [x] Same-hour test (docs/13): +7% overall, +12% at the open, none intraday → supports D4
+- [x] Copied to `FYP/alertSystem`, branch `alert-system`; work continues there
+- [x] V4 clean links (docs/14): direct links carry the effect (+10.6%, overnight +16%); loose links none
+- [x] D4 "Watch the open" built (v1.2, docs/08 section 6b)
+- [x] V3 sector gauges (docs/15): overnight effect survives (+13%), intraday effect is shared with the sector gauge
+- [ ] Open work: see the Work breakdown table above (V1 running)
+- [ ] Later ideas: push notifications for overnight jumps; more holdings per topic. (A direction hint is ruled out: B1 in the Evidence map.)
 
 ## Decision log
 
@@ -133,3 +283,8 @@ Each gate has a pass rule fixed in advance. Failing a gate sends us to the next 
 - **2026-11-27 03:00** — Prototype v1 (EventLens) built: holdings with 24-hour event strips, jump alerts, W3 early warning, W5 large-wallet pressure, team clusters shown descriptively, forward track record, evidence page. US-politics links shown as "weak link" (D6).
 - **2026-11-27 02:58** — D7 (early warning on live data) failed twice; cause: live markets move ~2× more per hour than the research markets, so research thresholds over-fire in quiet markets. Early warning moved to shadow mode; improvement pre-registered (live-relative thresholds, judged on precision after 2 weeks).
 - **2026-11-27 14:05** — Value proposition written down (top of this file): off-hours early warning is the headline; intraday alerts explain moves; no direction. Based on S1–S3 (docs/09) and the 72% off-hours share of jumps.
+- **2026-11-27 16:10** — Added 'What an alert means' to the plan: an alert is a higher chance of a big move, not a guarantee (25% vs 18%; 72/257 real days, 28% vs 21.6%), never a direction.
+- **2026-11-27 16:15** — Added the effect-strength table and the definition of a top-20% move under 'What an alert means'.
+- **2026-11-27 16:25** — VIX control test (doc 12): FAIL on specificity. Linked-jump hours +17% beyond the VIX level and recent volatility (CI +10 to +24), but unrelated-jump hours +13%; linked − unrelated +4% (CI −3 to +11). Alerts carry 'event news is moving markets' information beyond the VIX; holding-specific extra is weak at the hourly level.
+- **2026-11-27 16:35** — Same-hour test (doc 13) PASS: linked holdings move +7% more than other holdings in the same news hour (CI +2 to +12); +12% at the open after overnight jumps (CI +4 to +20); none intraday; 2+ linked jumps +9%. The holding-specific effect is real but small and concentrated at the open.
+- **2026-11-27 16:40** — Added the Evidence map (can / cannot / test register) to the plan.
