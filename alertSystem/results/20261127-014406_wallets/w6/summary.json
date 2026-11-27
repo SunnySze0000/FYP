@@ -1,0 +1,70 @@
+{
+  "id": "w6",
+  "title": "Robustness of the wallet passes",
+  "question": "Do W2, W3 and W5 survive a timestamp check and a 15-minute gap before each hour?",
+  "verdict": "fail",
+  "headline": "Hourly prices match the last trade at the timestamp itself (best offset +0 min), so there is no stale-snapshot leak. With wallet flows ending 15 min before each hour: W2 large-wallet jumps +2.3 pts (CI -1.5 to +6.1); W3 AUC gain +0.018 (CI +0.010 to +0.029); W5 whale +0.39 vs retail +0.03 pts. Still holding: w3_auc_gain, w5_whale_beats_retail.",
+  "metrics": {
+    "timestamp_best_offset_min": 0,
+    "w2_gap": {
+      "diff": 0.02317927954896972,
+      "low": -0.014769605456912848,
+      "high": 0.06123559023326527,
+      "mean_high_group": -0.01672137404580152,
+      "mean_low_group": -0.03990065359477124,
+      "n_high": 262,
+      "n_low": 1530,
+      "markets": 436
+    },
+    "w3_gap": {
+      "auc_price_only": 0.8865974983058799,
+      "auc_with_wallets": 0.9049506996846409,
+      "gain": 0.018353201378761064,
+      "low": 0.009639344607480838,
+      "high": 0.02862334225245744,
+      "top5pct_lift": 12.596021005678686,
+      "coefficients": {
+        "intercept": -7.0571,
+        "abs_dp": 0.1395,
+        "recent_vol": 0.3719,
+        "gross_z": 0.0227,
+        "whale_z": -0.0752,
+        "wallets_z": 0.7576,
+        "new_z": -0.0057,
+        "imbalance": -0.1221
+      },
+      "train_hours": 699265,
+      "test_hours": 602579,
+      "test_jumps": 1718
+    },
+    "w5_gap_whale": {
+      "mean": 0.0038504844637487477,
+      "low": 0.002864490917553736,
+      "high": 0.004836478009943759,
+      "n": 20951,
+      "groups": 312,
+      "p_two_sided": 0.0
+    },
+    "w5_gap_retail": {
+      "mean": 0.00033978766430738116,
+      "low": 2.4654198898132978e-05,
+      "high": 0.0006622205760511123,
+      "n": 59340,
+      "groups": 338,
+      "p_two_sided": 0.039
+    },
+    "checks": {
+      "w2_large_wallets_behind": false,
+      "w3_auc_gain": true,
+      "w5_whale_beats_retail": true
+    }
+  },
+  "notes": [
+    "Added after W2, W3 and W5 passed; a robustness check, not a new pass rule. Verdict: pass only if the timestamps are aligned and all three still hold with the gap."
+  ],
+  "tables": [
+    "timestamp_check"
+  ],
+  "figures": [],
+  "seconds": 134.6
+}

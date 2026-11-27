@@ -1,0 +1,34 @@
+{
+  "id": "v3",
+  "title": "Skilled wallets lead the probability",
+  "question": "Does net buying by skilled wallets predict the next hour's probability move?",
+  "verdict": "pass",
+  "headline": "After an hour of net skilled-wallet buying (\u2265 $500), the probability moves +0.70 points their way next hour (95% CI +0.03 to +1.31, 170 markets); everyone else: +0.53.",
+  "metrics": {
+    "top_flow": {
+      "mean": 0.007011915673693859,
+      "low": 0.0003439548573568164,
+      "high": 0.013070640057636886,
+      "n": 1091,
+      "groups": 170,
+      "p_two_sided": 0.0345
+    },
+    "rest_flow": {
+      "mean": 0.0052801536044684945,
+      "low": 0.0035822306579087475,
+      "high": 0.007582327969464208,
+      "n": 11458,
+      "groups": 298,
+      "p_two_sided": 0.0
+    }
+  },
+  "notes": [
+    "Skill is point-in-time (topic F's timeline: markets closed before each trade).",
+    "Pass rule: skilled-flow signed next-hour move > 0 with the 95% CI above 0; < 30 markets = inconclusive."
+  ],
+  "tables": [],
+  "figures": [
+    "wallet_lead"
+  ],
+  "seconds": 35.7
+}

@@ -1,0 +1,608 @@
+{
+  "run_id": "20261127-0236_daily_events_fix1",
+  "suite": "daily",
+  "title": "T2-D \u00b7 Daily-use applicability (docs/05)",
+  "dataset": "events",
+  "decision": "All required daily-use gates pass: build prototype v1 with a daily digest.",
+  "fair_value": {},
+  "experiments": [
+    {
+      "id": "d1",
+      "title": "Point-in-time universe",
+      "question": "Do the passed findings hold on every market the app could see at the time, not only hindsight-chosen ones?",
+      "verdict": "pass",
+      "headline": "Without the hindsight filter (329 markets, watch rule): V1 +0.24\u00d7 (CI +0.14 to +0.33); W3 AUC gain +0.048 (CI +0.036 to +0.063); W5 whale +0.82 (CI low +0.64) vs retail +0.09 points.",
+      "metrics": {
+        "checks": {
+          "a_v1_all_candidates": true,
+          "b_w3_gain": true,
+          "c_w5_whale_above_retail": true
+        },
+        "v1": {
+          "mean": 0.2390950340556899,
+          "low": 0.14368858272352372,
+          "high": 0.3327802452462573,
+          "n": 329,
+          "groups": 329,
+          "p_two_sided": 0.0
+        },
+        "v1_slices": [
+          {
+            "slice": "all candidates (watched)",
+            "mean": 0.2390950340556899,
+            "low": 0.14368858272352372,
+            "high": 0.3327802452462573,
+            "n": 329,
+            "groups": 329,
+            "p_two_sided": 0.0
+          },
+          {
+            "slice": "research markets only",
+            "mean": 0.24192438849154954,
+            "low": 0.14624704245980003,
+            "high": 0.338747863575333,
+            "n": 321,
+            "groups": 321,
+            "p_two_sided": 0.0
+          },
+          {
+            "slice": "markets the hindsight filter dropped",
+            "mean": 0.12556718731682265,
+            "low": -0.15828152830487818,
+            "high": 0.395288933226896,
+            "n": 8,
+            "groups": 8,
+            "p_two_sided": 0.38
+          },
+          {
+            "slice": "lowest-volume third",
+            "mean": 0.2545808697157563,
+            "low": 0.11863962075467677,
+            "high": 0.40666095246092715,
+            "n": 107,
+            "groups": 107,
+            "p_two_sided": 0.001
+          }
+        ],
+        "w3": {
+          "auc_price_only": 0.8694509182402387,
+          "auc_with_wallets": 0.9177057597482673,
+          "gain": 0.04825484150802861,
+          "low": 0.03563825400070298,
+          "high": 0.06255475269479728,
+          "top5pct_lift": 13.195894833548378,
+          "coefficients": {
+            "intercept": -6.7611,
+            "abs_dp": 0.1402,
+            "recent_vol": 0.4179,
+            "gross_z": -0.0186,
+            "whale_z": -0.0546,
+            "wallets_z": 0.8308,
+            "new_z": 0.0037,
+            "imbalance": -0.0782
+          },
+          "train_hours": 457813,
+          "test_hours": 371132,
+          "test_jumps": 1361
+        },
+        "w5_whale": {
+          "mean": 0.008198631172956213,
+          "low": 0.006403774237887895,
+          "high": 0.009993488108024532,
+          "n": 13223,
+          "groups": 280,
+          "p_two_sided": 0.0
+        },
+        "w5_retail": {
+          "mean": 0.0009442135765308417,
+          "low": 0.0004917382033456022,
+          "high": 0.0014434499704750175,
+          "n": 44518,
+          "groups": 322,
+          "p_two_sided": 0.0005
+        },
+        "watched_wallet_hours": 837213,
+        "low_volume_cut_usd": 3151036.6666666665
+      },
+      "notes": [
+        "Watch rule: >= 24 h of history and probability 1 h earlier in 10-90%.",
+        "Pass rule (pre-registered): (a) V1 CI > 0 on all candidates, (b) W3 gain CI > 0, (c) W5 whale CI above retail."
+      ],
+      "tables": [
+        "v1_slices"
+      ],
+      "figures": [],
+      "seconds": 86.3
+    },
+    {
+      "id": "d2",
+      "title": "Stability over time",
+      "question": "Do the effects keep holding quarter by quarter, including the most recent quarter?",
+      "verdict": "pass",
+      "headline": "V1 positive in 6 of 6 quarters (latest 2026Q2: +0.12\u00d7); W3 rolling gain positive in 8 of 8 quarters, pooled +0.049 (CI +0.040 to +0.060); W5 whale beats retail in 8 of 8 quarters.",
+      "metrics": {
+        "checks": {
+          "a_v1_quarters": true,
+          "b_w3_rolling": true,
+          "c_w5_quarters": true
+        },
+        "w3_pooled": {
+          "gain": 0.04910181927849078,
+          "low": 0.039522949775924535,
+          "high": 0.06049393164089344
+        },
+        "v1_quarters": [
+          {
+            "quarter": "2024Q4",
+            "mean": 0.19256177836438687,
+            "markets": 5
+          },
+          {
+            "quarter": "2025Q1",
+            "mean": 0.2481072589931058,
+            "markets": 48
+          },
+          {
+            "quarter": "2025Q2",
+            "mean": 0.3007339154224479,
+            "markets": 48
+          },
+          {
+            "quarter": "2025Q3",
+            "mean": 0.44344318899521823,
+            "markets": 50
+          },
+          {
+            "quarter": "2025Q4",
+            "mean": 0.2777576898462823,
+            "markets": 61
+          },
+          {
+            "quarter": "2026Q1",
+            "mean": 0.27926005320069863,
+            "markets": 56
+          },
+          {
+            "quarter": "2026Q2",
+            "mean": 0.12104604032417332,
+            "markets": 75
+          },
+          {
+            "quarter": "2026Q3",
+            "mean": 0.3865217852953731,
+            "markets": 14
+          },
+          {
+            "quarter": "2026Q4",
+            "mean": -0.10661195115561499,
+            "markets": 4
+          }
+        ],
+        "w3_quarters": [
+          {
+            "quarter": "2025Q1",
+            "auc_price_only": 0.8819754742821888,
+            "auc_with_wallets": 0.9428675652120588,
+            "gain": 0.060892090929870024,
+            "test_hours": 87105,
+            "jumps": 310
+          },
+          {
+            "quarter": "2025Q2",
+            "auc_price_only": 0.8861676444644648,
+            "auc_with_wallets": 0.9316642259174079,
+            "gain": 0.04549658145294311,
+            "test_hours": 95553,
+            "jumps": 367
+          },
+          {
+            "quarter": "2025Q3",
+            "auc_price_only": 0.8906960337068861,
+            "auc_with_wallets": 0.9548007085978981,
+            "gain": 0.06410467489101201,
+            "test_hours": 161979,
+            "jumps": 264
+          },
+          {
+            "quarter": "2025Q4",
+            "auc_price_only": 0.8608237155076455,
+            "auc_with_wallets": 0.9048800538337858,
+            "gain": 0.04405633832614031,
+            "test_hours": 137002,
+            "jumps": 450
+          },
+          {
+            "quarter": "2026Q1",
+            "auc_price_only": 0.8917394310258824,
+            "auc_with_wallets": 0.935598336119857,
+            "gain": 0.04385890509397461,
+            "test_hours": 151531,
+            "jumps": 430
+          },
+          {
+            "quarter": "2026Q2",
+            "auc_price_only": 0.853815218370636,
+            "auc_with_wallets": 0.8970889805312193,
+            "gain": 0.04327376216058332,
+            "test_hours": 118571,
+            "jumps": 758
+          },
+          {
+            "quarter": "2026Q3",
+            "auc_price_only": 0.844941607030467,
+            "auc_with_wallets": 0.954136460057344,
+            "gain": 0.10919485302687704,
+            "test_hours": 42969,
+            "jumps": 70
+          },
+          {
+            "quarter": "2026Q4",
+            "auc_price_only": 0.8534585662043745,
+            "auc_with_wallets": 0.9347788587594011,
+            "gain": 0.0813202925550266,
+            "test_hours": 9692,
+            "jumps": 30
+          }
+        ],
+        "w5_quarters": [
+          {
+            "quarter": "2024Q3",
+            "whale": 0.004500000000000004,
+            "whale_markets": 1,
+            "retail": -0.006111111111111117,
+            "retail_markets": 1,
+            "diff": 0.01061111111111112
+          },
+          {
+            "quarter": "2024Q4",
+            "whale": 0.009213483146067415,
+            "whale_markets": 22,
+            "retail": -0.0013490566037735845,
+            "retail_markets": 34,
+            "diff": 0.010562539749841
+          },
+          {
+            "quarter": "2025Q1",
+            "whale": 0.010533538025507794,
+            "whale_markets": 91,
+            "retail": 0.001488705768298594,
+            "retail_markets": 107,
+            "diff": 0.009044832257209201
+          },
+          {
+            "quarter": "2025Q2",
+            "whale": 0.00853125,
+            "whale_markets": 97,
+            "retail": 0.002164061581854507,
+            "retail_markets": 112,
+            "diff": 0.006367188418145493
+          },
+          {
+            "quarter": "2025Q3",
+            "whale": 0.009994615384615385,
+            "whale_markets": 100,
+            "retail": 0.0032775271242883233,
+            "retail_markets": 137,
+            "diff": 0.0067170882603270615
+          },
+          {
+            "quarter": "2025Q4",
+            "whale": 0.008904377880184331,
+            "whale_markets": 120,
+            "retail": 0.0018050283860502835,
+            "retail_markets": 158,
+            "diff": 0.0070993494941340475
+          },
+          {
+            "quarter": "2026Q1",
+            "whale": 0.007623360655737705,
+            "whale_markets": 143,
+            "retail": 0.0013839015363911631,
+            "retail_markets": 183,
+            "diff": 0.0062394591193465415
+          },
+          {
+            "quarter": "2026Q2",
+            "whale": 0.009922535211267606,
+            "whale_markets": 151,
+            "retail": 0.0009841006533278887,
+            "retail_markets": 177,
+            "diff": 0.008938434557939717
+          },
+          {
+            "quarter": "2026Q3",
+            "whale": 0.0071718905472636825,
+            "whale_markets": 40,
+            "retail": 5.3943097193049665e-05,
+            "retail_markets": 44,
+            "diff": 0.007117947450070633
+          },
+          {
+            "quarter": "2026Q4",
+            "whale": 0.002364321608040201,
+            "whale_markets": 17,
+            "retail": -0.0011254002134471713,
+            "retail_markets": 20,
+            "diff": 0.0034897218214873724
+          }
+        ]
+      },
+      "notes": [
+        "W3 is rolling-origin: each quarter is scored by a model trained only on hours before it.",
+        "Pass rule (pre-registered): V1 > 0 in >= 2/3 of quarters with >= 20 markets and in the latest; W3 gain > 0 in >= 2/3 of quarters and pooled CI > 0; W5 whale > retail in >= 2/3 of quarters."
+      ],
+      "tables": [
+        "v1_quarters",
+        "w3_quarters",
+        "w5_quarters"
+      ],
+      "figures": [
+        "v1_quarters"
+      ],
+      "seconds": 77.0
+    },
+    {
+      "id": "d3",
+      "title": "Alert value and load",
+      "question": "Does an alert carry information, and would a daily user get a usable number of them?",
+      "verdict": "pass",
+      "headline": "An alert is followed by a big move (top 20% of the asset's hours) 25% of the time for related assets vs 18% for unrelated ones (difference +7.5 points, CI +4.6 to +10.3). Reference portfolio: at least one alert on 55% of days, median 1/day, 95th percentile 8/day.",
+      "metrics": {
+        "checks": {
+          "a_alert_value": true,
+          "b_load_some_days": true,
+          "b_load_not_spam": true
+        },
+        "value": {
+          "mean": 0.07489086358008488,
+          "low": 0.04573482091128884,
+          "high": 0.10255859488707586,
+          "n": 329,
+          "groups": 329,
+          "p_two_sided": 0.0
+        },
+        "mapped_big_rate": 0.25238931235736056,
+        "placebo_big_rate": 0.17749844877727566,
+        "share_days_with_alert": 0.5469613259668509,
+        "median_per_day": 1.0,
+        "p95_per_day": 8.0,
+        "mean_watched_markets_per_day": 28.845303867403317,
+        "window": [
+          "2026-05-08",
+          "2026-11-04"
+        ]
+      },
+      "notes": [
+        "Counts are a lower bound: only a sample of markets was collected (limitation L5).",
+        "Pass rule (pre-registered): big-move rate mapped \u2212 placebo CI > 0; >= 1 alert on >= 50% of days; 95th percentile <= 30 alerts/day."
+      ],
+      "tables": [
+        "alerts_per_day"
+      ],
+      "figures": [
+        "alerts_per_day"
+      ],
+      "seconds": 1.8
+    },
+    {
+      "id": "d4",
+      "title": "Live feasibility",
+      "question": "Can the app get the live data it needs, fresh and fast enough?",
+      "verdict": "pass",
+      "headline": "20261127-021157_live_check: refresh 21.1 s for 50 watched markets; median latest-trade age 19.1 min; BTC bar age -1.1 min; sources {'gamma': True, 'data_api': True, 'clob': True, 'yahoo': True}.",
+      "metrics": {
+        "id": "d4",
+        "verdict": "pass",
+        "run_at": "2026-11-26T18:12:18.116135+00:00",
+        "reachable": {
+          "gamma": true,
+          "data_api": true,
+          "clob": true,
+          "yahoo": true
+        },
+        "checks": {
+          "all_sources_reachable": true,
+          "median_trade_age_ok": true,
+          "btc_bar_fresh": true,
+          "refresh_fast": true
+        },
+        "refresh_seconds": 21.1,
+        "markets_scanned": 500,
+        "watched_markets": 50,
+        "median_trade_age_min": 19.11565373738607,
+        "markets_with_trade_last_hour": 45,
+        "btc_bar_age_min": -1.1426795959472655
+      },
+      "notes": [
+        "Pass rule (pre-registered): all sources reachable; median trade age <= 60 min; BTC bar <= 90 min; refresh <= 120 s."
+      ],
+      "tables": [],
+      "figures": [],
+      "seconds": 0.0
+    },
+    {
+      "id": "d5",
+      "title": "Daily resolution",
+      "question": "Is a once-a-day summary still informative?",
+      "verdict": "pass",
+      "headline": "Day level: on days a related market moves \u2265 10 points, related assets' daily move exceeds unrelated by +0.23\u00d7 (CI +0.16 to +0.30, 397 markets); without crypto-price markets +0.11\u00d7 (CI +0.04 to +0.17).",
+      "metrics": {
+        "main": {
+          "mean": 0.2267546833683681,
+          "low": 0.15752095347406941,
+          "high": 0.29811898294394523,
+          "n": 397,
+          "groups": 397,
+          "p_two_sided": 0.0
+        },
+        "without_crypto_price_markets": {
+          "mean": 0.10586679163096958,
+          "low": 0.04339682453665585,
+          "high": 0.16893675029379857,
+          "n": 329,
+          "groups": 329,
+          "p_two_sided": 0.0005
+        }
+      },
+      "notes": [
+        "Probability sampled at each asset's daily close (16:00 ET stocks, 00:00 UTC crypto).",
+        "Pass rule: CI > 0. Not required to build; decides the daily digest."
+      ],
+      "tables": [],
+      "figures": [],
+      "seconds": 1.1
+    },
+    {
+      "id": "d6",
+      "title": "Generality across event types",
+      "question": "Does the effect hold across event types, not only one group?",
+      "verdict": "pass",
+      "headline": "Positive in 6 of 7 event groups (ai_tech +0.13, crypto +0.35, energy_mideast +0.17, rates +0.48, trade_china +0.52, us_politics -0.12, war_europe +0.20); leaving out any one group, the smallest lower CI is +0.10.",
+      "metrics": {
+        "checks": {
+          "half_of_groups_positive": true,
+          "no_group_drives_it": true
+        },
+        "by_group": [
+          {
+            "group": "ai_tech",
+            "mean": 0.12698727315954486,
+            "low": -0.02296730567848072,
+            "high": 0.26384299172250036,
+            "n": 40,
+            "groups": 40,
+            "p_two_sided": 0.0855
+          },
+          {
+            "group": "crypto",
+            "mean": 0.35221994298785897,
+            "low": 0.14908745788336114,
+            "high": 0.547560793346046,
+            "n": 65,
+            "groups": 65,
+            "p_two_sided": 0.0
+          },
+          {
+            "group": "energy_mideast",
+            "mean": 0.17450283070728717,
+            "low": 0.017945116916322376,
+            "high": 0.3445692120284679,
+            "n": 85,
+            "groups": 85,
+            "p_two_sided": 0.034
+          },
+          {
+            "group": "rates",
+            "mean": 0.48283988521893934,
+            "low": -0.03471704891048922,
+            "high": 1.0029259216427013,
+            "n": 33,
+            "groups": 33,
+            "p_two_sided": 0.071
+          },
+          {
+            "group": "trade_china",
+            "mean": 0.518753890988436,
+            "low": 0.11566621410389064,
+            "high": 1.024731952998463,
+            "n": 27,
+            "groups": 27,
+            "p_two_sided": 0.027
+          },
+          {
+            "group": "us_politics",
+            "mean": -0.12158842836750769,
+            "low": -0.30451604680145633,
+            "high": 0.045385135006955644,
+            "n": 38,
+            "groups": 38,
+            "p_two_sided": 0.182
+          },
+          {
+            "group": "war_europe",
+            "mean": 0.20347736706978886,
+            "low": 0.07852520971045836,
+            "high": 0.34778744721232824,
+            "n": 37,
+            "groups": 37,
+            "p_two_sided": 0.005
+          }
+        ],
+        "leave_one_out": [
+          {
+            "left_out": "ai_tech",
+            "mean": 0.2546116791624228,
+            "low": 0.15425042132561562,
+            "high": 0.36189051506087805,
+            "n": 289,
+            "groups": 289,
+            "p_two_sided": 0.0
+          },
+          {
+            "left_out": "crypto",
+            "mean": 0.21124231026557252,
+            "low": 0.10450583938136725,
+            "high": 0.31740338640679105,
+            "n": 264,
+            "groups": 264,
+            "p_two_sided": 0.0
+          },
+          {
+            "left_out": "energy_mideast",
+            "mean": 0.2615964163696826,
+            "low": 0.14743244407437353,
+            "high": 0.37449517226515433,
+            "n": 244,
+            "groups": 244,
+            "p_two_sided": 0.0
+          },
+          {
+            "left_out": "rates",
+            "mean": 0.21192077700032763,
+            "low": 0.12411372194870658,
+            "high": 0.30475817658092774,
+            "n": 296,
+            "groups": 296,
+            "p_two_sided": 0.0
+          },
+          {
+            "left_out": "trade_china",
+            "mean": 0.21409242101865633,
+            "low": 0.1172689139350642,
+            "high": 0.31344471811124625,
+            "n": 302,
+            "groups": 302,
+            "p_two_sided": 0.0
+          },
+          {
+            "left_out": "us_politics",
+            "mean": 0.28619459272263664,
+            "low": 0.18581329739566707,
+            "high": 0.3912916125191481,
+            "n": 291,
+            "groups": 291,
+            "p_two_sided": 0.0
+          },
+          {
+            "left_out": "war_europe",
+            "mean": 0.24360823158472533,
+            "low": 0.13952856538450728,
+            "high": 0.34634476161139505,
+            "n": 292,
+            "groups": 292,
+            "p_two_sided": 0.0
+          }
+        ]
+      },
+      "notes": [
+        "Pass rule (pre-registered): > 0 in >= half of groups with >= 10 markets; every leave-one-group-out CI > 0."
+      ],
+      "tables": [
+        "by_group",
+        "leave_one_out"
+      ],
+      "figures": [],
+      "seconds": 0.1
+    }
+  ]
+}

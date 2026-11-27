@@ -1,0 +1,38 @@
+{
+  "id": "e3",
+  "title": "Information in skilled wallets' trades (H2)",
+  "question": "Is the price more likely to move in a trade's direction when the trader has proven skill?",
+  "verdict": "inconclusive",
+  "headline": "Top-tier trades beat other trades by -1.17 points to resolution (95% CI -2.43 to -0.00; 12 markets, 3 events).",
+  "metrics": {
+    "main": {
+      "sample": "band",
+      "weighting": "equal",
+      "horizon": "markout_res",
+      "top_mean": -0.006866797024140683,
+      "rest_mean": 0.004847502548713545,
+      "diff": -0.011714299572854225,
+      "low": -0.024257804590925636,
+      "high": -8.728124066733253e-06,
+      "p": 0.0285,
+      "markets": 12,
+      "events": 3
+    },
+    "top_tier_share_of_trades": 0.043706323035713285,
+    "period_b_trades": 1467264,
+    "banded_trades": 536467
+  },
+  "notes": [
+    "Skill tier is decided with markets closed before each trade (walk-forward).",
+    "Main test (pre-registered): trades with YES price in the band, equal weight, to resolution; per-market differences, bootstrap over events. Fewer than 5 events or 10 markets = inconclusive."
+  ],
+  "tables": [
+    "markout_tests",
+    "per_market_main",
+    "tier_means_pct_points"
+  ],
+  "figures": [
+    "markouts"
+  ],
+  "seconds": 10.1
+}

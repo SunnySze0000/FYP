@@ -1,0 +1,561 @@
+{
+  "id": "d4",
+  "verdict": "pass",
+  "run_at": "2026-11-26T18:12:18.116135+00:00",
+  "reachable": {
+    "gamma": true,
+    "data_api": true,
+    "clob": true,
+    "yahoo": true
+  },
+  "checks": {
+    "all_sources_reachable": true,
+    "median_trade_age_ok": true,
+    "btc_bar_fresh": true,
+    "refresh_fast": true
+  },
+  "refresh_seconds": 21.1,
+  "markets_scanned": 500,
+  "watched_markets": 50,
+  "median_trade_age_min": 19.11565373738607,
+  "markets_with_trade_last_hour": 45,
+  "btc_bar_age_min": -1.1426795959472655,
+  "assets": [
+    {
+      "symbol": "SPY",
+      "latest_bar_age_min": 1271.0739870707193,
+      "bars": 391
+    },
+    {
+      "symbol": "QQQ",
+      "latest_bar_age_min": 1271.0739870707193,
+      "bars": 391
+    },
+    {
+      "symbol": "TLT",
+      "latest_bar_age_min": 1271.0739870707193,
+      "bars": 391
+    },
+    {
+      "symbol": "GLD",
+      "latest_bar_age_min": 1271.0739870707193,
+      "bars": 391
+    },
+    {
+      "symbol": "USO",
+      "latest_bar_age_min": 1271.0739870707193,
+      "bars": 380
+    },
+    {
+      "symbol": "BTC-USD",
+      "latest_bar_age_min": -1.1426795959472655,
+      "bars": 1093
+    }
+  ],
+  "markets": [
+    {
+      "id": "3580932",
+      "question": "Will Chiang Wan-an win the next Taipei Mayor election?",
+      "groups": [
+        "us_politics"
+      ],
+      "latest_trade_age_min": 0.20732040405273439,
+      "trades_last_hour": 100,
+      "midpoint": 0.615
+    },
+    {
+      "id": "3580933",
+      "question": "Will Puma Shen win the next Taipei Mayor election?",
+      "groups": [
+        "us_politics"
+      ],
+      "latest_trade_age_min": 0.5073204040527344,
+      "trades_last_hour": 100,
+      "midpoint": 0.3785
+    },
+    {
+      "id": "682705",
+      "question": "Will Benjamin Netanyahu be the next Prime Minister of Israel?",
+      "groups": [
+        "energy_mideast"
+      ],
+      "latest_trade_age_min": 1.123987070719401,
+      "trades_last_hour": 100,
+      "midpoint": 0.11
+    },
+    {
+      "id": "682708",
+      "question": "Will Gadi Eizenkot be the next Prime Minister of Israel?",
+      "groups": [
+        "energy_mideast"
+      ],
+      "latest_trade_age_min": 1.123987070719401,
+      "trades_last_hour": 100,
+      "midpoint": 0.7835
+    },
+    {
+      "id": "1339767",
+      "question": "Will Bitcoin dip to $50,000 by December 31, 2026?",
+      "groups": [
+        "crypto"
+      ],
+      "latest_trade_age_min": 41.1739870707194,
+      "trades_last_hour": 4,
+      "midpoint": 0.2825
+    },
+    {
+      "id": "701502",
+      "question": "Will Bitcoin dip to $45,000 by December 31, 2026?",
+      "groups": [
+        "crypto"
+      ],
+      "latest_trade_age_min": 34.05732040405273,
+      "trades_last_hour": 5,
+      "midpoint": 0.1335
+    },
+    {
+      "id": "679022",
+      "question": "Will David Lisnard win the 2027 French presidential election?",
+      "groups": [
+        "us_politics"
+      ],
+      "latest_trade_age_min": 19.307320404052735,
+      "trades_last_hour": 13,
+      "midpoint": 0.2215
+    },
+    {
+      "id": "3580994",
+      "question": "Will Lee Shu-chuan win the next New Taipei Mayor election?",
+      "groups": [
+        "us_politics"
+      ],
+      "latest_trade_age_min": 4.573987070719401,
+      "trades_last_hour": 79,
+      "midpoint": 0.37
+    },
+    {
+      "id": "4418550",
+      "question": "Will AI solve P versus NP in 2026?",
+      "groups": [
+        "ai_tech"
+      ],
+      "latest_trade_age_min": 0.12398707071940104,
+      "trades_last_hour": 56,
+      "midpoint": 0.1505
+    },
+    {
+      "id": "679030",
+      "question": "Will Jean-Luc M\u00e9lenchon win the 2027 French presidential election?",
+      "groups": [
+        "us_politics"
+      ],
+      "latest_trade_age_min": 18.923987070719402,
+      "trades_last_hour": 2,
+      "midpoint": 0.145
+    },
+    {
+      "id": "3580995",
+      "question": "Will Su Chiao-hui win the next New Taipei Mayor election?",
+      "groups": [
+        "us_politics"
+      ],
+      "latest_trade_age_min": 4.873987070719401,
+      "trades_last_hour": 18,
+      "midpoint": 0.635
+    },
+    {
+      "id": "5336560",
+      "question": "Will PSOE win the most seats in the 2026 Spanish general election?",
+      "groups": [
+        "us_politics"
+      ],
+      "latest_trade_age_min": 8.557320404052735,
+      "trades_last_hour": 51,
+      "midpoint": 0.265
+    },
+    {
+      "id": "701501",
+      "question": "Will Bitcoin dip to $55,000 by December 31, 2026?",
+      "groups": [
+        "crypto"
+      ],
+      "latest_trade_age_min": 34.1239870707194,
+      "trades_last_hour": 33,
+      "midpoint": 0.485
+    },
+    {
+      "id": "4418549",
+      "question": "Will AI solve the Riemann Hypothesis in 2026?",
+      "groups": [
+        "ai_tech"
+      ],
+      "latest_trade_age_min": 5.907320404052735,
+      "trades_last_hour": 57,
+      "midpoint": 0.745
+    },
+    {
+      "id": "7288834",
+      "question": "Will Bitcoin reach $62,500 in November?",
+      "groups": [
+        "crypto"
+      ],
+      "latest_trade_age_min": 1.7073204040527343,
+      "trades_last_hour": 16,
+      "midpoint": 0.47
+    },
+    {
+      "id": "6976265",
+      "question": "Will Puma Shen win the 2026 Taipei Mayoral Election by 8% or more?",
+      "groups": [
+        "us_politics"
+      ],
+      "latest_trade_age_min": 14.473987070719401,
+      "trades_last_hour": 100,
+      "midpoint": 0.1225
+    },
+    {
+      "id": "6507392",
+      "question": "Will Bitcoin dip to $55,000 in November?",
+      "groups": [
+        "crypto"
+      ],
+      "latest_trade_age_min": 1.6739870707194011,
+      "trades_last_hour": 47,
+      "midpoint": 0.1115
+    },
+    {
+      "id": "7289328",
+      "question": "Will Bitcoin reach $64,000 November 23-29?",
+      "groups": [
+        "crypto"
+      ],
+      "latest_trade_age_min": 45.30732040405273,
+      "trades_last_hour": 6,
+      "midpoint": 0.165
+    },
+    {
+      "id": "5336560",
+      "question": "Will PSOE win the most seats in the 2026 Spanish general election?",
+      "groups": [
+        "us_politics"
+      ],
+      "latest_trade_age_min": 8.557320404052735,
+      "trades_last_hour": 51,
+      "midpoint": 0.265
+    },
+    {
+      "id": "5336561",
+      "question": "Will PP win the most seats in the 2026 Spanish general election?",
+      "groups": [
+        "us_politics"
+      ],
+      "latest_trade_age_min": 0.9073204040527344,
+      "trades_last_hour": 26,
+      "midpoint": 0.745
+    },
+    {
+      "id": "679018",
+      "question": "Will Marine Le Pen win the 2027 French presidential election?",
+      "groups": [
+        "us_politics"
+      ],
+      "latest_trade_age_min": 21.5239870707194,
+      "trades_last_hour": 12,
+      "midpoint": 0.4415
+    },
+    {
+      "id": "6831495",
+      "question": "US x Iran Effective Ceasefire by November 22?",
+      "groups": [
+        "energy_mideast",
+        "war_europe"
+      ],
+      "latest_trade_age_min": 15.5739870707194,
+      "trades_last_hour": 24,
+      "midpoint": 0.605
+    },
+    {
+      "id": "6617887",
+      "question": "Belgium snap election called by December 31?",
+      "groups": [
+        "us_politics"
+      ],
+      "latest_trade_age_min": 40.9239870707194,
+      "trades_last_hour": 2,
+      "midpoint": 0.125
+    },
+    {
+      "id": "7351886",
+      "question": "Will Bitcoin dip to $58,000 November 23-29?",
+      "groups": [
+        "crypto"
+      ],
+      "latest_trade_age_min": 34.4739870707194,
+      "trades_last_hour": 6,
+      "midpoint": 0.265
+    },
+    {
+      "id": "7150681",
+      "question": "Will Bitcoin reach $65,000 in November?",
+      "groups": [
+        "crypto"
+      ],
+      "latest_trade_age_min": 6.807320404052734,
+      "trades_last_hour": 32,
+      "midpoint": 0.155
+    },
+    {
+      "id": "6367369",
+      "question": "Israel x Iran ceasefire continues through December 15?",
+      "groups": [
+        "energy_mideast",
+        "war_europe"
+      ],
+      "latest_trade_age_min": 11.273987070719402,
+      "trades_last_hour": 9,
+      "midpoint": 0.825
+    },
+    {
+      "id": "691340",
+      "question": "AI bubble burst in 2026?",
+      "groups": [
+        "ai_tech"
+      ],
+      "latest_trade_age_min": 1.073987070719401,
+      "trades_last_hour": 10,
+      "midpoint": 0.1665
+    },
+    {
+      "id": "3215013",
+      "question": "Will the Fed increase interest rates by 25 bps after the January 2027 meeting?",
+      "groups": [
+        "rates"
+      ],
+      "latest_trade_age_min": 31.657320404052733,
+      "trades_last_hour": 8,
+      "midpoint": 0.535
+    },
+    {
+      "id": "3581449",
+      "question": "Will Ko Chih-en win the next Kaohsiung Mayor election?",
+      "groups": [
+        "us_politics"
+      ],
+      "latest_trade_age_min": 38.30732040405273,
+      "trades_last_hour": 7,
+      "midpoint": 0.229
+    },
+    {
+      "id": "3215012",
+      "question": "Will there be no change in Fed interest rates after the January 2027 meeting?",
+      "groups": [
+        "rates"
+      ],
+      "latest_trade_age_min": 31.657320404052733,
+      "trades_last_hour": 8,
+      "midpoint": 0.435
+    },
+    {
+      "id": "7363483",
+      "question": "Will Bitcoin reach $62,000 on November 26?",
+      "groups": [
+        "crypto"
+      ],
+      "latest_trade_age_min": 15.523987070719402,
+      "trades_last_hour": 85,
+      "midpoint": 0.1
+    },
+    {
+      "id": "7203527",
+      "question": "Will the price of Bitcoin be above $62,000 on November 27?",
+      "groups": [
+        "crypto"
+      ],
+      "latest_trade_age_min": 2.223987070719401,
+      "trades_last_hour": 29,
+      "midpoint": 0.145
+    },
+    {
+      "id": "7279439",
+      "question": "Will Ethereum dip to $1,600 November 23-29?",
+      "groups": [
+        "crypto"
+      ],
+      "latest_trade_age_min": 19.307320404052735,
+      "trades_last_hour": 12,
+      "midpoint": 0.265
+    },
+    {
+      "id": "3581388",
+      "question": "Will Johnny Chiang win the next Taichung Mayor election?",
+      "groups": [
+        "us_politics"
+      ],
+      "latest_trade_age_min": 30.2239870707194,
+      "trades_last_hour": 4,
+      "midpoint": 0.805
+    },
+    {
+      "id": "7350617",
+      "question": "Will Bitcoin dip to $57,500 in November?",
+      "groups": [
+        "crypto"
+      ],
+      "latest_trade_age_min": 2.0073204040527344,
+      "trades_last_hour": 10,
+      "midpoint": 0.315
+    },
+    {
+      "id": "701552",
+      "question": "Will Ethereum dip to $1,500 by December 31, 2026?",
+      "groups": [
+        "crypto"
+      ],
+      "latest_trade_age_min": 29.957320404052734,
+      "trades_last_hour": 13,
+      "midpoint": 0.508
+    },
+    {
+      "id": "7289327",
+      "question": "Will Bitcoin reach $62,000 November 23-29?",
+      "groups": [
+        "crypto"
+      ],
+      "latest_trade_age_min": 23.007320404052734,
+      "trades_last_hour": 4,
+      "midpoint": 0.525
+    },
+    {
+      "id": "6992277",
+      "question": "Will Trump pardon Jensen Huang before 2027?",
+      "groups": [
+        "us_politics"
+      ],
+      "latest_trade_age_min": 3.873987070719401,
+      "trades_last_hour": 10,
+      "midpoint": 0.1155
+    },
+    {
+      "id": "1345233",
+      "question": "Will OpenAI\u2019s market cap be between $1.25T and $1.5T at market close on IPO day by December 31, 2027?",
+      "groups": [
+        "ai_tech"
+      ],
+      "latest_trade_age_min": 237.15732040405274,
+      "trades_last_hour": 0,
+      "midpoint": 0.165
+    },
+    {
+      "id": "1811265",
+      "question": "Pete Hegseth out as Secretary of Defense by December 31?",
+      "groups": [
+        "crypto"
+      ],
+      "latest_trade_age_min": 27.923987070719402,
+      "trades_last_hour": 2,
+      "midpoint": 0.115
+    },
+    {
+      "id": "1811265",
+      "question": "Pete Hegseth out as Secretary of Defense by December 31?",
+      "groups": [
+        "crypto"
+      ],
+      "latest_trade_age_min": 27.923987070719402,
+      "trades_last_hour": 2,
+      "midpoint": 0.115
+    },
+    {
+      "id": "7289354",
+      "question": "Will Ethereum reach $1,800 November 23-29?",
+      "groups": [
+        "crypto"
+      ],
+      "latest_trade_age_min": 43.1239870707194,
+      "trades_last_hour": 2,
+      "midpoint": 0.23
+    },
+    {
+      "id": "4338136",
+      "question": "Russia x Ukraine ceasefire agreement by May 31, 2027?",
+      "groups": [
+        "war_europe"
+      ],
+      "latest_trade_age_min": 84.60732040405273,
+      "trades_last_hour": 0,
+      "midpoint": 0.545
+    },
+    {
+      "id": "6831497",
+      "question": "US x Iran Effective Ceasefire by December 31?",
+      "groups": [
+        "energy_mideast",
+        "war_europe"
+      ],
+      "latest_trade_age_min": 72.55732040405273,
+      "trades_last_hour": 0,
+      "midpoint": 0.855
+    },
+    {
+      "id": "3581389",
+      "question": "Will Ho Hsin-chun win the next Taichung Mayor election?",
+      "groups": [
+        "us_politics"
+      ],
+      "latest_trade_age_min": 107.15732040405274,
+      "trades_last_hour": 0,
+      "midpoint": 0.2035
+    },
+    {
+      "id": "7043510",
+      "question": "Will Solana reach $80 in November?",
+      "groups": [
+        "crypto"
+      ],
+      "latest_trade_age_min": 140.35732040405273,
+      "trades_last_hour": 0,
+      "midpoint": 0.16
+    },
+    {
+      "id": "2431413",
+      "question": "Will Anthropic have the best AI model at the end of December 2026?",
+      "groups": [
+        "ai_tech"
+      ],
+      "latest_trade_age_min": 11.1739870707194,
+      "trades_last_hour": 3,
+      "midpoint": 0.18
+    },
+    {
+      "id": "6910695",
+      "question": "Will WTI Crude Oil (WTI) hit (HIGH) $90 in November?",
+      "groups": [
+        "energy_mideast"
+      ],
+      "latest_trade_age_min": 45.5239870707194,
+      "trades_last_hour": 2,
+      "midpoint": 0.13
+    },
+    {
+      "id": "814612",
+      "question": "Will Kuomintang (KMT) win the most head of local government elections in the 2026 Taiwan local elections?",
+      "groups": [
+        "trade_china",
+        "us_politics"
+      ],
+      "latest_trade_age_min": 14.507320404052734,
+      "trades_last_hour": 12,
+      "midpoint": 0.705
+    },
+    {
+      "id": "5420002",
+      "question": "Will Zoran Jankovi\u0107 win the 2026 Ljubljana mayoral election?",
+      "groups": [
+        "us_politics"
+      ],
+      "latest_trade_age_min": 48.20732040405274,
+      "trades_last_hour": 8,
+      "midpoint": 0.675
+    }
+  ]
+}

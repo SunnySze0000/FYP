@@ -1,0 +1,90 @@
+{
+  "id": "w2",
+  "title": "Will the jump stick?",
+  "question": "Do jumps backed by large, skilled, many or new wallets hold up better (or worse) over the next day?",
+  "verdict": "pass",
+  "headline": "1880 jumps; on average they continue -3.5 points over 24 h. Significant (Bonferroni): large wallets behind +3.9 pts (CI +0.2 to +7.6)",
+  "metrics": {
+    "jumps": 1880,
+    "mean_continuation": -0.03514308510638298,
+    "splits": [
+      {
+        "split": "large_wallets_behind",
+        "diff": 0.038993420103683216,
+        "low": 0.00215043985782438,
+        "high": 0.07613647280900579,
+        "mean_high_group": -0.0023305369127516722,
+        "mean_low_group": -0.04132395701643489,
+        "n_high": 298,
+        "n_low": 1582,
+        "markets": 445
+      },
+      {
+        "split": "skilled_wallets_behind",
+        "diff": 0.00872129129982013,
+        "low": -0.028139584354058066,
+        "high": 0.04708303661827298,
+        "mean_high_group": -0.02814285714285714,
+        "mean_low_group": -0.03686414844267727,
+        "n_high": 371,
+        "n_low": 1509,
+        "markets": 445
+      },
+      {
+        "split": "many_wallets",
+        "diff": 0.02148527245949926,
+        "low": -0.0009656881864659628,
+        "high": 0.045770594657840655,
+        "mean_high_group": -0.024743298969072163,
+        "mean_low_group": -0.046228571428571424,
+        "n_high": 970,
+        "n_low": 910,
+        "markets": 445
+      },
+      {
+        "split": "new_wallets_driven",
+        "diff": -0.004397872340425518,
+        "low": -0.02927056946842571,
+        "high": 0.021194381863295038,
+        "mean_high_group": -0.037342021276595735,
+        "mean_low_group": -0.03294414893617022,
+        "n_high": 940,
+        "n_low": 940,
+        "markets": 445
+      },
+      {
+        "split": "same_owner_groups_behind (secondary)",
+        "diff": null,
+        "low": null,
+        "high": null,
+        "mean_high_group": null,
+        "mean_low_group": null,
+        "n_high": 0,
+        "n_low": 1880,
+        "markets": 445
+      },
+      {
+        "split": "filtered_out_wallets_behind (secondary)",
+        "diff": 0.0040992013255055845,
+        "low": -0.023674805836162213,
+        "high": 0.030607815168326353,
+        "mean_high_group": -0.032620331950207464,
+        "mean_low_group": -0.03671953327571305,
+        "n_high": 723,
+        "n_low": 1157,
+        "markets": 445
+      }
+    ]
+  },
+  "notes": [
+    "Pass rule (pre-registered): any of the four main splits with a 98.75% CI (Bonferroni for 4 tests) excluding 0, in either direction; a reliable 'likely to revert' label is as useful as 'likely to stick'.",
+    "Same-owner groups and filtered-out wallets (team pipeline) are reported as secondary splits."
+  ],
+  "tables": [
+    "splits"
+  ],
+  "figures": [
+    "persistence"
+  ],
+  "seconds": 3.5
+}

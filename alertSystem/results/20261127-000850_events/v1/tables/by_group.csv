@@ -1,0 +1,17 @@
+group,kind,mean,count
+ai_tech,mapped,1.00882,196
+ai_tech,placebo,0.915772,102
+crypto,mapped,1.56531,348
+crypto,placebo,1.20728,154
+energy_mideast,mapped,1.197,320
+energy_mideast,placebo,1.16289,191
+macro,mapped,1.74127,20
+macro,placebo,1.19562,11
+rates,mapped,2.21696,194
+rates,placebo,1.57648,72
+trade_china,mapped,1.90891,182
+trade_china,placebo,1.19006,60
+us_politics,mapped,0.921778,158
+us_politics,placebo,0.969416,80
+war_europe,mapped,0.987229,251
+war_europe,placebo,0.875645,107

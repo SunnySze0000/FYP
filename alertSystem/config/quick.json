@@ -1,0 +1,6 @@
+{
+  "collect": {"sample_size": 40, "max_trade_pages": 20, "closed_from": "2026-06-01"},
+  "crypto": {"per_kind": {"5m": 40, "15m": 40, "1h": 40, "4h": 20}, "closed_from": "2026-09-01", "min_train_days": 10},
+  "events": {"max_markets": 150},
+  "research": {"bootstrap_draws": 500, "permutations": 300}
+}

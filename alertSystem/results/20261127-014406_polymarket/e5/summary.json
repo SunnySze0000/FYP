@@ -1,0 +1,33 @@
+{
+  "id": "e5",
+  "title": "App export",
+  "question": "What does the trading helper load?",
+  "verdict": "descriptive",
+  "headline": "Exported 2000 wallet track records (529 in the top tier) and 300 market pages. Out of sample, the top tier's net side won in 62% of 133 markets (the market's own mid-life favourite: 73%).",
+  "metrics": {
+    "ranked_wallets": 5284,
+    "top_wallets": 529,
+    "top_threshold": 0.07702813880343777,
+    "exported_wallets": 2000,
+    "markets": 300,
+    "out_of_sample_markets_with_top_flow": 133,
+    "top_net_side_hit_rate": 0.6165413533834586,
+    "market_favourite_hit_rate": 0.7293233082706767,
+    "fair_value": {
+      "a": 0.446840123306943,
+      "b": 0.8922600174694536,
+      "n": 343,
+      "fitted": true
+    }
+  },
+  "notes": [
+    "Wallet scores use every resolved market (the app looks forward from today), so historical market pages contain hindsight; the out-of-sample hit rate uses point-in-time tiers only."
+  ],
+  "tables": [
+    "market_index",
+    "wallet_recent_markets",
+    "wallet_scores"
+  ],
+  "figures": [],
+  "seconds": 27.5
+}

@@ -1,0 +1,209 @@
+{
+  "run_id": "20261127-001943_crypto",
+  "suite": "crypto",
+  "title": "T1 \u00b7 Polymarket crypto markets as a lead signal for BTC/ETH",
+  "dataset": "crypto",
+  "created_at": "2026-11-26T16:27:08.176402+00:00",
+  "seconds": 358.7,
+  "walletlens": "0.1.0",
+  "python": "3.12.3",
+  "pandas": "3.1.0",
+  "numpy": "2.4.3",
+  "settings": {
+    "root": "C:\\Users\\szewa\\Downloads\\fyptest1",
+    "collect": {
+      "closed_from": "2025-01-01",
+      "closed_to": "2026-10-31",
+      "min_volume_usd": 100000,
+      "min_duration_days": 7,
+      "contested_low": 0.15,
+      "contested_high": 0.85,
+      "min_contested_points": 3,
+      "sample_size": 300,
+      "seed": 20261126,
+      "trade_filter_type": "CASH",
+      "trade_filter_amount": 50,
+      "trade_page_size": 1000,
+      "max_trade_pages": 100,
+      "price_bucket_seconds": 3600,
+      "screen_bucket_seconds": 43200
+    },
+    "research": {
+      "calibration_horizons_days": [
+        1,
+        7,
+        30
+      ],
+      "calibration_bins": 10,
+      "skill_shrinkage_markets": 5,
+      "persistence_min_markets": 5,
+      "top_fraction": 0.1,
+      "min_prior_markets": 3,
+      "markout_horizons_s": [
+        3600,
+        86400
+      ],
+      "signal_min_usd": 100,
+      "signal_price_band": [
+        0.05,
+        0.95
+      ],
+      "copy_delays_s": [
+        60,
+        3600
+      ],
+      "copy_costs": [
+        0.01,
+        0.02
+      ],
+      "bootstrap_draws": 2000,
+      "permutations": 1000,
+      "seed": 7
+    },
+    "crypto": {
+      "closed_from": "2026-03-01",
+      "closed_to": "2026-11-20",
+      "min_volume_usd": 1000,
+      "assets": [
+        "BTC",
+        "ETH"
+      ],
+      "per_kind": {
+        "5m": 800,
+        "15m": 800,
+        "1h": 800,
+        "4h": 300
+      },
+      "seed": 20261126,
+      "trade_filter_type": "CASH",
+      "trade_filter_amount": 5,
+      "trade_page_size": 1000,
+      "max_trade_pages": 25,
+      "binance_data": "https://data.binance.vision",
+      "binance_api": "https://api.binance.com",
+      "horizons_min": [
+        5,
+        15,
+        60
+      ],
+      "main_horizon_min": 5,
+      "lookback_min": 5,
+      "vol_window_min": 60,
+      "stale_min": 10,
+      "min_train_days": 21,
+      "signal_quantile": 0.9,
+      "costs_bps": [
+        5,
+        20
+      ],
+      "delay_min": 1,
+      "bootstrap_draws": 2000,
+      "seed_research": 11
+    },
+    "events": {
+      "max_markets": 1200,
+      "max_per_group": 200,
+      "history_days": 180,
+      "price_bucket_seconds": 3600,
+      "yahoo_hourly_range": "730d",
+      "yahoo_daily_range": "5y",
+      "extra_assets": [
+        "QQQ",
+        "^VIX",
+        "VIXY",
+        "HYG"
+      ],
+      "shock_points": 0.1,
+      "min_markets_per_group": 10,
+      "bootstrap_draws": 2000,
+      "seed": 13
+    },
+    "app": {
+      "host": "127.0.0.1",
+      "port": 8765,
+      "live_cache_seconds": 60
+    }
+  },
+  "dataset_manifest": {
+    "dataset": "crypto",
+    "built_at": "2026-11-26T15:57:30.697170+00:00",
+    "markets": 5239,
+    "sampled": 5239,
+    "trades": 4632386,
+    "wallets": 103456,
+    "by_asset_kind": {
+      "BTC-15m": 800,
+      "BTC-1h": 800,
+      "BTC-4h": 300,
+      "BTC-5m": 639,
+      "ETH-15m": 800,
+      "ETH-1h": 800,
+      "ETH-4h": 300,
+      "ETH-5m": 800
+    },
+    "spot_minutes": {
+      "BTC": 421920,
+      "ETH": 421920
+    },
+    "validation_problems": [],
+    "config": {
+      "closed_from": "2026-03-01",
+      "closed_to": "2026-11-20",
+      "min_volume_usd": 1000,
+      "assets": [
+        "BTC",
+        "ETH"
+      ],
+      "per_kind": {
+        "5m": 800,
+        "15m": 800,
+        "1h": 800,
+        "4h": 300
+      },
+      "seed": 20261126,
+      "trade_filter_type": "CASH",
+      "trade_filter_amount": 5,
+      "trade_page_size": 1000,
+      "max_trade_pages": 25,
+      "binance_data": "https://data.binance.vision",
+      "binance_api": "https://api.binance.com",
+      "horizons_min": [
+        5,
+        15,
+        60
+      ],
+      "main_horizon_min": 5,
+      "lookback_min": 5,
+      "vol_window_min": 60,
+      "stale_min": 10,
+      "min_train_days": 21,
+      "signal_quantile": 0.9,
+      "costs_bps": [
+        5,
+        20
+      ],
+      "delay_min": 1,
+      "bootstrap_draws": 2000,
+      "seed_research": 11
+    }
+  },
+  "context": {
+    "window_shifts_s": {
+      "BTC-15m": 0,
+      "BTC-1h": 0,
+      "BTC-4h": 0,
+      "BTC-5m": 0,
+      "ETH-15m": 0,
+      "ETH-1h": 0,
+      "ETH-4h": 0,
+      "ETH-5m": 0
+    }
+  },
+  "verdicts": {
+    "c0": "pass",
+    "c1": "fail",
+    "c2": "fail",
+    "c3": "fail"
+  },
+  "decision": "T1 fails: Polymarket crypto markets do not lead spot. Move to T2 (event shocks -> assets)."
+}

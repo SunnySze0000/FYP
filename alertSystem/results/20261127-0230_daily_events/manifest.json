@@ -1,0 +1,187 @@
+{
+  "run_id": "20261127-0230_daily_events",
+  "suite": "daily",
+  "title": "T2-D \u00b7 Daily-use applicability (docs/05)",
+  "dataset": "events",
+  "created_at": "2026-11-26T18:17:04.695544+00:00",
+  "seconds": 180.0,
+  "walletlens": "0.1.0",
+  "python": "3.13.18",
+  "pandas": "3.0.5",
+  "numpy": "2.5.3",
+  "settings": {
+    "root": "/home/claude/ev2",
+    "collect": {
+      "closed_from": "2025-01-01",
+      "closed_to": "2026-10-31",
+      "min_volume_usd": 100000,
+      "min_duration_days": 7,
+      "contested_low": 0.15,
+      "contested_high": 0.85,
+      "min_contested_points": 3,
+      "sample_size": 300,
+      "seed": 20261126,
+      "trade_filter_type": "CASH",
+      "trade_filter_amount": 50,
+      "trade_page_size": 1000,
+      "max_trade_pages": 100,
+      "price_bucket_seconds": 3600,
+      "screen_bucket_seconds": 43200
+    },
+    "research": {
+      "calibration_horizons_days": [
+        1,
+        7,
+        30
+      ],
+      "calibration_bins": 10,
+      "skill_shrinkage_markets": 5,
+      "persistence_min_markets": 5,
+      "top_fraction": 0.1,
+      "min_prior_markets": 3,
+      "markout_horizons_s": [
+        3600,
+        86400
+      ],
+      "signal_min_usd": 100,
+      "signal_price_band": [
+        0.05,
+        0.95
+      ],
+      "copy_delays_s": [
+        60,
+        3600
+      ],
+      "copy_costs": [
+        0.01,
+        0.02
+      ],
+      "bootstrap_draws": 2000,
+      "permutations": 1000,
+      "seed": 7
+    },
+    "crypto": {
+      "closed_from": "2026-03-01",
+      "closed_to": "2026-11-20",
+      "min_volume_usd": 1000,
+      "assets": [
+        "BTC",
+        "ETH"
+      ],
+      "per_kind": {
+        "5m": 800,
+        "15m": 800,
+        "1h": 800,
+        "4h": 300
+      },
+      "seed": 20261126,
+      "trade_filter_type": "CASH",
+      "trade_filter_amount": 5,
+      "trade_page_size": 1000,
+      "max_trade_pages": 25,
+      "binance_data": "https://data.binance.vision",
+      "binance_api": "https://api.binance.com",
+      "horizons_min": [
+        5,
+        15,
+        60
+      ],
+      "main_horizon_min": 5,
+      "lookback_min": 5,
+      "vol_window_min": 60,
+      "stale_min": 10,
+      "min_train_days": 21,
+      "signal_quantile": 0.9,
+      "costs_bps": [
+        5,
+        20
+      ],
+      "delay_min": 1,
+      "bootstrap_draws": 2000,
+      "seed_research": 11
+    },
+    "events": {
+      "max_markets": 1200,
+      "max_per_group": 200,
+      "history_days": 180,
+      "price_bucket_seconds": 3600,
+      "yahoo_hourly_range": "730d",
+      "yahoo_daily_range": "5y",
+      "extra_assets": [
+        "QQQ",
+        "^VIX",
+        "VIXY",
+        "HYG"
+      ],
+      "shock_points": 0.1,
+      "trade_filter_amount": 250,
+      "max_trade_pages": 30,
+      "whale_trade_usd": 5000,
+      "new_wallet_days": 3,
+      "frequent_wallet_trades": 200,
+      "min_markets_per_group": 10,
+      "bootstrap_draws": 2000,
+      "seed": 13
+    },
+    "app": {
+      "host": "127.0.0.1",
+      "port": 8765,
+      "live_cache_seconds": 60
+    }
+  },
+  "dataset_manifest": {
+    "dataset": "events",
+    "built_at": "2026-11-26T16:08:15.361051+00:00",
+    "markets": 689,
+    "price_points": 1289448,
+    "assets_hourly": {
+      "BTC-USD": 17474,
+      "COIN": 5063,
+      "EEM": 5065,
+      "ETH-USD": 17471,
+      "EZU": 5065,
+      "FXI": 5064,
+      "GLD": 5092,
+      "HYG": 5092,
+      "IEF": 5092,
+      "ITA": 5092,
+      "IWM": 5092,
+      "KWEB": 5092,
+      "MSFT": 5092,
+      "MSTR": 5092,
+      "NVDA": 5092,
+      "QQQ": 5092,
+      "SHY": 5092,
+      "SMH": 5092,
+      "SPY": 5092,
+      "TLT": 5092,
+      "USO": 5092,
+      "UUP": 5092,
+      "VIXY": 5092,
+      "XLE": 5092,
+      "XLF": 5092,
+      "^VIX": 9980
+    },
+    "assets_daily": 26,
+    "groups": {
+      "energy_mideast": 170,
+      "us_politics": 164,
+      "war_europe": 144,
+      "crypto": 130,
+      "ai_tech": 88,
+      "rates": 58,
+      "trade_china": 38,
+      "macro": 9
+    }
+  },
+  "context": {},
+  "verdicts": {
+    "d1": "pass",
+    "d2": "pass",
+    "d3": "pass",
+    "d4": "pass",
+    "d5": "pass",
+    "d6": "pass"
+  },
+  "decision": "All required daily-use gates pass: build prototype v1 with a daily digest."
+}

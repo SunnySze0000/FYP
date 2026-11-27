@@ -1,0 +1,6 @@
+{
+  "research": {
+    "persistence_min_markets": 3,
+    "min_prior_markets": 3
+  }
+}

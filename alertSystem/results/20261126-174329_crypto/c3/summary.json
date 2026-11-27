@@ -1,0 +1,42 @@
+{
+  "id": "c3",
+  "title": "G3 \u00b7 Tradable after costs?",
+  "question": "Trading spot when the model's signal is strong, entering one minute late and paying fees: is it profitable?",
+  "verdict": "fail",
+  "headline": "Best rule (polymarket) nets -4.87 bps per trade at 5 bps cost (95% CI -7.44 to -2.19, 117 trades).",
+  "metrics": {
+    "main": {
+      "signal": "edge_polymarket",
+      "cost_bps": 5,
+      "trades": 117,
+      "days": 46,
+      "mean_bps": -4.872024740511396,
+      "low": -7.440195665716371,
+      "high": -2.190265042881506,
+      "hit_rate": 0.26495726495726496,
+      "gross_bps": 0.12797525948860408
+    },
+    "best": {
+      "signal": "edge_polymarket",
+      "cost_bps": 5,
+      "trades": 117,
+      "days": 46,
+      "mean_bps": -4.872024740511396,
+      "low": -7.440195665716371,
+      "high": -2.190265042881506,
+      "hit_rate": 0.26495726495726496,
+      "gross_bps": 0.12797525948860408
+    }
+  },
+  "notes": [
+    "Threshold: top 10% of |signal| on earlier days only; one open position per asset.",
+    "Pass rule: any rule with mean net return > 0 and CI above 0 at 5 bps; 20 bps (retail taker fees) is reported too. < 100 trades = inconclusive."
+  ],
+  "tables": [
+    "rules"
+  ],
+  "figures": [
+    "pnl"
+  ],
+  "seconds": 0.3
+}

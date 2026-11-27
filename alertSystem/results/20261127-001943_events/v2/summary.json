@@ -1,0 +1,36 @@
+{
+  "id": "v2",
+  "title": "Next-hour lead",
+  "question": "Does a probability shock tell us where the related asset goes in the following hour?",
+  "verdict": "pass",
+  "headline": "Next-hour direction after shocks: hit rate 53.1% (95% CI 50.6% to 55.5%, 343 markets). Next-hour size effect vs unrelated assets: -0.01\u00d7 (CI -0.08 to +0.06).",
+  "metrics": {
+    "direction": {
+      "mean": 0.03149157375654574,
+      "low": 0.006091660546295981,
+      "high": 0.05467993384416278,
+      "n": 343,
+      "groups": 343,
+      "p_two_sided": 0.014
+    },
+    "next_hour_size": {
+      "mean": -0.008494218470531379,
+      "low": -0.08053111236219719,
+      "high": 0.06370905960462314,
+      "n": 366,
+      "groups": 366,
+      "p_two_sided": 0.8205
+    }
+  },
+  "notes": [
+    "Direction uses the sign of each market-asset co-movement estimated on earlier hours only.",
+    "Pass rule (direction): hit rate above 50% with the 95% CI above 50%; < 30 markets = inconclusive. The size effect is reported as secondary (useful for a volatility warning)."
+  ],
+  "tables": [
+    "per_market_hits"
+  ],
+  "figures": [
+    "lead"
+  ],
+  "seconds": 0.1
+}

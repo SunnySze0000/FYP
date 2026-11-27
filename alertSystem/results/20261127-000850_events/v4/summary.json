@@ -1,0 +1,29 @@
+{
+  "id": "v4",
+  "title": "Stable exposures",
+  "question": "If an asset rose with an event's probability early on, does it still do so later?",
+  "verdict": "fail",
+  "headline": "Exposure keeps its sign in 44% of related market-asset pairs (95% CI 34% to 54%, 42 markets).",
+  "metrics": {
+    "main": {
+      "mean": -0.06115107913669065,
+      "low": -0.16129941789958765,
+      "high": 0.04032802964254574,
+      "n": 139,
+      "groups": 42,
+      "p_two_sided": 0.242
+    },
+    "pairs": 139
+  },
+  "notes": [
+    "Exposure = slope of hourly asset return on hourly change in the event's log-odds.",
+    "Pass rule: sign agreement above 50% with the 95% CI above 50%."
+  ],
+  "tables": [
+    "pairs"
+  ],
+  "figures": [
+    "stability"
+  ],
+  "seconds": 0.0
+}

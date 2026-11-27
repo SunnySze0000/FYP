@@ -1,0 +1,42 @@
+{
+  "id": "e2",
+  "title": "Skill persistence (H1)",
+  "question": "Do wallets with high edge in earlier markets also have high edge in later markets?",
+  "verdict": "fail",
+  "headline": "Spearman \u03c1 between period-A and period-B edge = 0.086 (95% CI -0.106 to 0.267, permutation p = 0.1588, 129 wallets with \u2265 5 markets in each period). Holding long-shot style fixed: \u03c1 = 0.085.",
+  "metrics": {
+    "edge_vs_fair": {
+      "rho": 0.08606887298747766,
+      "p_one_sided": 0.15884115884115885,
+      "low": -0.10607768775495807,
+      "high": 0.2673687952584388,
+      "n": 129
+    },
+    "edge_vs_price": {
+      "rho": 0.09489601967799645,
+      "p_one_sided": 0.14385614385614387,
+      "low": -0.09188247870294987,
+      "high": 0.29466949822182414,
+      "n": 129
+    },
+    "partial_longshot": {
+      "rho": 0.08528622540250448,
+      "n": 129
+    },
+    "rolling_mean_rho": 0.0807372728005249,
+    "rolling_events": 214,
+    "min_markets_per_period": 5
+  },
+  "notes": [
+    "Pass rule (pre-registered): \u03c1 > 0 with permutation p < 0.05; fewer than 30 wallets = inconclusive.",
+    "Edge is measured against fair value from E1; the raw-price version is reported for comparison."
+  ],
+  "tables": [
+    "rolling",
+    "wallet_pairs"
+  ],
+  "figures": [
+    "persistence"
+  ],
+  "seconds": 28.9
+}

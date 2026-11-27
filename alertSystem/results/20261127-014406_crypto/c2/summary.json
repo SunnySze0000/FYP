@@ -1,0 +1,48 @@
+{
+  "id": "c2",
+  "title": "G2 \u00b7 Do skilled wallets lead?",
+  "question": "Does net buying by wallets with a proven record (judged only on earlier markets) predict spot?",
+  "verdict": "fail",
+  "headline": "Skilled-wallet flow changes out-of-sample R\u00b2 by -0.009% beyond plain flow (95% CI -0.033% to +0.013%); crypto wallet edge persistence \u03c1 = 0.09 (2588 wallets).",
+  "metrics": {
+    "skill_over_flow": {
+      "gain": -9.45037454491704e-05,
+      "low": -0.0003289794936863932,
+      "high": 0.00012756392781418076,
+      "days": 229,
+      "rows": 204555,
+      "r2_model": -0.0005212622882428963,
+      "r2_baseline": -0.00042671821632400686,
+      "p_gain_le_0": 0.7825
+    },
+    "flow_over_price": {
+      "gain": -2.2367458596628254e-05,
+      "low": -0.0001783042339129237,
+      "high": 0.00011770934704523883,
+      "days": 229,
+      "rows": 204555,
+      "r2_model": -0.00042671821632400686,
+      "r2_baseline": -0.0004043417136310179,
+      "p_gain_le_0": 0.619
+    },
+    "ic_top_flow": {
+      "ic": -0.016290941917213083,
+      "low": -0.03203344906152292,
+      "high": -0.0006935972733846844,
+      "days": 249
+    },
+    "persistence_rho": 0.08604048227416945,
+    "persistence_wallets": 2588
+  },
+  "notes": [
+    "Top tier = top 10% of shrunk edge among wallets with \u2265 5 resolved crypto markets before the trade.",
+    "Pass rule: skilled flow's R\u00b2 gain over plain flow > 0 with the 95% CI above 0."
+  ],
+  "tables": [
+    "wallet_pairs"
+  ],
+  "figures": [
+    "wallets"
+  ],
+  "seconds": 2.4
+}

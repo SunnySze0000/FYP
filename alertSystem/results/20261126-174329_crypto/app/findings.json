@@ -1,0 +1,188 @@
+{
+  "run_id": "20261126-174329_crypto",
+  "suite": "crypto",
+  "title": "T1 \u00b7 Polymarket crypto markets as a lead signal for BTC/ETH",
+  "dataset": "crypto",
+  "decision": "G0 failed: not enough aligned data to test T1. Fix the data (see C0) before judging the topic.",
+  "fair_value": {},
+  "experiments": [
+    {
+      "id": "c0",
+      "title": "G0 \u00b7 Data and alignment",
+      "question": "Do we have enough crypto markets, and do their windows line up with the spot candles?",
+      "verdict": "fail",
+      "headline": "276 markets with trades, 13,795 asset-minutes over 79 days; resolution matches the spot candle in 93.8% of markets.",
+      "metrics": {
+        "markets_sampled": 276,
+        "markets_with_trades": 276,
+        "trades": 184056,
+        "wallets": 10464,
+        "panel_minutes": 13795,
+        "panel_days": 79,
+        "outcome_vs_spot_agreement": 0.9384057971014492,
+        "window_shifts_s": {
+          "BTC-15m": 0,
+          "BTC-1h": 0,
+          "BTC-4h": 0,
+          "BTC-5m": 0,
+          "ETH-15m": 0,
+          "ETH-1h": 0,
+          "ETH-4h": 0,
+          "ETH-5m": -60
+        },
+        "corr_p_q": 0.972093119190376
+      },
+      "notes": [
+        "Pass rule: \u2265 500 markets with trades and \u2265 95% agreement between the resolution and spot(close) \u2265 spot(open) over the market window.",
+        "A window shift is applied only if it beats the documented window by 5+ points of agreement."
+      ],
+      "tables": [
+        "alignment",
+        "by_kind",
+        "coverage"
+      ],
+      "figures": [
+        "data"
+      ],
+      "seconds": 2.4
+    },
+    {
+      "id": "c1",
+      "title": "G1 \u00b7 Does Polymarket lead spot?",
+      "question": "Beyond what the spot path already says, does the Polymarket price predict the next spot return?",
+      "verdict": "fail",
+      "headline": "At 5 min, adding Polymarket's view changes out-of-sample R\u00b2 by -0.196% (95% CI -0.564% to +0.083%, 69 test days); daily rank correlation +0.008.",
+      "metrics": {
+        "main": {
+          "gain": -0.0019568470433330987,
+          "low": -0.005641020355463389,
+          "high": 0.0008286696138377189,
+          "days": 69,
+          "rows": 11902,
+          "r2_model": -0.005171486358007238,
+          "r2_baseline": -0.0032083610428534914,
+          "p_gain_le_0": 0.9175
+        },
+        "ic_main": {
+          "ic": 0.008166273882756864,
+          "low": -0.028411192051941772,
+          "high": 0.04324811612141232,
+          "days": 74
+        },
+        "coefficients_full_sample": {
+          "intercept": -4.958378306701446e-06,
+          "r_past": -0.021428605812604275,
+          "u": -7.24537652813037e-05
+        },
+        "peak_lead_lag": {
+          "asset": "BTC",
+          "lag_min": -1,
+          "corr": 0.3823381289972905
+        }
+      },
+      "notes": [
+        "Signal u = logit(Polymarket P(Up)) \u2212 logit(P(Up) implied by the spot path and recent volatility).",
+        "Walk-forward by day (\u2265 10 training days); CI by resampling test days.",
+        "Pass rule: R\u00b2 gain > 0 with the 95% CI above 0 at the main horizon; < 20 test days = inconclusive."
+      ],
+      "tables": [
+        "by_horizon",
+        "lead_lag"
+      ],
+      "figures": [
+        "lead"
+      ],
+      "seconds": 0.6
+    },
+    {
+      "id": "c2",
+      "title": "G2 \u00b7 Do skilled wallets lead?",
+      "question": "Does net buying by wallets with a proven record (judged only on earlier markets) predict spot?",
+      "verdict": "fail",
+      "headline": "Skilled-wallet flow changes out-of-sample R\u00b2 by -0.067% beyond plain flow (95% CI -0.336% to +0.164%); crypto wallet edge persistence \u03c1 = 0.01 (231 wallets).",
+      "metrics": {
+        "skill_over_flow": {
+          "gain": -0.0006702064744090741,
+          "low": -0.0033589131896413606,
+          "high": 0.0016424510645580233,
+          "days": 69,
+          "rows": 11902,
+          "r2_model": -0.005661784167167783,
+          "r2_baseline": -0.0049882345456702115,
+          "p_gain_le_0": 0.7055
+        },
+        "flow_over_price": {
+          "gain": 0.00018230900381088766,
+          "low": -0.0015641912983925033,
+          "high": 0.0017895167380456432,
+          "days": 69,
+          "rows": 11902,
+          "r2_model": -0.0049882345456702115,
+          "r2_baseline": -0.005171486358007238,
+          "p_gain_le_0": 0.3995
+        },
+        "ic_top_flow": {
+          "ic": -0.08267721806652341,
+          "low": -0.15840170858239544,
+          "high": -0.007892229219158187,
+          "days": 69
+        },
+        "persistence_rho": 0.01384178040849705,
+        "persistence_wallets": 231
+      },
+      "notes": [
+        "Top tier = top 10% of shrunk edge among wallets with \u2265 5 resolved crypto markets before the trade.",
+        "Pass rule: skilled flow's R\u00b2 gain over plain flow > 0 with the 95% CI above 0."
+      ],
+      "tables": [
+        "wallet_pairs"
+      ],
+      "figures": [
+        "wallets"
+      ],
+      "seconds": 0.4
+    },
+    {
+      "id": "c3",
+      "title": "G3 \u00b7 Tradable after costs?",
+      "question": "Trading spot when the model's signal is strong, entering one minute late and paying fees: is it profitable?",
+      "verdict": "fail",
+      "headline": "Best rule (polymarket) nets -4.87 bps per trade at 5 bps cost (95% CI -7.44 to -2.19, 117 trades).",
+      "metrics": {
+        "main": {
+          "signal": "edge_polymarket",
+          "cost_bps": 5,
+          "trades": 117,
+          "days": 46,
+          "mean_bps": -4.872024740511396,
+          "low": -7.440195665716371,
+          "high": -2.190265042881506,
+          "hit_rate": 0.26495726495726496,
+          "gross_bps": 0.12797525948860408
+        },
+        "best": {
+          "signal": "edge_polymarket",
+          "cost_bps": 5,
+          "trades": 117,
+          "days": 46,
+          "mean_bps": -4.872024740511396,
+          "low": -7.440195665716371,
+          "high": -2.190265042881506,
+          "hit_rate": 0.26495726495726496,
+          "gross_bps": 0.12797525948860408
+        }
+      },
+      "notes": [
+        "Threshold: top 10% of |signal| on earlier days only; one open position per asset.",
+        "Pass rule: any rule with mean net return > 0 and CI above 0 at 5 bps; 20 bps (retail taker fees) is reported too. < 100 trades = inconclusive."
+      ],
+      "tables": [
+        "rules"
+      ],
+      "figures": [
+        "pnl"
+      ],
+      "seconds": 0.3
+    }
+  ]
+}

@@ -1,0 +1,387 @@
+{
+  "run_id": "20261127-013354_wallets_events",
+  "suite": "wallets",
+  "title": "T2-W \u00b7 Can wallets help the event-risk monitor?",
+  "dataset": "events",
+  "decision": "Wallet features that passed and go into the product: W2: label jumps likely to stick or revert by who is behind them; W3: early warning from unusual wallet activity; W5: highlight the wallet type whose buying leads the price.",
+  "fair_value": {},
+  "experiments": [
+    {
+      "id": "w0",
+      "title": "Wallet data",
+      "question": "Is there enough wallet-level data around probability jumps to test W1-W5?",
+      "verdict": "pass",
+      "headline": "2,777,538 trades by 147,076 wallets in 689 event markets; 1880 probability jumps with trades in the same hour. Team pipeline: 2 same-owner groups, 9878 entities pass the hard rules, 3 behaviour clusters.",
+      "metrics": {
+        "trades": 2777538,
+        "wallets": 147076,
+        "markets": 689,
+        "market_hours": 1310112,
+        "shocks_with_flow": 1880,
+        "pipeline": {
+          "wallets": 74230,
+          "linked_pairs": 3,
+          "merged_entities": 2,
+          "rule_counts": {
+            "entities": 74227,
+            "eligible": 9878,
+            "fewer_than_min_trades": 63207,
+            "fewer_than_min_active_days": 51898
+          },
+          "clustering": {
+            "selected_k": 3,
+            "selected_seed": 43,
+            "mean_silhouette": 0.19346331984274662,
+            "seed_stability_ari": 0.9995317726796416,
+            "size_valid": true,
+            "minimum_cluster_size": 494,
+            "status": "fitted",
+            "removed_features": [
+              "taker_fraction",
+              "late_activity_fraction"
+            ],
+            "fit_entities": 9878,
+            "cluster_sizes": {
+              "C0": 1193,
+              "C1": 5076,
+              "C2": 3609
+            }
+          }
+        },
+        "cluster_explanations": {
+          "C0": "higher active days; higher markets traded; higher two sided token fraction",
+          "C1": "higher median gap hours; lower trades per active day; lower busiest day trade fraction",
+          "C2": "higher busiest day trade fraction; higher trades per active day; higher top market notional fraction"
+        }
+      },
+      "notes": [
+        "Pass rule: \u2265 100 markets with trades and \u2265 300 jumps with same-hour trades.",
+        "Behaviour clusters are fitted on trades before the median market close and then frozen (team pipeline).",
+        "Types are not exclusive except retail; trade shares: whale 7.0%, skilled 3.9%, new 15.7%, frequent 47.4%, retail 32.8%, linked 0.0%, filtered_out 39.0%."
+      ],
+      "tables": [
+        "clusters",
+        "pipeline_wallets",
+        "type_shares"
+      ],
+      "figures": [
+        "wallets"
+      ],
+      "seconds": 69.5
+    },
+    {
+      "id": "w1",
+      "title": "Large-wallet confirmation",
+      "question": "When a jump is pushed by trades of \u2265 $5,000 in its direction, do the related assets move more?",
+      "verdict": "fail",
+      "headline": "Related assets react +0.01\u00d7 (of a normal hour) more when large wallets back the jump (95% CI -0.28 to +0.36; 822 vs 2548 jump-asset pairs, 308 markets). Same-owner groups backing it: +nan\u00d7 (CI +nan to +nan).",
+      "metrics": {
+        "whale_backed": {
+          "diff": 0.00885668569769349,
+          "low": -0.2787452072600776,
+          "high": 0.36073828221000337,
+          "mean_high_group": 1.4739764033974854,
+          "mean_low_group": 1.4651197176997919,
+          "n_high": 822,
+          "n_low": 2548,
+          "markets": 308
+        },
+        "same_owner_group_backed": {
+          "diff": null,
+          "low": null,
+          "high": null,
+          "n_high": 0,
+          "n_low": 3370,
+          "markets": 308
+        }
+      },
+      "notes": [
+        "Pass rule (pre-registered): whale-backed minus other jumps > 0, 95% CI above 0, resampling markets.",
+        "Same-owner groups come from the team's sniper grouping; reported as secondary."
+      ],
+      "tables": [],
+      "figures": [
+        "confirmation"
+      ],
+      "seconds": 3.1
+    },
+    {
+      "id": "w2",
+      "title": "Will the jump stick?",
+      "question": "Do jumps backed by large, skilled, many or new wallets hold up better (or worse) over the next day?",
+      "verdict": "pass",
+      "headline": "1880 jumps; on average they continue -3.5 points over 24 h. Significant (Bonferroni): large wallets behind +3.9 pts (CI +0.2 to +7.6)",
+      "metrics": {
+        "jumps": 1880,
+        "mean_continuation": -0.03514308510638298,
+        "splits": [
+          {
+            "split": "large_wallets_behind",
+            "diff": 0.038993420103683216,
+            "low": 0.00215043985782438,
+            "high": 0.07613647280900579,
+            "mean_high_group": -0.0023305369127516722,
+            "mean_low_group": -0.04132395701643489,
+            "n_high": 298,
+            "n_low": 1582,
+            "markets": 445
+          },
+          {
+            "split": "skilled_wallets_behind",
+            "diff": 0.00872129129982013,
+            "low": -0.028139584354058066,
+            "high": 0.04708303661827298,
+            "mean_high_group": -0.02814285714285714,
+            "mean_low_group": -0.03686414844267727,
+            "n_high": 371,
+            "n_low": 1509,
+            "markets": 445
+          },
+          {
+            "split": "many_wallets",
+            "diff": 0.02148527245949926,
+            "low": -0.0009656881864659628,
+            "high": 0.045770594657840655,
+            "mean_high_group": -0.024743298969072163,
+            "mean_low_group": -0.046228571428571424,
+            "n_high": 970,
+            "n_low": 910,
+            "markets": 445
+          },
+          {
+            "split": "new_wallets_driven",
+            "diff": -0.004397872340425518,
+            "low": -0.02927056946842571,
+            "high": 0.021194381863295038,
+            "mean_high_group": -0.037342021276595735,
+            "mean_low_group": -0.03294414893617022,
+            "n_high": 940,
+            "n_low": 940,
+            "markets": 445
+          },
+          {
+            "split": "same_owner_groups_behind (secondary)",
+            "diff": null,
+            "low": null,
+            "high": null,
+            "mean_high_group": null,
+            "mean_low_group": null,
+            "n_high": 0,
+            "n_low": 1880,
+            "markets": 445
+          },
+          {
+            "split": "filtered_out_wallets_behind (secondary)",
+            "diff": 0.0040992013255055845,
+            "low": -0.023674805836162213,
+            "high": 0.030607815168326353,
+            "mean_high_group": -0.032620331950207464,
+            "mean_low_group": -0.03671953327571305,
+            "n_high": 723,
+            "n_low": 1157,
+            "markets": 445
+          }
+        ]
+      },
+      "notes": [
+        "Pass rule (pre-registered): any of the four main splits with a 98.75% CI (Bonferroni for 4 tests) excluding 0, in either direction; a reliable 'likely to revert' label is as useful as 'likely to stick'.",
+        "Same-owner groups and filtered-out wallets (team pipeline) are reported as secondary splits."
+      ],
+      "tables": [
+        "splits"
+      ],
+      "figures": [
+        "persistence"
+      ],
+      "seconds": 1.7
+    },
+    {
+      "id": "w3",
+      "title": "Early warning",
+      "question": "Does unusual wallet activity this hour warn of a probability jump next hour, beyond recent price moves?",
+      "verdict": "pass",
+      "headline": "Out of time, adding wallet activity moves the AUC from 0.887 to 0.914 (gain +0.027, 95% CI +0.018 to +0.038); the 5% most unusual hours are followed by a jump 12.8\u00d7 as often as average.",
+      "metrics": {
+        "auc_price_only": 0.8865974983058799,
+        "auc_with_wallets": 0.9139240559413074,
+        "gain": 0.027326557635427573,
+        "low": 0.01795511343652343,
+        "high": 0.03828897262108922,
+        "top5pct_lift": 12.817208065852341,
+        "coefficients": {
+          "intercept": -7.2365,
+          "abs_dp": 0.1342,
+          "recent_vol": 0.3695,
+          "gross_z": 0.0756,
+          "whale_z": -0.0814,
+          "wallets_z": 0.8544,
+          "new_z": 0.008,
+          "imbalance": -0.1464
+        },
+        "train_hours": 699265,
+        "test_hours": 602579,
+        "test_jumps": 1718
+      },
+      "notes": [
+        "Trained on earlier-closing markets, tested on later-closing ones.",
+        "Pass rule (pre-registered): AUC gain over the price-only model > 0 with the 95% CI above 0 (markets resampled)."
+      ],
+      "tables": [],
+      "figures": [
+        "early_warning"
+      ],
+      "seconds": 76.8
+    },
+    {
+      "id": "w4",
+      "title": "Large wallets and the direction hint",
+      "question": "Does V2's next-hour direction hint work better when large wallets push the jump?",
+      "verdict": "fail",
+      "headline": "Direction hint hit rate 52.3% when large wallets agree vs 53.6% otherwise (difference -1.3 points, 95% CI -6.2 to +3.2; 805 vs 2334).",
+      "metrics": {
+        "agree_vs_not": {
+          "diff": -0.013008350764023069,
+          "low": -0.061751513158123245,
+          "high": 0.03193274926570044,
+          "mean_high_group": 0.5229813664596273,
+          "mean_low_group": 0.5359897172236504,
+          "n_high": 805,
+          "n_low": 2334,
+          "markets": 291
+        },
+        "agree_hit_rate_minus_half": {
+          "mean": 0.02298136645962733,
+          "low": -0.018243628778979157,
+          "high": 0.061550272317696955,
+          "n": 805,
+          "groups": 135,
+          "p_two_sided": 0.2545
+        }
+      },
+      "notes": [
+        "Pass rule (pre-registered): agree minus not-agree hit rate > 0 with the 95% CI above 0 (markets resampled)."
+      ],
+      "tables": [],
+      "figures": [
+        "direction"
+      ],
+      "seconds": 0.4
+    },
+    {
+      "id": "w5",
+      "title": "Whose buying leads?",
+      "question": "Is there a wallet type (or behaviour cluster) whose buying the probability follows more than retail's?",
+      "verdict": "pass",
+      "headline": "After retail buying the price follows +0.05 points next hour. Beating that (Bonferroni CI above retail): whale +0.42.",
+      "metrics": {
+        "by_type": [
+          {
+            "type": "retail (baseline)",
+            "mean": 0.0004836724935660343,
+            "low": 0.00017516484229197963,
+            "high": 0.0008058478509032093,
+            "n": 71107,
+            "groups": 339,
+            "p_two_sided": 0.003
+          },
+          {
+            "type": "whale",
+            "mean": 0.004242106280193237,
+            "low": 0.003194868097455796,
+            "high": 0.005289344462930679,
+            "n": 25875,
+            "groups": 313,
+            "p_two_sided": 0.0
+          },
+          {
+            "type": "skilled",
+            "mean": -0.0002443303061882784,
+            "low": -0.0011391460980844273,
+            "high": 0.0006504854857078703,
+            "n": 20151,
+            "groups": 312,
+            "p_two_sided": 0.4535
+          },
+          {
+            "type": "new",
+            "mean": 0.00033053262578616353,
+            "low": -0.0003509222249558737,
+            "high": 0.0010119874765282008,
+            "n": 30528,
+            "groups": 333,
+            "p_two_sided": 0.1965
+          },
+          {
+            "type": "frequent",
+            "mean": -0.0006680820725074767,
+            "low": -0.0010103664787457147,
+            "high": -0.0003257976662692386,
+            "n": 79247,
+            "groups": 332,
+            "p_two_sided": 0.0
+          },
+          {
+            "type": "cluster C0 (secondary)",
+            "mean": -0.0015511181856865926,
+            "low": -0.0018977799409839178,
+            "high": -0.0012393793123346307,
+            "n": 63451,
+            "groups": 319,
+            "p_two_sided": 0.0
+          },
+          {
+            "type": "cluster C1 (secondary)",
+            "mean": -0.0005150427637095422,
+            "low": -0.00093065730621008,
+            "high": -3.89800133677262e-05,
+            "n": 29815,
+            "groups": 324,
+            "p_two_sided": 0.0245
+          },
+          {
+            "type": "cluster C2 (secondary)",
+            "mean": -0.00129765054503122,
+            "low": -0.001737352281307513,
+            "high": -0.0008258229132914362,
+            "n": 28347,
+            "groups": 322,
+            "p_two_sided": 0.0
+          },
+          {
+            "type": "same-owner groups (secondary)",
+            "mean": null,
+            "low": null,
+            "high": null,
+            "n": 0,
+            "groups": 0,
+            "p_two_sided": null
+          }
+        ],
+        "regression_points": {
+          "intercept": 0.009,
+          "f_retail": 0.035,
+          "f_whale": 0.463,
+          "f_skilled": -0.028,
+          "f_new": 0.004,
+          "f_frequent": -0.108
+        },
+        "cluster_explanations": {
+          "C0": "higher active days; higher markets traded; higher two sided token fraction",
+          "C1": "higher median gap hours; lower trades per active day; lower busiest day trade fraction",
+          "C2": "higher busiest day trade fraction; higher trades per active day; higher top market notional fraction"
+        }
+      },
+      "notes": [
+        "Tested on the later half of the data only, since the behaviour clusters are fitted on the earlier half.",
+        "Pass rule (pre-registered): a main type (whale, skilled, new, frequent) whose 98.75% CI lies above retail's mean. Behaviour clusters and same-owner groups (team pipeline) are reported as secondary."
+      ],
+      "tables": [
+        "by_type"
+      ],
+      "figures": [
+        "types"
+      ],
+      "seconds": 0.3
+    }
+  ]
+}

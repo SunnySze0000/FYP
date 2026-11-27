@@ -1,0 +1,24 @@
+## D2 · Stability over time
+
+**Question.** Do the effects keep holding quarter by quarter, including the most recent quarter?
+
+**Verdict: PASS.** V1 positive in 6 of 6 quarters (latest 2026Q2: +0.12×); W3 rolling gain positive in 8 of 8 quarters, pooled +0.049 (CI +0.040 to +0.060); W5 whale beats retail in 8 of 8 quarters.
+
+| metric | value |
+|---|---|
+| checks.a_v1_quarters | True |
+| checks.b_w3_rolling | True |
+| checks.c_w5_quarters | True |
+| w3_pooled.gain | 0.0491 |
+| w3_pooled.low | 0.03952 |
+| w3_pooled.high | 0.06049 |
+| v1_quarters | [{'quarter': '2024Q4', 'mean': 0.19256177836438687, 'markets': 5}, {'quarter': '2025Q1', 'mean': 0.2481072589931058, 'markets': 48}, {'quarter': '2025Q2', 'mean': 0.3007339154224479, 'markets': 48}, {'quarter': '2025Q3', 'mean': 0.44344318899521823, 'markets': 50}, {'quarter': '2025Q4', 'mean': 0.2777576898462823, 'markets': 61}, {'quarter': '2026Q1', 'mean': 0.27926005320069863, 'markets': 56}, {'quarter': '2026Q2', 'mean': 0.12104604032417332, 'markets': 75}, {'quarter': '2026Q3', 'mean': 0.3865217852953731, 'markets': 14}, {'quarter': '2026Q4', 'mean': -0.10661195115561499, 'markets': 4}] |
+| w3_quarters | [{'quarter': '2025Q1', 'auc_price_only': 0.8819754742821888, 'auc_with_wallets': 0.9428675652120588, 'gain': 0.060892090929870024, 'test_hours': 87105, 'jumps': 310}, {'quarter': '2025Q2', 'auc_price_only': 0.8861676444644648, 'auc_with_wallets': 0.9316642259174079, 'gain': 0.04549658145294311, 'test_hours': 95553, 'jumps': 367}, {'quarter': '2025Q3', 'auc_price_only': 0.8906960337068861, 'auc_with_wallets': 0.9548007085978981, 'gain': 0.06410467489101201, 'test_hours': 161979, 'jumps': 264}, {'quarter': '2025Q4', 'auc_price_only': 0.8608237155076455, 'auc_with_wallets': 0.9048800538337858, 'gain': 0.04405633832614031, 'test_hours': 137002, 'jumps': 450}, {'quarter': '2026Q1', 'auc_price_only': 0.8917394310258824, 'auc_with_wallets': 0.935598336119857, 'gain': 0.04385890509397461, 'test_hours': 151531, 'jumps': 430}, {'quarter': '2026Q2', 'auc_price_only': 0.853815218370636, 'auc_with_wallets': 0.8970889805312193, 'gain': 0.04327376216058332, 'test_hours': 118571, 'jumps': 758}, {'quarter': '2026Q3', 'auc_price_only': 0.844941607030467, 'auc_with_wallets': 0.954136460057344, 'gain': 0.10919485302687704, 'test_hours': 42969, 'jumps': 70}, {'quarter': '2026Q4', 'auc_price_only': 0.8534585662043745, 'auc_with_wallets': 0.9347788587594011, 'gain': 0.0813202925550266, 'test_hours': 9692, 'jumps': 30}] |
+| w5_quarters | [{'quarter': '2024Q3', 'whale': 0.004500000000000004, 'whale_markets': 1, 'retail': -0.006111111111111117, 'retail_markets': 1, 'diff': 0.01061111111111112}, {'quarter': '2024Q4', 'whale': 0.009213483146067415, 'whale_markets': 22, 'retail': -0.0013490566037735845, 'retail_markets': 34, 'diff': 0.010562539749841}, {'quarter': '2025Q1', 'whale': 0.010533538025507794, 'whale_markets': 91, 'retail': 0.001488705768298594, 'retail_markets': 107, 'diff': 0.009044832257209201}, {'quarter': '2025Q2', 'whale': 0.00853125, 'whale_markets': 97, 'retail': 0.002164061581854507, 'retail_markets': 112, 'diff': 0.006367188418145493}, {'quarter': '2025Q3', 'whale': 0.009994615384615385, 'whale_markets': 100, 'retail': 0.0032775271242883233, 'retail_markets': 137, 'diff': 0.0067170882603270615}, {'quarter': '2025Q4', 'whale': 0.008904377880184331, 'whale_markets': 120, 'retail': 0.0018050283860502835, 'retail_markets': 158, 'diff': 0.0070993494941340475}, {'quarter': '2026Q1', 'whale': 0.007623360655737705, 'whale_markets': 143, 'retail': 0.0013839015363911631, 'retail_markets': 183, 'diff': 0.0062394591193465415}, {'quarter': '2026Q2', 'whale': 0.009922535211267606, 'whale_markets': 151, 'retail': 0.0009841006533278887, 'retail_markets': 177, 'diff': 0.008938434557939717}, {'quarter': '2026Q3', 'whale': 0.0071718905472636825, 'whale_markets': 40, 'retail': 5.3943097193049665e-05, 'retail_markets': 44, 'diff': 0.007117947450070633}, {'quarter': '2026Q4', 'whale': 0.002364321608040201, 'whale_markets': 17, 'retail': -0.0011254002134471713, 'retail_markets': 20, 'diff': 0.0034897218214873724}] |
+
+![v1_quarters](figures/v1_quarters.png)
+
+Tables: [v1_quarters](tables/v1_quarters.csv), [w3_quarters](tables/w3_quarters.csv), [w5_quarters](tables/w5_quarters.csv)
+
+- W3 is rolling-origin: each quarter is scored by a model trained only on hours before it.
+- Pass rule (pre-registered): V1 > 0 in >= 2/3 of quarters with >= 20 markets and in the latest; W3 gain > 0 in >= 2/3 of quarters and pooled CI > 0; W5 whale > retail in >= 2/3 of quarters.

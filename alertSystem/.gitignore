@@ -1,0 +1,13 @@
+data/raw/*
+data/interim/*
+data/processed/*
+!data/**/.gitkeep
+logs/*.log
+__pycache__/
+*.py[cod]
+.pytest_cache/
+*.tmp
+_stage*/
+data/app/*.jsonl
+data/app/portfolio.json
+data/app/holdings/

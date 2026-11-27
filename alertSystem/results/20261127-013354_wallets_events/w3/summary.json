@@ -1,0 +1,37 @@
+{
+  "id": "w3",
+  "title": "Early warning",
+  "question": "Does unusual wallet activity this hour warn of a probability jump next hour, beyond recent price moves?",
+  "verdict": "pass",
+  "headline": "Out of time, adding wallet activity moves the AUC from 0.887 to 0.914 (gain +0.027, 95% CI +0.018 to +0.038); the 5% most unusual hours are followed by a jump 12.8\u00d7 as often as average.",
+  "metrics": {
+    "auc_price_only": 0.8865974983058799,
+    "auc_with_wallets": 0.9139240559413074,
+    "gain": 0.027326557635427573,
+    "low": 0.01795511343652343,
+    "high": 0.03828897262108922,
+    "top5pct_lift": 12.817208065852341,
+    "coefficients": {
+      "intercept": -7.2365,
+      "abs_dp": 0.1342,
+      "recent_vol": 0.3695,
+      "gross_z": 0.0756,
+      "whale_z": -0.0814,
+      "wallets_z": 0.8544,
+      "new_z": 0.008,
+      "imbalance": -0.1464
+    },
+    "train_hours": 699265,
+    "test_hours": 602579,
+    "test_jumps": 1718
+  },
+  "notes": [
+    "Trained on earlier-closing markets, tested on later-closing ones.",
+    "Pass rule (pre-registered): AUC gain over the price-only model > 0 with the 95% CI above 0 (markets resampled)."
+  ],
+  "tables": [],
+  "figures": [
+    "early_warning"
+  ],
+  "seconds": 76.8
+}

@@ -1,0 +1,63 @@
+{
+  "id": "w0",
+  "title": "Wallet data",
+  "question": "Is there enough wallet-level data around probability jumps to test W1-W5?",
+  "verdict": "pass",
+  "headline": "2,777,538 trades by 147,076 wallets in 689 event markets; 1880 probability jumps with trades in the same hour. Team pipeline: 2 same-owner groups, 9878 entities pass the hard rules, 3 behaviour clusters.",
+  "metrics": {
+    "trades": 2777538,
+    "wallets": 147076,
+    "markets": 689,
+    "market_hours": 1310112,
+    "shocks_with_flow": 1880,
+    "pipeline": {
+      "wallets": 74230,
+      "linked_pairs": 3,
+      "merged_entities": 2,
+      "rule_counts": {
+        "entities": 74227,
+        "eligible": 9878,
+        "fewer_than_min_trades": 63207,
+        "fewer_than_min_active_days": 51898
+      },
+      "clustering": {
+        "selected_k": 3,
+        "selected_seed": 43,
+        "mean_silhouette": 0.19346331984274662,
+        "seed_stability_ari": 0.9995317726796416,
+        "size_valid": true,
+        "minimum_cluster_size": 494,
+        "status": "fitted",
+        "removed_features": [
+          "taker_fraction",
+          "late_activity_fraction"
+        ],
+        "fit_entities": 9878,
+        "cluster_sizes": {
+          "C0": 1193,
+          "C1": 5076,
+          "C2": 3609
+        }
+      }
+    },
+    "cluster_explanations": {
+      "C0": "higher active days; higher markets traded; higher two sided token fraction",
+      "C1": "higher median gap hours; lower trades per active day; lower busiest day trade fraction",
+      "C2": "higher busiest day trade fraction; higher trades per active day; higher top market notional fraction"
+    }
+  },
+  "notes": [
+    "Pass rule: \u2265 100 markets with trades and \u2265 300 jumps with same-hour trades.",
+    "Behaviour clusters are fitted on trades before the median market close and then frozen (team pipeline).",
+    "Types are not exclusive except retail; trade shares: whale 7.0%, skilled 3.9%, new 15.7%, frequent 47.4%, retail 32.8%, linked 0.0%, filtered_out 39.0%."
+  ],
+  "tables": [
+    "clusters",
+    "pipeline_wallets",
+    "type_shares"
+  ],
+  "figures": [
+    "wallets"
+  ],
+  "seconds": 134.3
+}

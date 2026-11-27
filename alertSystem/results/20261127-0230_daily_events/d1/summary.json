@@ -1,0 +1,108 @@
+{
+  "id": "d1",
+  "title": "Point-in-time universe",
+  "question": "Do the passed findings hold on every market the app could see at the time, not only hindsight-chosen ones?",
+  "verdict": "pass",
+  "headline": "Without the hindsight filter (350 markets, watch rule): V1 +0.22\u00d7 (CI +0.13 to +0.32); W3 AUC gain +0.040 (CI +0.027 to +0.055); W5 whale +0.84 (CI low +0.66) vs retail +0.09 points.",
+  "metrics": {
+    "checks": {
+      "a_v1_all_candidates": true,
+      "b_w3_gain": true,
+      "c_w5_whale_above_retail": true
+    },
+    "v1": {
+      "mean": 0.22163558132076677,
+      "low": 0.13012046098018995,
+      "high": 0.3162913846904996,
+      "n": 350,
+      "groups": 350,
+      "p_two_sided": 0.0
+    },
+    "v1_slices": [
+      {
+        "slice": "all candidates (watched)",
+        "mean": 0.22163558132076677,
+        "low": 0.13012046098018995,
+        "high": 0.3162913846904996,
+        "n": 350,
+        "groups": 350,
+        "p_two_sided": 0.0
+      },
+      {
+        "slice": "research markets only",
+        "mean": 0.22388279521559584,
+        "low": 0.13207055309177132,
+        "high": 0.3162821993095486,
+        "n": 342,
+        "groups": 342,
+        "p_two_sided": 0.0
+      },
+      {
+        "slice": "markets the hindsight filter dropped",
+        "mean": 0.12556718731682265,
+        "low": -0.15828152830487818,
+        "high": 0.395288933226896,
+        "n": 8,
+        "groups": 8,
+        "p_two_sided": 0.38
+      },
+      {
+        "slice": "lowest-volume third",
+        "mean": 0.23738651730044033,
+        "low": 0.11253358954872121,
+        "high": 0.3815413204036229,
+        "n": 113,
+        "groups": 113,
+        "p_two_sided": 0.001
+      }
+    ],
+    "w3": {
+      "auc_price_only": 0.8676458317342368,
+      "auc_with_wallets": 0.9074269078754477,
+      "gain": 0.03978107614121085,
+      "low": 0.027012142675343742,
+      "high": 0.05464668183413573,
+      "top5pct_lift": 12.465349749010853,
+      "coefficients": {
+        "intercept": -6.9173,
+        "abs_dp": 0.1252,
+        "recent_vol": 0.4013,
+        "gross_z": 0.0172,
+        "whale_z": -0.0599,
+        "wallets_z": 0.8674,
+        "new_z": 0.0075,
+        "imbalance": -0.0413
+      },
+      "train_hours": 448843,
+      "test_hours": 380102,
+      "test_jumps": 1468
+    },
+    "w5_whale": {
+      "mean": 0.008366596061818467,
+      "low": 0.0066160055659584705,
+      "high": 0.010117186557678464,
+      "n": 12747,
+      "groups": 276,
+      "p_two_sided": 0.0
+    },
+    "w5_retail": {
+      "mean": 0.000936341914778983,
+      "low": 0.0004844637890667582,
+      "high": 0.0014359863095953784,
+      "n": 42689,
+      "groups": 316,
+      "p_two_sided": 0.0005
+    },
+    "watched_wallet_hours": 837213,
+    "low_volume_cut_usd": 2923230.0
+  },
+  "notes": [
+    "Watch rule: >= 24 h of history and probability 1 h earlier in 10-90%.",
+    "Pass rule (pre-registered): (a) V1 CI > 0 on all candidates, (b) W3 gain CI > 0, (c) W5 whale CI above retail."
+  ],
+  "tables": [
+    "v1_slices"
+  ],
+  "figures": [],
+  "seconds": 90.6
+}

@@ -1,0 +1,16 @@
+## D6 · Generality across event types
+
+**Question.** Does the effect hold across event types, not only one group?
+
+**Verdict: PASS.** Positive in 6 of 7 event groups (ai_tech +0.12, crypto +0.33, energy_mideast +0.18, rates +0.48, trade_china +0.52, us_politics -0.18, war_europe +0.13); leaving out any one group, the smallest lower CI is +0.10.
+
+| metric | value |
+|---|---|
+| checks.half_of_groups_positive | True |
+| checks.no_group_drives_it | True |
+| by_group | [{'group': 'ai_tech', 'mean': 0.12300282359389826, 'low': -0.015031209014806498, 'high': 0.24992406533543965, 'n': 44, 'groups': 44, 'p_two_sided': 0.07}, {'group': 'crypto', 'mean': 0.3281270402651575, 'low': 0.13458135269003113, 'high': 0.5248940620361094, 'n': 69, 'groups': 69, 'p_two_sided': 0.0}, {'group': 'energy_mideast', 'mean': 0.18073400693847314, 'low': 0.025539059334790084, 'high': 0.33420671106855937, 'n': 87, 'groups': 87, 'p_two_sided': 0.0195}, {'group': 'rates', 'mean': 0.48283988521893934, 'low': -0.03471704891048922, 'high': 1.0029259216427013, 'n': 33, 'groups': 33, 'p_two_sided': 0.071}, {'group': 'trade_china', 'mean': 0.518753890988436, 'low': 0.11566621410389064, 'high': 1.024731952998463, 'n': 27, 'groups': 27, 'p_two_sided': 0.027}, {'group': 'us_politics', 'mean': -0.18252700458848395, 'low': -0.3929872259865685, 'high': 0.0253265074812644, 'n': 33, 'groups': 33, 'p_two_sided': 0.088}, {'group': 'war_europe', 'mean': 0.12965396082303282, 'low': 0.01618241111249414, 'high': 0.24933888689735237, 'n': 53, 'groups': 53, 'p_two_sided': 0.0315}] |
+| leave_one_out | [{'left_out': 'ai_tech', 'mean': 0.23581806935992433, 'low': 0.13599825379040809, 'high': 0.3347768050615769, 'n': 306, 'groups': 306, 'p_two_sided': 0.0}, {'left_out': 'crypto', 'mean': 0.19548643303904803, 'low': 0.09689146946232917, 'high': 0.29824664036905835, 'n': 281, 'groups': 281, 'p_two_sided': 0.0}, {'left_out': 'energy_mideast', 'mean': 0.23516575991871178, 'low': 0.12616274815382303, 'high': 0.3504216480234532, 'n': 263, 'groups': 263, 'p_two_sided': 0.0}, {'left_out': 'rates', 'mean': 0.19444396608846487, 'low': 0.10922384901184971, 'high': 0.27639199394753255, 'n': 317, 'groups': 317, 'p_two_sided': 0.0}, {'left_out': 'trade_china', 'mean': 0.19679906627114735, 'low': 0.10962551512982106, 'high': 0.28899630938902376, 'n': 323, 'groups': 323, 'p_two_sided': 0.0}, {'left_out': 'us_politics', 'mean': 0.26370928900217144, 'low': 0.16480788322314208, 'high': 0.36377067091596094, 'n': 317, 'groups': 317, 'p_two_sided': 0.0}, {'left_out': 'war_europe', 'mean': 0.23804980989443647, 'low': 0.13500193103754482, 'high': 0.3493812954506885, 'n': 297, 'groups': 297, 'p_two_sided': 0.0}] |
+
+Tables: [by_group](tables/by_group.csv), [leave_one_out](tables/leave_one_out.csv)
+
+- Pass rule (pre-registered): > 0 in >= half of groups with >= 10 markets; every leave-one-group-out CI > 0.

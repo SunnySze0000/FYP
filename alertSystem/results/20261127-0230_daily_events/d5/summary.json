@@ -1,0 +1,32 @@
+{
+  "id": "d5",
+  "title": "Daily resolution",
+  "question": "Is a once-a-day summary still informative?",
+  "verdict": "pass",
+  "headline": "Day level: on days a related market moves \u2265 10 points, related assets' daily move exceeds unrelated by +0.23\u00d7 (CI +0.16 to +0.29, 412 markets); without crypto-price markets +0.10\u00d7 (CI +0.04 to +0.16).",
+  "metrics": {
+    "main": {
+      "mean": 0.22616153951953688,
+      "low": 0.16261162850335578,
+      "high": 0.294980906706287,
+      "n": 412,
+      "groups": 412,
+      "p_two_sided": 0.0
+    },
+    "without_crypto_price_markets": {
+      "mean": 0.10180850313159209,
+      "low": 0.037747127829206376,
+      "high": 0.16307398781135085,
+      "n": 339,
+      "groups": 339,
+      "p_two_sided": 0.001
+    }
+  },
+  "notes": [
+    "Probability sampled at each asset's daily close (16:00 ET stocks, 00:00 UTC crypto).",
+    "Pass rule: CI > 0. Not required to build; decides the daily digest."
+  ],
+  "tables": [],
+  "figures": [],
+  "seconds": 1.2
+}

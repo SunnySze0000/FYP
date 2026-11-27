@@ -1,0 +1,24 @@
+{
+  "id": "v0",
+  "title": "Data",
+  "question": "Are there enough contested event markets overlapping with asset trading hours?",
+  "verdict": "pass",
+  "headline": "689 event markets aligned with hourly prices of 26 assets; 7,156 shock hours.",
+  "metrics": {
+    "markets": 689,
+    "markets_with_aligned_assets": 689,
+    "pairs": 4345,
+    "shock_hours": 7156,
+    "asset_series": 26
+  },
+  "notes": [
+    "Pass rule: \u2265 100 markets with aligned mapped assets."
+  ],
+  "tables": [
+    "groups"
+  ],
+  "figures": [
+    "coverage"
+  ],
+  "seconds": 5.4
+}

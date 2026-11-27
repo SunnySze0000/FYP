@@ -1,0 +1,152 @@
+{
+  "id": "d6",
+  "title": "Generality across event types",
+  "question": "Does the effect hold across event types, not only one group?",
+  "verdict": "pass",
+  "headline": "Positive in 6 of 7 event groups (ai_tech +0.13, crypto +0.35, energy_mideast +0.17, rates +0.48, trade_china +0.52, us_politics -0.12, war_europe +0.20); leaving out any one group, the smallest lower CI is +0.10.",
+  "metrics": {
+    "checks": {
+      "half_of_groups_positive": true,
+      "no_group_drives_it": true
+    },
+    "by_group": [
+      {
+        "group": "ai_tech",
+        "mean": 0.12698727315954486,
+        "low": -0.02296730567848072,
+        "high": 0.26384299172250036,
+        "n": 40,
+        "groups": 40,
+        "p_two_sided": 0.0855
+      },
+      {
+        "group": "crypto",
+        "mean": 0.35221994298785897,
+        "low": 0.14908745788336114,
+        "high": 0.547560793346046,
+        "n": 65,
+        "groups": 65,
+        "p_two_sided": 0.0
+      },
+      {
+        "group": "energy_mideast",
+        "mean": 0.17450283070728717,
+        "low": 0.017945116916322376,
+        "high": 0.3445692120284679,
+        "n": 85,
+        "groups": 85,
+        "p_two_sided": 0.034
+      },
+      {
+        "group": "rates",
+        "mean": 0.48283988521893934,
+        "low": -0.03471704891048922,
+        "high": 1.0029259216427013,
+        "n": 33,
+        "groups": 33,
+        "p_two_sided": 0.071
+      },
+      {
+        "group": "trade_china",
+        "mean": 0.518753890988436,
+        "low": 0.11566621410389064,
+        "high": 1.024731952998463,
+        "n": 27,
+        "groups": 27,
+        "p_two_sided": 0.027
+      },
+      {
+        "group": "us_politics",
+        "mean": -0.12158842836750769,
+        "low": -0.30451604680145633,
+        "high": 0.045385135006955644,
+        "n": 38,
+        "groups": 38,
+        "p_two_sided": 0.182
+      },
+      {
+        "group": "war_europe",
+        "mean": 0.20347736706978886,
+        "low": 0.07852520971045836,
+        "high": 0.34778744721232824,
+        "n": 37,
+        "groups": 37,
+        "p_two_sided": 0.005
+      }
+    ],
+    "leave_one_out": [
+      {
+        "left_out": "ai_tech",
+        "mean": 0.2546116791624228,
+        "low": 0.15425042132561562,
+        "high": 0.36189051506087805,
+        "n": 289,
+        "groups": 289,
+        "p_two_sided": 0.0
+      },
+      {
+        "left_out": "crypto",
+        "mean": 0.21124231026557252,
+        "low": 0.10450583938136725,
+        "high": 0.31740338640679105,
+        "n": 264,
+        "groups": 264,
+        "p_two_sided": 0.0
+      },
+      {
+        "left_out": "energy_mideast",
+        "mean": 0.2615964163696826,
+        "low": 0.14743244407437353,
+        "high": 0.37449517226515433,
+        "n": 244,
+        "groups": 244,
+        "p_two_sided": 0.0
+      },
+      {
+        "left_out": "rates",
+        "mean": 0.21192077700032763,
+        "low": 0.12411372194870658,
+        "high": 0.30475817658092774,
+        "n": 296,
+        "groups": 296,
+        "p_two_sided": 0.0
+      },
+      {
+        "left_out": "trade_china",
+        "mean": 0.21409242101865633,
+        "low": 0.1172689139350642,
+        "high": 0.31344471811124625,
+        "n": 302,
+        "groups": 302,
+        "p_two_sided": 0.0
+      },
+      {
+        "left_out": "us_politics",
+        "mean": 0.28619459272263664,
+        "low": 0.18581329739566707,
+        "high": 0.3912916125191481,
+        "n": 291,
+        "groups": 291,
+        "p_two_sided": 0.0
+      },
+      {
+        "left_out": "war_europe",
+        "mean": 0.24360823158472533,
+        "low": 0.13952856538450728,
+        "high": 0.34634476161139505,
+        "n": 292,
+        "groups": 292,
+        "p_two_sided": 0.0
+      }
+    ]
+  },
+  "notes": [
+    "Pass rule (pre-registered): > 0 in >= half of groups with >= 10 markets; every leave-one-group-out CI > 0."
+  ],
+  "tables": [
+    "by_group",
+    "leave_one_out"
+  ],
+  "figures": [],
+  "seconds": 0.1
+}

@@ -1,0 +1,502 @@
+{
+  "created_at": "2026-11-27T04:01:53.104833+00:00",
+  "research_run": "20261127-0236_daily_events_fix1",
+  "shock_points": 0.1,
+  "watch": {
+    "low": 0.1,
+    "high": 0.9,
+    "min_age_hours": 24
+  },
+  "big_quantile": 0.8,
+  "groups": {
+    "rates": {
+      "assets": [
+        "TLT",
+        "IEF",
+        "SHY",
+        "UUP",
+        "XLF"
+      ],
+      "keywords": [
+        "fed",
+        "fomc",
+        "interest rate*",
+        "rate cut*",
+        "rate hike*",
+        "bps",
+        "powell",
+        "fed chair"
+      ],
+      "effect": 0.48283988521893934,
+      "reliable": true
+    },
+    "macro": {
+      "assets": [
+        "SPY",
+        "TLT",
+        "GLD",
+        "IWM"
+      ],
+      "keywords": [
+        "recession",
+        "gdp",
+        "cpi",
+        "inflation",
+        "unemployment",
+        "jobs report",
+        "nonfarm",
+        "default"
+      ],
+      "effect": null,
+      "reliable": true
+    },
+    "trade_china": {
+      "assets": [
+        "FXI",
+        "KWEB",
+        "EEM",
+        "SPY"
+      ],
+      "keywords": [
+        "tariff*",
+        "china",
+        "chinese",
+        "xi jinping",
+        "trade deal",
+        "taiwan*"
+      ],
+      "effect": 0.518753890988436,
+      "reliable": true
+    },
+    "energy_mideast": {
+      "assets": [
+        "USO",
+        "XLE",
+        "GLD"
+      ],
+      "keywords": [
+        "oil",
+        "crude",
+        "opec",
+        "iran*",
+        "israel*",
+        "saudi*",
+        "hormuz",
+        "gaza",
+        "hezbollah",
+        "houthi*"
+      ],
+      "effect": 0.17450283070728717,
+      "reliable": true
+    },
+    "war_europe": {
+      "assets": [
+        "ITA",
+        "USO",
+        "EZU",
+        "GLD"
+      ],
+      "keywords": [
+        "russia*",
+        "ukrain*",
+        "putin",
+        "zelensk*",
+        "nato",
+        "ceasefire"
+      ],
+      "effect": 0.20347736706978886,
+      "reliable": true
+    },
+    "us_politics": {
+      "assets": [
+        "SPY",
+        "IWM",
+        "XLE",
+        "ITA"
+      ],
+      "keywords": [
+        "trump",
+        "senate",
+        "house",
+        "election",
+        "shutdown",
+        "impeach*",
+        "supreme court",
+        "governor"
+      ],
+      "effect": -0.12158842836750769,
+      "reliable": false
+    },
+    "crypto": {
+      "assets": [
+        "BTC-USD",
+        "ETH-USD",
+        "COIN",
+        "MSTR"
+      ],
+      "keywords": [
+        "bitcoin",
+        "btc",
+        "ethereum",
+        "eth",
+        "crypto*",
+        "stablecoin*",
+        "sec",
+        "solana",
+        "etf*"
+      ],
+      "effect": 0.35221994298785897,
+      "reliable": true
+    },
+    "ai_tech": {
+      "assets": [
+        "NVDA",
+        "SMH",
+        "QQQ",
+        "MSFT"
+      ],
+      "keywords": [
+        "nvidia",
+        "openai",
+        "ai",
+        "gpt*",
+        "chip*",
+        "semiconductor*",
+        "apple",
+        "microsoft",
+        "google"
+      ],
+      "effect": 0.12698727315954486,
+      "reliable": true
+    }
+  },
+  "assets": [
+    {
+      "asset": "BTC-USD",
+      "normal_abs_r": 0.0034647193796467734,
+      "shock_abs_r": 0.006053487568897474,
+      "big_threshold": 0.004572974371202677,
+      "big_rate_shock": 0.4139433551198257,
+      "big_rate_normal": 0.23707575920390309,
+      "shocks": 459,
+      "markets": 82
+    },
+    {
+      "asset": "COIN",
+      "normal_abs_r": 0.00848539587582633,
+      "shock_abs_r": 0.012925899494790154,
+      "big_threshold": 0.015931121493293433,
+      "big_rate_shock": 0.32679738562091504,
+      "big_rate_normal": 0.1464395503054047,
+      "shocks": 153,
+      "markets": 66
+    },
+    {
+      "asset": "EEM",
+      "normal_abs_r": 0.001707802234926366,
+      "shock_abs_r": 0.0026157729827438097,
+      "big_threshold": 0.003157238110364524,
+      "big_rate_shock": 0.1891891891891892,
+      "big_rate_normal": 0.13185586179335573,
+      "shocks": 74,
+      "markets": 27
+    },
+    {
+      "asset": "ETH-USD",
+      "normal_abs_r": 0.005215597671918478,
+      "shock_abs_r": 0.008050275427211446,
+      "big_threshold": 0.006704494180209509,
+      "big_rate_shock": 0.4095860566448802,
+      "big_rate_normal": 0.24850348558489754,
+      "shocks": 459,
+      "markets": 82
+    },
+    {
+      "asset": "EZU",
+      "normal_abs_r": 0.001586529225814073,
+      "shock_abs_r": 0.0014846347053245235,
+      "big_threshold": 0.0031128178110349405,
+      "big_rate_shock": 0.1310344827586207,
+      "big_rate_normal": 0.12072708423238088,
+      "shocks": 145,
+      "markets": 52
+    },
+    {
+      "asset": "FXI",
+      "normal_abs_r": 0.0017142763070771571,
+      "shock_abs_r": 0.0032813334519931022,
+      "big_threshold": 0.003451796370758143,
+      "big_rate_shock": 0.21621621621621623,
+      "big_rate_normal": 0.11526864434867676,
+      "shocks": 74,
+      "markets": 27
+    },
+    {
+      "asset": "GLD",
+      "normal_abs_r": 0.0019711779903067647,
+      "shock_abs_r": 0.0025426332999279053,
+      "big_threshold": 0.003286579545312307,
+      "big_rate_shock": 0.1870967741935484,
+      "big_rate_normal": 0.15605964357752677,
+      "shocks": 310,
+      "markets": 129
+    },
+    {
+      "asset": "IEF",
+      "normal_abs_r": 0.0005311019257566188,
+      "shock_abs_r": 0.0009004303630308443,
+      "big_threshold": 0.00118013493119129,
+      "big_rate_shock": 0.2714285714285714,
+      "big_rate_normal": 0.09622793820729768,
+      "shocks": 70,
+      "markets": 33
+    },
+    {
+      "asset": "ITA",
+      "normal_abs_r": 0.002586920088859819,
+      "shock_abs_r": 0.002947594158237315,
+      "big_threshold": 0.004519745184979662,
+      "big_rate_shock": 0.17419354838709677,
+      "big_rate_normal": 0.1562130983756186,
+      "shocks": 310,
+      "markets": 123
+    },
+    {
+      "asset": "IWM",
+      "normal_abs_r": 0.0026081600209775166,
+      "shock_abs_r": 0.002832236956028578,
+      "big_threshold": 0.004546288833748413,
+      "big_rate_shock": 0.14864864864864866,
+      "big_rate_normal": 0.15143290420525055,
+      "shocks": 222,
+      "markets": 87
+    },
+    {
+      "asset": "KWEB",
+      "normal_abs_r": 0.002439574646904519,
+      "shock_abs_r": 0.004421321147541827,
+      "big_threshold": 0.0046607513121244,
+      "big_rate_shock": 0.21621621621621623,
+      "big_rate_normal": 0.13596755373250588,
+      "shocks": 74,
+      "markets": 27
+    },
+    {
+      "asset": "MSFT",
+      "normal_abs_r": 0.002687783099426477,
+      "shock_abs_r": 0.003069390174575789,
+      "big_threshold": 0.005072452409803141,
+      "big_rate_shock": 0.20408163265306123,
+      "big_rate_normal": 0.1462671950921018,
+      "shocks": 98,
+      "markets": 41
+    },
+    {
+      "asset": "MSTR",
+      "normal_abs_r": 0.009923401115033339,
+      "shock_abs_r": 0.015906220370145597,
+      "big_threshold": 0.01849578983774869,
+      "big_rate_shock": 0.33986928104575165,
+      "big_rate_normal": 0.13082702423933232,
+      "shocks": 153,
+      "markets": 66
+    },
+    {
+      "asset": "NVDA",
+      "normal_abs_r": 0.004665251388819961,
+      "shock_abs_r": 0.004400810107134556,
+      "big_threshold": 0.009494805485594782,
+      "big_rate_shock": 0.09183673469387756,
+      "big_rate_normal": 0.12411909275507223,
+      "shocks": 98,
+      "markets": 41
+    },
+    {
+      "asset": "QQQ",
+      "normal_abs_r": 0.0022727450230006874,
+      "shock_abs_r": 0.0022068146468446734,
+      "big_threshold": 0.004171694669476977,
+      "big_rate_shock": 0.1326530612244898,
+      "big_rate_normal": 0.14852133051919258,
+      "shocks": 98,
+      "markets": 41
+    },
+    {
+      "asset": "SHY",
+      "normal_abs_r": 0.00013317892435442971,
+      "shock_abs_r": 0.00029748914849868314,
+      "big_threshold": 0.00030130372029013586,
+      "big_rate_shock": 0.2857142857142857,
+      "big_rate_normal": 0.10272621983685136,
+      "shocks": 70,
+      "markets": 33
+    },
+    {
+      "asset": "SMH",
+      "normal_abs_r": 0.0036790980605954384,
+      "shock_abs_r": 0.0037965667356620273,
+      "big_threshold": 0.007499505127790407,
+      "big_rate_shock": 0.11224489795918367,
+      "big_rate_normal": 0.1329634707857069,
+      "shocks": 98,
+      "markets": 41
+    },
+    {
+      "asset": "SPY",
+      "normal_abs_r": 0.0018146189677748009,
+      "shock_abs_r": 0.0021785859388977263,
+      "big_threshold": 0.0030621048652257343,
+      "big_rate_shock": 0.21224489795918366,
+      "big_rate_normal": 0.17062461685732766,
+      "shocks": 245,
+      "markets": 95
+    },
+    {
+      "asset": "TLT",
+      "normal_abs_r": 0.0011981598529675831,
+      "shock_abs_r": 0.0017522664740502257,
+      "big_threshold": 0.002514300989735041,
+      "big_rate_shock": 0.2727272727272727,
+      "big_rate_normal": 0.10715970381746771,
+      "shocks": 77,
+      "markets": 37
+    },
+    {
+      "asset": "USO",
+      "normal_abs_r": 0.005306072332235892,
+      "shock_abs_r": 0.0062717756487868275,
+      "big_threshold": 0.007286741182946699,
+      "big_rate_shock": 0.26732673267326734,
+      "big_rate_normal": 0.2110079784684933,
+      "shocks": 303,
+      "markets": 125
+    },
+    {
+      "asset": "UUP",
+      "normal_abs_r": 0.0005893695676932419,
+      "shock_abs_r": 0.001555435839606059,
+      "big_threshold": 0.001196883003335536,
+      "big_rate_shock": 0.44285714285714284,
+      "big_rate_normal": 0.11337018574338859,
+      "shocks": 70,
+      "markets": 33
+    },
+    {
+      "asset": "XLE",
+      "normal_abs_r": 0.002597451043157999,
+      "shock_abs_r": 0.0032786083084586116,
+      "big_threshold": 0.004719582026859737,
+      "big_rate_shock": 0.20887728459530025,
+      "big_rate_normal": 0.13769341304754373,
+      "shocks": 383,
+      "markets": 160
+    },
+    {
+      "asset": "XLF",
+      "normal_abs_r": 0.001847199663558803,
+      "shock_abs_r": 0.00319739244366641,
+      "big_threshold": 0.003489057709760157,
+      "big_rate_shock": 0.4,
+      "big_rate_normal": 0.14037452319988783,
+      "shocks": 70,
+      "markets": 33
+    }
+  ],
+  "early_warning": {
+    "features": [
+      "abs_dp",
+      "recent_vol",
+      "gross_z",
+      "whale_z",
+      "wallets_z",
+      "imbalance"
+    ],
+    "mean": [
+      0.005125,
+      0.005017,
+      0.069634,
+      0.027166,
+      0.016307,
+      0.096304
+    ],
+    "std": [
+      0.014814,
+      0.00675,
+      2.497224,
+      1.441814,
+      0.475775,
+      0.253539
+    ],
+    "beta": [
+      -6.625844,
+      0.110572,
+      0.423203,
+      -0.102558,
+      -0.029253,
+      0.871846,
+      -0.004139
+    ],
+    "threshold": -4.724867707702139,
+    "levels": [
+      {
+        "upper": 0.1,
+        "threshold": -5.861247545804463,
+        "jump_rate": 0.0021357941360503328,
+        "jump_rate_flagged": 0.02729467408976696
+      },
+      {
+        "upper": 0.25,
+        "threshold": -4.905407641586001,
+        "jump_rate": 0.002309833128640804,
+        "jump_rate_flagged": 0.033686345200540785
+      },
+      {
+        "upper": 0.5,
+        "threshold": -4.265029568870142,
+        "jump_rate": 0.003177239412210709,
+        "jump_rate_flagged": 0.048555956678700364
+      },
+      {
+        "upper": 0.75,
+        "threshold": -3.8449650391969326,
+        "jump_rate": 0.005380292032648911,
+        "jump_rate_flagged": 0.08189776899181023
+      },
+      {
+        "upper": 1.0,
+        "threshold": -3.3582945414849883,
+        "jump_rate": 0.01179113867169947,
+        "jump_rate_flagged": 0.1520488856937455
+      }
+    ],
+    "jump_rate_flagged": 0.04427234124686354,
+    "jump_rate_all": 0.0033138507379862356,
+    "check": {
+      "auc_with_wallets": 0.9170230016489326,
+      "auc_price_only": 0.8712032467025768,
+      "gain": 0.04581975494635582
+    },
+    "trailing_hours": 48,
+    "min_trade_usd": 250,
+    "whale_trade_usd": 5000
+  },
+  "pressure": {
+    "min_flow_usd": 500,
+    "whale_follow_points": 0.82,
+    "retail_follow_points": 0.09
+  },
+  "clusters": {
+    "C0": {
+      "name": "Market makers",
+      "description": "Active on many days and markets, trade both sides"
+    },
+    "C1": {
+      "name": "Patient traders",
+      "description": "Long gaps between trades, few trades a day"
+    },
+    "C2": {
+      "name": "Burst traders",
+      "description": "Most activity on one day and in one market"
+    }
+  }
+}

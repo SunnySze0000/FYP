@@ -1,0 +1,27 @@
+{
+  "id": "v1",
+  "title": "Same-hour sensitivity",
+  "question": "When an event's probability jumps, do the assets linked to that event move more than unrelated assets?",
+  "verdict": "inconclusive",
+  "headline": "In shock hours, related assets move +nan\u00d7 (of normal-hour size) more than unrelated assets (95% CI +nan to +nan, 0 markets).",
+  "metrics": {
+    "main": {
+      "mean": null,
+      "low": null,
+      "high": null,
+      "groups": 0
+    }
+  },
+  "notes": [
+    "Direction-free test (a market's YES can be good or bad news for an asset).",
+    "Pass rule: mapped-minus-placebo ratio > 0 with the 95% CI above 0 (bootstrap over markets); fewer than 30 markets = inconclusive."
+  ],
+  "tables": [
+    "by_group",
+    "per_market"
+  ],
+  "figures": [
+    "sensitivity"
+  ],
+  "seconds": 0.0
+}

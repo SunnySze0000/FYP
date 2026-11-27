@@ -1,0 +1,232 @@
+{
+  "run_id": "20261127-014406_events",
+  "suite": "events",
+  "title": "T2 \u00b7 Event-probability shocks and the assets they move",
+  "dataset": "events",
+  "decision": "T2 works as a risk tool: Polymarket shocks move the assets they relate to (event exposure monitor). Shocks also lean on the next hour's direction (weak; see V5): show it as a hint, not a signal. Prices keep moving with net wallet flow; whether *skilled* wallets add to that is checked in V5.",
+  "fair_value": {},
+  "experiments": [
+    {
+      "id": "v0",
+      "title": "Data",
+      "question": "Are there enough contested event markets overlapping with asset trading hours?",
+      "verdict": "pass",
+      "headline": "689 event markets aligned with hourly prices of 26 assets; 7,156 shock hours.",
+      "metrics": {
+        "markets": 689,
+        "markets_with_aligned_assets": 689,
+        "pairs": 4345,
+        "shock_hours": 7156,
+        "asset_series": 26
+      },
+      "notes": [
+        "Pass rule: \u2265 100 markets with aligned mapped assets."
+      ],
+      "tables": [
+        "groups"
+      ],
+      "figures": [
+        "coverage"
+      ],
+      "seconds": 5.4
+    },
+    {
+      "id": "v1",
+      "title": "Same-hour sensitivity",
+      "question": "When an event's probability jumps, do the assets linked to that event move more than unrelated assets?",
+      "verdict": "pass",
+      "headline": "In shock hours, related assets move +0.25\u00d7 (of normal-hour size) more than unrelated assets (95% CI +0.15 to +0.34, 366 markets). Without crypto-price markets: +0.22\u00d7 (CI +0.11 to +0.34).",
+      "metrics": {
+        "main": {
+          "mean": 0.24709669117279745,
+          "low": 0.14823874518604604,
+          "high": 0.3434516340479948,
+          "n": 366,
+          "groups": 366,
+          "p_two_sided": 0.0
+        },
+        "without_crypto_price_markets": {
+          "mean": 0.21623742386619382,
+          "low": 0.10625430699328761,
+          "high": 0.33626678992577963,
+          "n": 288,
+          "groups": 288,
+          "p_two_sided": 0.0
+        },
+        "crypto_price_markets_only": {
+          "mean": 0.3610386012279494,
+          "low": 0.1936396412654307,
+          "high": 0.5385542442309379,
+          "n": 78,
+          "groups": 78,
+          "p_two_sided": 0.0
+        }
+      },
+      "notes": [
+        "Direction-free test (a market's YES can be good or bad news for an asset).",
+        "Pass rule: mapped-minus-placebo ratio > 0 with the 95% CI above 0 (bootstrap over markets); fewer than 30 markets = inconclusive."
+      ],
+      "tables": [
+        "by_group",
+        "per_market"
+      ],
+      "figures": [
+        "sensitivity"
+      ],
+      "seconds": 0.2
+    },
+    {
+      "id": "v2",
+      "title": "Next-hour lead",
+      "question": "Does a probability shock tell us where the related asset goes in the following hour?",
+      "verdict": "pass",
+      "headline": "Next-hour direction after shocks: hit rate 53.1% (95% CI 50.6% to 55.5%, 343 markets). Next-hour size effect vs unrelated assets: -0.01\u00d7 (CI -0.08 to +0.06).",
+      "metrics": {
+        "direction": {
+          "mean": 0.03149157375654574,
+          "low": 0.006091660546295981,
+          "high": 0.05467993384416278,
+          "n": 343,
+          "groups": 343,
+          "p_two_sided": 0.014
+        },
+        "next_hour_size": {
+          "mean": -0.008494218470531379,
+          "low": -0.08053111236219719,
+          "high": 0.06370905960462314,
+          "n": 366,
+          "groups": 366,
+          "p_two_sided": 0.8205
+        }
+      },
+      "notes": [
+        "Direction uses the sign of each market-asset co-movement estimated on earlier hours only.",
+        "Pass rule (direction): hit rate above 50% with the 95% CI above 50%; < 30 markets = inconclusive. The size effect is reported as secondary (useful for a volatility warning)."
+      ],
+      "tables": [
+        "per_market_hits"
+      ],
+      "figures": [
+        "lead"
+      ],
+      "seconds": 0.1
+    },
+    {
+      "id": "v3",
+      "title": "Skilled wallets lead the probability",
+      "question": "Does net buying by skilled wallets predict the next hour's probability move?",
+      "verdict": "pass",
+      "headline": "After an hour of net skilled-wallet buying (\u2265 $500), the probability moves +0.70 points their way next hour (95% CI +0.03 to +1.31, 170 markets); everyone else: +0.53.",
+      "metrics": {
+        "top_flow": {
+          "mean": 0.007011915673693859,
+          "low": 0.0003439548573568164,
+          "high": 0.013070640057636886,
+          "n": 1091,
+          "groups": 170,
+          "p_two_sided": 0.0345
+        },
+        "rest_flow": {
+          "mean": 0.0052801536044684945,
+          "low": 0.0035822306579087475,
+          "high": 0.007582327969464208,
+          "n": 11458,
+          "groups": 298,
+          "p_two_sided": 0.0
+        }
+      },
+      "notes": [
+        "Skill is point-in-time (topic F's timeline: markets closed before each trade).",
+        "Pass rule: skilled-flow signed next-hour move > 0 with the 95% CI above 0; < 30 markets = inconclusive."
+      ],
+      "tables": [],
+      "figures": [
+        "wallet_lead"
+      ],
+      "seconds": 35.7
+    },
+    {
+      "id": "v4",
+      "title": "Stable exposures",
+      "question": "If an asset rose with an event's probability early on, does it still do so later?",
+      "verdict": "fail",
+      "headline": "Exposure keeps its sign in 44% of related market-asset pairs (95% CI 34% to 54%, 42 markets).",
+      "metrics": {
+        "main": {
+          "mean": -0.06115107913669065,
+          "low": -0.16129941789958765,
+          "high": 0.04032802964254574,
+          "n": 139,
+          "groups": 42,
+          "p_two_sided": 0.242
+        },
+        "pairs": 139
+      },
+      "notes": [
+        "Exposure = slope of hourly asset return on hourly change in the event's log-odds.",
+        "Pass rule: sign agreement above 50% with the 95% CI above 50%."
+      ],
+      "tables": [
+        "pairs"
+      ],
+      "figures": [
+        "stability"
+      ],
+      "seconds": 0.0
+    },
+    {
+      "id": "v5",
+      "title": "Robustness of V2 and V3",
+      "question": "Do the narrow V2/V3 passes survive placebo, subgroup and head-to-head checks?",
+      "verdict": "pass",
+      "headline": "V2 direction holds: placebo assets 50.5% (\u2248 50% as it should be), related assets without crypto-price markets 53.4%. V3: skilled minus other wallets' flow = -3.40 points per market (CI -5.99 to -1.32), so skilled wallets do not move first beyond ordinary order-flow momentum.",
+      "metrics": {
+        "direction_mapped": {
+          "hit_rate": 0.5314915737565458,
+          "low": 0.506091660546296,
+          "high": 0.5546799338441628,
+          "markets": 343
+        },
+        "direction_placebo": {
+          "hit_rate": 0.5052264254670372,
+          "low": 0.4767833143950137,
+          "high": 0.5330727111033349,
+          "markets": 363
+        },
+        "direction_mapped_without_crypto": {
+          "hit_rate": 0.5339545599006026,
+          "low": 0.5064212045494687,
+          "high": 0.5624262873984026,
+          "markets": 256
+        },
+        "wallets": {
+          "per_market_top_minus_rest": {
+            "mean": -0.034010223170010165,
+            "low": -0.059925698058431585,
+            "high": -0.01316054063848131,
+            "n": 170,
+            "groups": 170,
+            "p_two_sided": 0.0085
+          },
+          "markets": 170,
+          "regression_points": {
+            "skilled_flow": 0.007896021536099508,
+            "other_flow": 0.006247159888232033,
+            "hours": 11693
+          }
+        },
+        "v2_holds": true,
+        "skilled_beat_others": false
+      },
+      "notes": [
+        "Added after V2 and V3 passed narrowly; reported as a robustness check, not a new pass rule.",
+        "Verdict reflects V2 only; the wallet head-to-head is reported in the metrics and headline."
+      ],
+      "tables": [
+        "direction_by_group"
+      ],
+      "figures": [],
+      "seconds": 32.3
+    }
+  ]
+}

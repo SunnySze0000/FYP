@@ -1,0 +1,36 @@
+{
+  "id": "d4",
+  "title": "Live feasibility",
+  "question": "Can the app get the live data it needs, fresh and fast enough?",
+  "verdict": "pass",
+  "headline": "20261127-021157_live_check: refresh 21.1 s for 50 watched markets; median latest-trade age 19.1 min; BTC bar age -1.1 min; sources {'gamma': True, 'data_api': True, 'clob': True, 'yahoo': True}.",
+  "metrics": {
+    "id": "d4",
+    "verdict": "pass",
+    "run_at": "2026-11-26T18:12:18.116135+00:00",
+    "reachable": {
+      "gamma": true,
+      "data_api": true,
+      "clob": true,
+      "yahoo": true
+    },
+    "checks": {
+      "all_sources_reachable": true,
+      "median_trade_age_ok": true,
+      "btc_bar_fresh": true,
+      "refresh_fast": true
+    },
+    "refresh_seconds": 21.1,
+    "markets_scanned": 500,
+    "watched_markets": 50,
+    "median_trade_age_min": 19.11565373738607,
+    "markets_with_trade_last_hour": 45,
+    "btc_bar_age_min": -1.1426795959472655
+  },
+  "notes": [
+    "Pass rule (pre-registered): all sources reachable; median trade age <= 60 min; BTC bar <= 90 min; refresh <= 120 s."
+  ],
+  "tables": [],
+  "figures": [],
+  "seconds": 0.0
+}

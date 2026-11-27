@@ -1,0 +1,43 @@
+{
+  "id": "d3",
+  "title": "Alert value and load",
+  "question": "Does an alert carry information, and would a daily user get a usable number of them?",
+  "verdict": "pass",
+  "headline": "An alert is followed by a big move (top 20% of the asset's hours) 25% of the time for related assets vs 18% for unrelated ones (difference +7.5 points, CI +4.6 to +10.3). Reference portfolio: at least one alert on 55% of days, median 1/day, 95th percentile 8/day.",
+  "metrics": {
+    "checks": {
+      "a_alert_value": true,
+      "b_load_some_days": true,
+      "b_load_not_spam": true
+    },
+    "value": {
+      "mean": 0.07489086358008488,
+      "low": 0.04573482091128884,
+      "high": 0.10255859488707586,
+      "n": 329,
+      "groups": 329,
+      "p_two_sided": 0.0
+    },
+    "mapped_big_rate": 0.25238931235736056,
+    "placebo_big_rate": 0.17749844877727566,
+    "share_days_with_alert": 0.5469613259668509,
+    "median_per_day": 1.0,
+    "p95_per_day": 8.0,
+    "mean_watched_markets_per_day": 28.845303867403317,
+    "window": [
+      "2026-05-08",
+      "2026-11-04"
+    ]
+  },
+  "notes": [
+    "Counts are a lower bound: only a sample of markets was collected (limitation L5).",
+    "Pass rule (pre-registered): big-move rate mapped \u2212 placebo CI > 0; >= 1 alert on >= 50% of days; 95th percentile <= 30 alerts/day."
+  ],
+  "tables": [
+    "alerts_per_day"
+  ],
+  "figures": [
+    "alerts_per_day"
+  ],
+  "seconds": 1.8
+}

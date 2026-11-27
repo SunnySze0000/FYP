@@ -1,0 +1,35 @@
+{
+  "id": "w4",
+  "title": "Large wallets and the direction hint",
+  "question": "Does V2's next-hour direction hint work better when large wallets push the jump?",
+  "verdict": "fail",
+  "headline": "Direction hint hit rate 52.3% when large wallets agree vs 53.6% otherwise (difference -1.3 points, 95% CI -6.2 to +3.2; 805 vs 2334).",
+  "metrics": {
+    "agree_vs_not": {
+      "diff": -0.013008350764023069,
+      "low": -0.061751513158123245,
+      "high": 0.03193274926570044,
+      "mean_high_group": 0.5229813664596273,
+      "mean_low_group": 0.5359897172236504,
+      "n_high": 805,
+      "n_low": 2334,
+      "markets": 291
+    },
+    "agree_hit_rate_minus_half": {
+      "mean": 0.02298136645962733,
+      "low": -0.018243628778979157,
+      "high": 0.061550272317696955,
+      "n": 805,
+      "groups": 135,
+      "p_two_sided": 0.2545
+    }
+  },
+  "notes": [
+    "Pass rule (pre-registered): agree minus not-agree hit rate > 0 with the 95% CI above 0 (markets resampled)."
+  ],
+  "tables": [],
+  "figures": [
+    "direction"
+  ],
+  "seconds": 0.4
+}

@@ -1,0 +1,19 @@
+# Research runs
+
+Newest first.
+
+| run | topic | dataset | verdicts | decision |
+|---|---|---|---|---|
+| [20261127-014406_wallets](20261127-014406_wallets/summary.md) | wallets | events | w0: pass, w1: fail, w2: pass, w3: pass, w4: fail, w5: pass, w6: fail | Passed: W2 (label jumps likely to stick or revert by who is behind them); W3 (early warning from unusual wallet activity); W5 (highlight the wallet type whose buying leads the price). W6 robustness: not all of them survive the 15-minute gap; only those listed in W6 go into the product. |
+| [20261127-014406_events](20261127-014406_events/summary.md) | events | events | v0: pass, v1: pass, v2: pass, v3: pass, v4: fail, v5: pass | T2 works as a risk tool: Polymarket shocks move the assets they relate to (event exposure monitor). Shocks also lean on the next hour's direction (weak; see V5): show it as a hint, not a signal. Prices keep moving with net wallet flow; whether *skilled* wallets add to that is checked in V5. |
+| [20261127-014406_crypto](20261127-014406_crypto/summary.md) | crypto | crypto | c0: pass, c1: fail, c2: fail, c3: fail | T1 fails: Polymarket crypto markets do not lead spot. Move to T2 (event shocks -> assets). |
+| [20261127-014406_polymarket](20261127-014406_polymarket/summary.md) | polymarket | universe | e2: fail, e3: fail, e4: fail | Pivot: fair-value / mispricing helper; refine the topic. |
+| [20261127-013354_wallets_events](20261127-013354_wallets_events/summary.md) | wallets | events | w0: pass, w1: fail, w2: pass, w3: pass, w4: fail, w5: pass | Wallet features that passed and go into the product: W2: label jumps likely to stick or revert by who is behind them; W3: early warning from unusual wallet activity; W5: highlight the wallet type whose buying leads the price. |
+| [20261127-001943_events](20261127-001943_events/summary.md) | events | events | v0: pass, v1: pass, v2: pass, v3: pass, v4: fail, v5: pass | T2 works as a risk tool: Polymarket shocks move the assets they relate to (event exposure monitor). Shocks also lean on the next hour's direction (weak; see V5): show it as a hint, not a signal. Prices keep moving with net wallet flow; whether *skilled* wallets add to that is checked in V5. |
+| [20261127-001943_crypto](20261127-001943_crypto/summary.md) | crypto | crypto | c0: pass, c1: fail, c2: fail, c3: fail | T1 fails: Polymarket crypto markets do not lead spot. Move to T2 (event shocks -> assets). |
+| [20261127-001943_polymarket](20261127-001943_polymarket/summary.md) | polymarket | universe | e2: fail, e3: fail, e4: fail | Pivot: fair-value / mispricing helper; refine the topic. |
+| [20261127-000850_events](20261127-000850_events/summary.md) | events | events | v0: pass, v1: pass, v2: pass, v3: pass, v4: fail | T2 works as a risk tool: Polymarket shocks move the assets they relate to (event exposure monitor). Shocks also predict the next hour's direction: add alerts. Skilled wallets move first: add a wallet early-warning layer. |
+| [20261127-000850_crypto](20261127-000850_crypto/summary.md) | crypto | crypto | c0: pass, c1: fail, c2: fail, c3: fail | T1 fails: Polymarket crypto markets do not lead spot. Move to T2 (event shocks -> assets). |
+| [20261127-000850_polymarket](20261127-000850_polymarket/summary.md) | polymarket | universe | e2: fail, e3: fail, e4: fail | Pivot: fair-value / mispricing helper; refine the topic. |
+| [20261126-174329_crypto](20261126-174329_crypto/summary.md) | crypto | crypto | c0: fail, c1: fail, c2: fail, c3: fail | G0 failed: not enough aligned data to test T1. Fix the data (see C0) before judging the topic. |
+| [20261126-164625_polymarket_pilot_fed](20261126-164625_polymarket_pilot_fed/summary.md) | polymarket | pilot_fed | e2: pass, e3: inconclusive, e4: inconclusive | Inconclusive: not enough independent events for at least one test. Collect the wider universe before deciding. |

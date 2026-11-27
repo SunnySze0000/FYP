@@ -1,0 +1,38 @@
+{
+  "id": "e1",
+  "title": "Calibration and fair value (H0)",
+  "question": "Do YES prices match how often YES happens, and can a simple recalibration improve them?",
+  "verdict": "descriptive",
+  "headline": "Only 48 period-A calibration points (< 100): fair value is the market price itself. Average bucket gap 4.5%.",
+  "metrics": {
+    "points": 93,
+    "markets": 31,
+    "mean_abs_gap": 0.045043019805376346,
+    "brier_by_horizon": {
+      "1d": 0.004131065254210328,
+      "7d": 0.018207806951164286,
+      "30d": 0.0408756782603951
+    },
+    "fair_value": {
+      "a": 0.0,
+      "b": 1.0,
+      "n": 48,
+      "fitted": false
+    },
+    "period_b_logloss_market": 0.12385496401696516,
+    "period_b_logloss_fair": 0.12385496401696516,
+    "period_b_logloss_improvement": 0.0
+  },
+  "notes": [
+    "Fair value is fitted on period A only and used for every edge measure in E2\u2013E4.",
+    "Points from different horizons of the same market are not independent."
+  ],
+  "tables": [
+    "brier",
+    "reliability"
+  ],
+  "figures": [
+    "calibration"
+  ],
+  "seconds": 0.0
+}

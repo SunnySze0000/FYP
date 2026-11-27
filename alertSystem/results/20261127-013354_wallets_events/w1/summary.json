@@ -1,0 +1,36 @@
+{
+  "id": "w1",
+  "title": "Large-wallet confirmation",
+  "question": "When a jump is pushed by trades of \u2265 $5,000 in its direction, do the related assets move more?",
+  "verdict": "fail",
+  "headline": "Related assets react +0.01\u00d7 (of a normal hour) more when large wallets back the jump (95% CI -0.28 to +0.36; 822 vs 2548 jump-asset pairs, 308 markets). Same-owner groups backing it: +nan\u00d7 (CI +nan to +nan).",
+  "metrics": {
+    "whale_backed": {
+      "diff": 0.00885668569769349,
+      "low": -0.2787452072600776,
+      "high": 0.36073828221000337,
+      "mean_high_group": 1.4739764033974854,
+      "mean_low_group": 1.4651197176997919,
+      "n_high": 822,
+      "n_low": 2548,
+      "markets": 308
+    },
+    "same_owner_group_backed": {
+      "diff": null,
+      "low": null,
+      "high": null,
+      "n_high": 0,
+      "n_low": 3370,
+      "markets": 308
+    }
+  },
+  "notes": [
+    "Pass rule (pre-registered): whale-backed minus other jumps > 0, 95% CI above 0, resampling markets.",
+    "Same-owner groups come from the team's sniper grouping; reported as secondary."
+  ],
+  "tables": [],
+  "figures": [
+    "confirmation"
+  ],
+  "seconds": 3.1
+}

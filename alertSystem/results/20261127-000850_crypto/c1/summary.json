@@ -1,0 +1,48 @@
+{
+  "id": "c1",
+  "title": "G1 \u00b7 Does Polymarket lead spot?",
+  "question": "Beyond what the spot path already says, does the Polymarket price predict the next spot return?",
+  "verdict": "fail",
+  "headline": "At 5 min, adding Polymarket's view changes out-of-sample R\u00b2 by -0.008% (95% CI -0.017% to +0.000%, 229 test days); daily rank correlation +0.017.",
+  "metrics": {
+    "main": {
+      "gain": -7.978072284564597e-05,
+      "low": -0.00017209491338093796,
+      "high": 3.551520645347889e-06,
+      "days": 229,
+      "rows": 204555,
+      "r2_model": -0.0004043417136310179,
+      "r2_baseline": -0.0003245350991405438,
+      "p_gain_le_0": 0.9675
+    },
+    "ic_main": {
+      "ic": 0.017244173987788707,
+      "low": 0.009146413212741025,
+      "high": 0.025849873986620885,
+      "days": 250
+    },
+    "coefficients_full_sample": {
+      "intercept": 1.656532868031209e-06,
+      "r_past": -0.010073867503921832,
+      "u": -2.9884563968202854e-06
+    },
+    "peak_lead_lag": {
+      "asset": "BTC",
+      "lag_min": -1,
+      "corr": 0.4089954859978892
+    }
+  },
+  "notes": [
+    "Signal u = logit(Polymarket P(Up)) \u2212 logit(P(Up) implied by the spot path and recent volatility).",
+    "Walk-forward by day (\u2265 21 training days); CI by resampling test days.",
+    "Pass rule: R\u00b2 gain > 0 with the 95% CI above 0 at the main horizon; < 20 test days = inconclusive."
+  ],
+  "tables": [
+    "by_horizon",
+    "lead_lag"
+  ],
+  "figures": [
+    "lead"
+  ],
+  "seconds": 2.1
+}

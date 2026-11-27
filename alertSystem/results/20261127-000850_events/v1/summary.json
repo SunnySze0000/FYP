@@ -1,0 +1,45 @@
+{
+  "id": "v1",
+  "title": "Same-hour sensitivity",
+  "question": "When an event's probability jumps, do the assets linked to that event move more than unrelated assets?",
+  "verdict": "pass",
+  "headline": "In shock hours, related assets move +0.25\u00d7 (of normal-hour size) more than unrelated assets (95% CI +0.15 to +0.34, 366 markets). Without crypto-price markets: +0.22\u00d7 (CI +0.11 to +0.34).",
+  "metrics": {
+    "main": {
+      "mean": 0.24709669117279745,
+      "low": 0.14823874518604604,
+      "high": 0.3434516340479948,
+      "n": 366,
+      "groups": 366,
+      "p_two_sided": 0.0
+    },
+    "without_crypto_price_markets": {
+      "mean": 0.21623742386619382,
+      "low": 0.10625430699328761,
+      "high": 0.33626678992577963,
+      "n": 288,
+      "groups": 288,
+      "p_two_sided": 0.0
+    },
+    "crypto_price_markets_only": {
+      "mean": 0.3610386012279494,
+      "low": 0.1936396412654307,
+      "high": 0.5385542442309379,
+      "n": 78,
+      "groups": 78,
+      "p_two_sided": 0.0
+    }
+  },
+  "notes": [
+    "Direction-free test (a market's YES can be good or bad news for an asset).",
+    "Pass rule: mapped-minus-placebo ratio > 0 with the 95% CI above 0 (bootstrap over markets); fewer than 30 markets = inconclusive."
+  ],
+  "tables": [
+    "by_group",
+    "per_market"
+  ],
+  "figures": [
+    "sensitivity"
+  ],
+  "seconds": 0.1
+}

@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EventLens · event risk for your holdings</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="#today" aria-label="EventLens home">
+    <svg viewBox="0 0 32 32" width="28" height="28" aria-hidden="true"><path d="M2 20h6l3-12 4 20 4-14 3 6h8" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/></svg>
+    <span>EventLens</span>
+  </a>
+  <nav class="tabs" aria-label="Sections">
+    <a href="#today" data-view="today">Today</a>
+    <a href="#markets" data-view="markets">Markets</a>
+    <a href="#track" data-view="track">Track record</a>
+    <a href="#evidence" data-view="evidence">How we know</a>
+  </nav>
+  <div class="status" id="status" aria-live="polite">Loading…</div>
+</header>
+
+<main>
+  <section class="view" id="view-today">
+    <aside class="book" aria-labelledby="book-title">
+      <div class="book-head">
+        <h2 id="book-title">Your holdings</h2>
+        <button class="link" id="edit-book" type="button">Edit</button>
+      </div>
+      <p class="book-note">Each strip is the last 24 hours. A tick is a 10-point jump in a linked Polymarket event; height is the size of the jump. Click a holding to see how its bets were found.</p>
+      <ol class="holdings" id="holdings"></ol>
+    </aside>
+    <div class="today">
+      <h1 class="headline" id="headline">Checking the event markets linked to your holdings…</h1>
+      <p class="subhead" id="subhead"></p>
+      <section class="block" aria-labelledby="alerts-title">
+        <div class="block-head"><h2 id="alerts-title">Jumping now</h2><span class="hint">Moved 10+ points in the last hour</span></div>
+        <div id="alerts" class="cards"></div>
+      </section>
+      <section class="block" aria-labelledby="warn-title">
+        <div class="block-head"><h2 id="warn-title">Unusual wallet activity</h2><span class="hint">Early warning, in testing</span></div>
+        <div id="warnings" class="rows"></div>
+      </section>
+      <section class="block" aria-labelledby="notes-title">
+        <div class="block-head"><h2 id="notes-title">Wallet patterns</h2><span class="hint">Patterns that came before bigger moves in your holdings</span></div>
+        <div id="wallet-notes" class="rows"></div>
+      </section>
+      <section class="block" aria-labelledby="press-title">
+        <div class="block-head"><h2 id="press-title">Large-wallet pressure</h2><span class="hint">Net buying from $5k+ trades in the last hour</span></div>
+        <div id="pressure" class="rows"></div>
+      </section>
+    </div>
+  </section>
+
+  <section class="view" id="view-markets" hidden>
+    <div class="page-head">
+      <h1>Event markets we watch</h1>
+      <p>Open Polymarket markets that the research links to an asset, busiest first. Click one for detail.</p>
+      <div class="filters" role="group" aria-label="Filter markets">
+        <label><input type="checkbox" id="only-mine" checked> Linked to my holdings</label>
+        <label><input type="checkbox" id="only-active"> Only alerts and warnings</label>
+      </div>
+    </div>
+    <div class="table-wrap"><table class="market-table" id="market-table"></table></div>
+  </section>
+
+  <section class="view" id="view-track" hidden>
+    <div class="page-head">
+      <h1>Track record</h1>
+      <p>Every alert EventLens raises is saved, then checked against what the linked asset did in that hour. This is how the tool keeps testing itself on data it has never seen.</p>
+    </div>
+    <div id="track"></div>
+  </section>
+
+  <section class="view" id="view-evidence" hidden>
+    <div class="page-head">
+      <h1>How we know</h1>
+      <p>Each feature passed a test whose pass rule was written down before it ran. What did not pass is not in the app.</p>
+    </div>
+    <div id="evidence"></div>
+  </section>
+</main>
+
+<div class="drawer" id="drawer" hidden>
+  <div class="drawer-scrim" data-close></div>
+  <article class="drawer-panel" role="dialog" aria-modal="true" aria-labelledby="drawer-title" tabindex="-1">
+    <button class="close" type="button" data-close aria-label="Close">×</button>
+    <div id="drawer-body"></div>
+  </article>
+</div>
+
+<dialog id="book-dialog">
+  <form method="dialog" id="book-form">
+    <h2>Your holdings</h2>
+    <p>Add US stocks or ETFs by ticker, up to 15. EventLens finds the bets linked to each one and checks them against its own price history.</p>
+    <div class="ticker-entry">
+      <label for="ticker-input" class="sr-only">Tickers</label>
+      <input id="ticker-input" type="text" autocomplete="off" spellcheck="false" placeholder="e.g. AAPL, VOO, XOM">
+      <button type="button" id="ticker-add" class="secondary">Add</button>
+    </div>
+    <div class="ticker-list" id="asset-grid"></div>
+    <p class="note" id="book-count"></p>
+    <div class="dialog-actions">
+      <button type="submit" value="cancel" class="link">Cancel</button>
+      <button type="submit" value="save" class="primary">Save holdings</button>
+    </div>
+  </form>
+</dialog>
+
+<footer class="foot">Research tool for a final-year project. It flags event risk; it does not tell you what to buy or sell.</footer>
+<script src="/static/app.js"></script>
+</body>
+</html>

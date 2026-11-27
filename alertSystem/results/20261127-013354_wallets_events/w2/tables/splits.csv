@@ -1,0 +1,7 @@
+split,diff,low,high,mean_high_group,mean_low_group,n_high,n_low,markets
+large_wallets_behind,0.0389934,0.00215044,0.0761365,-0.00233054,-0.041324,298,1582,445
+skilled_wallets_behind,0.00872129,-0.0281396,0.047083,-0.0281429,-0.0368641,371,1509,445
+many_wallets,0.0214853,-0.000965688,0.0457706,-0.0247433,-0.0462286,970,910,445
+new_wallets_driven,-0.00439787,-0.0292706,0.0211944,-0.037342,-0.0329441,940,940,445
+same_owner_groups_behind (secondary),,,,,,0,1880,445
+filtered_out_wallets_behind (secondary),0.0040992,-0.0236748,0.0306078,-0.0326203,-0.0367195,723,1157,445

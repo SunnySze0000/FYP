@@ -1,0 +1,48 @@
+{
+  "id": "e4",
+  "title": "Copy-trading backtest (H3)",
+  "question": "After realistic delay and costs, does following skilled wallets make money?",
+  "verdict": "inconclusive",
+  "headline": "Copying top-tier wallets 60 min later with a 1\u00a2 cost returns -6.0% per $1 (95% CI -10.4% to -4.1%; 3703 copies in 10 markets) vs -11.4% for other ranked wallets.",
+  "metrics": {
+    "main": {
+      "tier": "top",
+      "delay_s": 3600,
+      "cost": 0.01,
+      "signals": 3778,
+      "copies": 3703,
+      "markets": 10,
+      "events": 3,
+      "mean_return": -0.0604436798770148,
+      "low": -0.1039616770445966,
+      "high": -0.04096858023526909,
+      "hit_rate": 0.5638671347556036,
+      "mean_entry_price": 0.6045079621919525
+    },
+    "baseline_rest": {
+      "tier": "ranked_rest",
+      "delay_s": 3600,
+      "cost": 0.01,
+      "signals": 23457,
+      "copies": 23023,
+      "markets": 11,
+      "events": 3,
+      "mean_return": -0.1138357792508839,
+      "low": -0.19245395923749328,
+      "high": 0.015387133520609213,
+      "hit_rate": 0.5502758111453764,
+      "mean_entry_price": 0.5530005641095427
+    }
+  },
+  "notes": [
+    "Signals: top-tier trades of at least $100 with YES price in (0.05, 0.95), one per wallet/market/hour; entry at the last price after the delay plus the cost; held to resolution.",
+    "Pass rule (pre-registered): 60-minute delay, 1\u00a2 cost, mean > 0 with CI above 0."
+  ],
+  "tables": [
+    "backtest_grid"
+  ],
+  "figures": [
+    "copy_trading"
+  ],
+  "seconds": 0.4
+}

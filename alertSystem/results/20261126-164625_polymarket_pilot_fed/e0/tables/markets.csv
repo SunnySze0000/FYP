@@ -1,0 +1,32 @@
+market_id,question,category,group_id,close_date,period,outcome_yes,volume_usd,trades,wallets,notional
+1654956,Will the Fed decrease interest rates by 50+ bps after the July 2026 meeting?,economics,fed-2026-07,2026-07-29,B,0,2.20153e+07,51789,6247,7.28605e+06
+1654957,Will the Fed decrease interest rates by 25 bps after the July 2026 meeting?,economics,fed-2026-07,2026-07-29,B,0,2.79947e+07,67340,5070,1.50031e+07
+1654958,Will there be no change in Fed interest rates after the July 2026 meeting?,economics,fed-2026-07,2026-07-29,B,1,4.04971e+07,128071,13002,5.20169e+07
+1654959,Will the Fed increase interest rates by 25 bps after the July 2026 meeting?,economics,fed-2026-07,2026-07-29,B,0,2.589e+07,122808,14488,2.24321e+07
+1654960,Will the Fed increase interest rates by 50+ bps after the July 2026 meeting?,economics,fed-2026-07,2026-07-29,B,0,2.7557e+07,57959,5378,1.45515e+07
+2252242,Will the Fed decrease interest rates by 50+ bps after the September 2026 meeting?,economics,fed-2026-09,2026-09-16,B,0,1.97394e+07,39090,3943,4.73371e+06
+2252243,Will the Fed decrease interest rates by 25 bps after the September 2026 meeting?,economics,fed-2026-09,2026-09-16,B,0,5.62551e+07,114998,5414,2.63509e+07
+2252244,Will there be no change in Fed interest rates after the September 2026 meeting?,economics,fed-2026-09,2026-09-16,B,0,5.64351e+07,151101,17101,5.20028e+07
+2252245,Will the Fed increase interest rates by 25 bps after the September 2026 meeting?,economics,fed-2026-09,2026-09-16,B,1,4.21583e+07,99192,11015,4.2679e+07
+2252246,Will the Fed increase interest rates by 50+ bps after the September 2026 meeting?,economics,fed-2026-09,2026-09-16,B,0,3.34349e+07,38951,3141,9.44019e+06
+570360,Fed decreases interest rates by 50+ bps after December 2025 meeting?,economics,fed-2025-12,2025-12-10,A,0,1.61574e+08,198367,26267,1.1812e+08
+570361,Fed decreases interest rates by 25 bps after December 2025 meeting?,economics,fed-2025-12,2025-12-10,A,1,5.46345e+07,173043,26173,6.28134e+07
+570362,No change in Fed interest rates after December 2025 meeting?,economics,fed-2025-12,2025-12-10,A,0,4.45235e+07,99239,13835,2.74268e+07
+570363,Fed increases interest rates by 25+ bps after December 2025 meeting?,economics,fed-2025-12,2025-12-10,A,0,1.33174e+08,190367,17153,5.97133e+07
+601697,Fed decreases interest rates by 50+ bps after January 2026 meeting?,economics,fed-2026-01,2026-01-28,A,0,2.35065e+08,197069,29272,1.03427e+08
+601698,Fed decreases interest rates by 25 bps after January 2026 meeting?,economics,fed-2026-01,2026-01-28,A,0,1.01212e+08,200830,26052,4.45678e+07
+601699,No change in Fed interest rates after January 2026 meeting?,economics,fed-2026-01,2026-01-28,A,1,1.06767e+08,273733,34959,1.33019e+08
+601700,Fed increases interest rates by 25+ bps after January 2026 meeting?,economics,fed-2026-01,2026-01-28,A,0,2.16456e+08,95922,14027,7.41789e+07
+654412,Will the Fed decrease interest rates by 50+ bps after the March 2026 meeting?,economics,fed-2026-03,2026-03-18,A,0,0,218319,28242,9.559e+07
+654413,Will the Fed decrease interest rates by 25 bps after the March 2026 meeting?,economics,fed-2026-03,2026-03-18,A,0,8.71033e+07,149092,20396,3.09742e+07
+654414,Will there be no change in Fed interest rates after the March 2026 meeting?,economics,fed-2026-03,2026-03-18,A,1,0,186033,24836,1.02262e+08
+654415,Will the Fed increase interest rates by 25+ bps after the March 2026 meeting?,economics,fed-2026-03,2026-03-18,A,0,1.72972e+08,129586,15304,9.63083e+07
+669660,Will the Fed decrease interest rates by 50+ bps after the April 2026 meeting?,economics,fed-2026-04,2026-04-29,A,0,6.60254e+07,116217,14652,3.15389e+07
+669661,Will the Fed decrease interest rates by 25 bps after the April 2026 meeting?,economics,fed-2026-04,2026-04-29,A,0,6.53119e+07,95725,11199,1.63872e+07
+669662,Will there be no change in Fed interest rates after the April 2026 meeting?,economics,fed-2026-04,2026-04-29,A,1,7.69092e+07,189424,22194,6.67322e+07
+669663,Will the Fed increase interest rates by 25+ bps after the April 2026 meeting?,economics,fed-2026-04,2026-04-29,A,0,7.59782e+07,129517,17105,2.05243e+07
+906972,Fed 50+ bps decrease after the 2026-06 meeting?,economics,fed-2026-06,2026-06-17,B,0,7.10366e+06,141769,10860,1.42073e+07
+906973,Fed 25 bps decrease after the 2026-06 meeting?,economics,fed-2026-06,2026-06-17,B,0,4.93551e+06,112598,7213,9.87101e+06
+906974,Fed No change after the 2026-06 meeting?,economics,fed-2026-06,2026-06-17,B,1,2.27701e+07,176039,9926,4.55403e+07
+906975,Fed 25 bps increase after the 2026-06 meeting?,economics,fed-2026-06,2026-06-17,B,0,3.40296e+06,106377,5871,6.80592e+06
+906976,Fed 50+ bps increase after the 2026-06 meeting?,economics,fed-2026-06,2026-06-17,B,0,2.74328e+06,59182,6294,5.48656e+06

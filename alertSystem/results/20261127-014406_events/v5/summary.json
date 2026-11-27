@@ -1,0 +1,54 @@
+{
+  "id": "v5",
+  "title": "Robustness of V2 and V3",
+  "question": "Do the narrow V2/V3 passes survive placebo, subgroup and head-to-head checks?",
+  "verdict": "pass",
+  "headline": "V2 direction holds: placebo assets 50.5% (\u2248 50% as it should be), related assets without crypto-price markets 53.4%. V3: skilled minus other wallets' flow = -3.40 points per market (CI -5.99 to -1.32), so skilled wallets do not move first beyond ordinary order-flow momentum.",
+  "metrics": {
+    "direction_mapped": {
+      "hit_rate": 0.5314915737565458,
+      "low": 0.506091660546296,
+      "high": 0.5546799338441628,
+      "markets": 343
+    },
+    "direction_placebo": {
+      "hit_rate": 0.5052264254670372,
+      "low": 0.4767833143950137,
+      "high": 0.5330727111033349,
+      "markets": 363
+    },
+    "direction_mapped_without_crypto": {
+      "hit_rate": 0.5339545599006026,
+      "low": 0.5064212045494687,
+      "high": 0.5624262873984026,
+      "markets": 256
+    },
+    "wallets": {
+      "per_market_top_minus_rest": {
+        "mean": -0.034010223170010165,
+        "low": -0.059925698058431585,
+        "high": -0.01316054063848131,
+        "n": 170,
+        "groups": 170,
+        "p_two_sided": 0.0085
+      },
+      "markets": 170,
+      "regression_points": {
+        "skilled_flow": 0.007896021536099508,
+        "other_flow": 0.006247159888232033,
+        "hours": 11693
+      }
+    },
+    "v2_holds": true,
+    "skilled_beat_others": false
+  },
+  "notes": [
+    "Added after V2 and V3 passed narrowly; reported as a robustness check, not a new pass rule.",
+    "Verdict reflects V2 only; the wallet head-to-head is reported in the metrics and headline."
+  ],
+  "tables": [
+    "direction_by_group"
+  ],
+  "figures": [],
+  "seconds": 32.3
+}

@@ -1,0 +1,5 @@
+slice,mean,low,high,n,groups,p_two_sided
+all candidates (watched),0.239095,0.143689,0.33278,329,329,0
+research markets only,0.241924,0.146247,0.338748,321,321,0
+markets the hindsight filter dropped,0.125567,-0.158282,0.395289,8,8,0.38
+lowest-volume third,0.254581,0.11864,0.406661,107,107,0.001

@@ -1,0 +1,215 @@
+{
+  "run_id": "20261126-164625_polymarket_pilot_fed",
+  "suite": "polymarket",
+  "title": "F \u00b7 Smart money inside Polymarket",
+  "dataset": "pilot_fed",
+  "decision": "Inconclusive: not enough independent events for at least one test. Collect the wider universe before deciding.",
+  "fair_value": {
+    "a": 0.0,
+    "b": 1.0,
+    "n": 48,
+    "fitted": false
+  },
+  "experiments": [
+    {
+      "id": "e0",
+      "title": "Dataset overview",
+      "question": "What does the data cover, and do enough wallets trade many markets to measure skill?",
+      "verdict": "descriptive",
+      "headline": "31 markets in 7 events, 4,109,747 trades by 255,931 wallets; 7,612 wallets traded 5+ markets and the top 1% of wallets did 74% of the volume.",
+      "metrics": {
+        "markets": 31,
+        "events": 7,
+        "trades": 4109747,
+        "wallets": 255931,
+        "first_close": "2025-12-10",
+        "last_close": "2026-09-16",
+        "split_date": "2026-06-17",
+        "period_a_markets": 16,
+        "period_b_markets": 15,
+        "top_1pct_wallets_share_of_volume": 0.7403164605101508,
+        "wallets_with_5plus_markets": 7612,
+        "wallets_with_3plus_events": 15496,
+        "yes_resolution_rate": 0.22580645161290322
+      },
+      "notes": [
+        "Trade rows are participant records: each fill appears once for every wallet in it.",
+        "Dataset source: fyp_fed_exports"
+      ],
+      "tables": [
+        "markets",
+        "wallet_repeat"
+      ],
+      "figures": [
+        "coverage"
+      ],
+      "seconds": 3.3
+    },
+    {
+      "id": "e1",
+      "title": "Calibration and fair value (H0)",
+      "question": "Do YES prices match how often YES happens, and can a simple recalibration improve them?",
+      "verdict": "descriptive",
+      "headline": "Only 48 period-A calibration points (< 100): fair value is the market price itself. Average bucket gap 4.5%.",
+      "metrics": {
+        "points": 93,
+        "markets": 31,
+        "mean_abs_gap": 0.045043019805376346,
+        "brier_by_horizon": {
+          "1d": 0.004131065254210328,
+          "7d": 0.018207806951164286,
+          "30d": 0.0408756782603951
+        },
+        "fair_value": {
+          "a": 0.0,
+          "b": 1.0,
+          "n": 48,
+          "fitted": false
+        },
+        "period_b_logloss_market": 0.12385496401696516,
+        "period_b_logloss_fair": 0.12385496401696516,
+        "period_b_logloss_improvement": 0.0
+      },
+      "notes": [
+        "Fair value is fitted on period A only and used for every edge measure in E2\u2013E4.",
+        "Points from different horizons of the same market are not independent."
+      ],
+      "tables": [
+        "brier",
+        "reliability"
+      ],
+      "figures": [
+        "calibration"
+      ],
+      "seconds": 0.0
+    },
+    {
+      "id": "e2",
+      "title": "Skill persistence (H1)",
+      "question": "Do wallets with high edge in earlier markets also have high edge in later markets?",
+      "verdict": "pass",
+      "headline": "Spearman \u03c1 between period-A and period-B edge = 0.276 (95% CI 0.225 to 0.325, permutation p = 0.0010, 1842 wallets with \u2265 3 markets in each period). Holding long-shot style fixed: \u03c1 = 0.009.",
+      "metrics": {
+        "edge_vs_fair": {
+          "rho": 0.27573943904426546,
+          "p_one_sided": 0.000999000999000999,
+          "low": 0.22494325651544692,
+          "high": 0.3254513279037117,
+          "n": 1842
+        },
+        "edge_vs_price": {
+          "rho": 0.27573943904426546,
+          "p_one_sided": 0.000999000999000999,
+          "low": 0.22494325651544692,
+          "high": 0.3254513279037117,
+          "n": 1842
+        },
+        "partial_longshot": {
+          "rho": 0.009389112340649208,
+          "n": 1842
+        },
+        "rolling_mean_rho": 0.36763874990018885,
+        "rolling_events": 5,
+        "min_markets_per_period": 3
+      },
+      "notes": [
+        "Pass rule (pre-registered): \u03c1 > 0 with permutation p < 0.05; fewer than 30 wallets = inconclusive.",
+        "Edge is measured against fair value from E1; the raw-price version is reported for comparison."
+      ],
+      "tables": [
+        "rolling",
+        "wallet_pairs"
+      ],
+      "figures": [
+        "persistence"
+      ],
+      "seconds": 4.0
+    },
+    {
+      "id": "e3",
+      "title": "Information in skilled wallets' trades (H2)",
+      "question": "Is the price more likely to move in a trade's direction when the trader has proven skill?",
+      "verdict": "inconclusive",
+      "headline": "Top-tier trades beat other trades by -1.17 points to resolution (95% CI -2.43 to -0.00; 12 markets, 3 events).",
+      "metrics": {
+        "main": {
+          "sample": "band",
+          "weighting": "equal",
+          "horizon": "markout_res",
+          "top_mean": -0.006866797024140683,
+          "rest_mean": 0.004847502548713545,
+          "diff": -0.011714299572854225,
+          "low": -0.024257804590925636,
+          "high": -8.728124066733253e-06,
+          "p": 0.0285,
+          "markets": 12,
+          "events": 3
+        },
+        "top_tier_share_of_trades": 0.043706323035713285,
+        "period_b_trades": 1467264,
+        "banded_trades": 536467
+      },
+      "notes": [
+        "Skill tier is decided with markets closed before each trade (walk-forward).",
+        "Main test (pre-registered): trades with YES price in the band, equal weight, to resolution; per-market differences, bootstrap over events. Fewer than 5 events or 10 markets = inconclusive."
+      ],
+      "tables": [
+        "markout_tests",
+        "per_market_main",
+        "tier_means_pct_points"
+      ],
+      "figures": [
+        "markouts"
+      ],
+      "seconds": 10.1
+    },
+    {
+      "id": "e4",
+      "title": "Copy-trading backtest (H3)",
+      "question": "After realistic delay and costs, does following skilled wallets make money?",
+      "verdict": "inconclusive",
+      "headline": "Copying top-tier wallets 60 min later with a 1\u00a2 cost returns -6.0% per $1 (95% CI -10.4% to -4.1%; 3703 copies in 10 markets) vs -11.4% for other ranked wallets.",
+      "metrics": {
+        "main": {
+          "tier": "top",
+          "delay_s": 3600,
+          "cost": 0.01,
+          "signals": 3778,
+          "copies": 3703,
+          "markets": 10,
+          "events": 3,
+          "mean_return": -0.0604436798770148,
+          "low": -0.1039616770445966,
+          "high": -0.04096858023526909,
+          "hit_rate": 0.5638671347556036,
+          "mean_entry_price": 0.6045079621919525
+        },
+        "baseline_rest": {
+          "tier": "ranked_rest",
+          "delay_s": 3600,
+          "cost": 0.01,
+          "signals": 23457,
+          "copies": 23023,
+          "markets": 11,
+          "events": 3,
+          "mean_return": -0.1138357792508839,
+          "low": -0.19245395923749328,
+          "high": 0.015387133520609213,
+          "hit_rate": 0.5502758111453764,
+          "mean_entry_price": 0.5530005641095427
+        }
+      },
+      "notes": [
+        "Signals: top-tier trades of at least $100 with YES price in (0.05, 0.95), one per wallet/market/hour; entry at the last price after the delay plus the cost; held to resolution.",
+        "Pass rule (pre-registered): 60-minute delay, 1\u00a2 cost, mean > 0 with CI above 0."
+      ],
+      "tables": [
+        "backtest_grid"
+      ],
+      "figures": [
+        "copy_trading"
+      ],
+      "seconds": 0.4
+    }
+  ]
+}
